@@ -85,7 +85,8 @@ def cmd_duzelt(a):
     if a.yaz:
         out = src.with_suffix(".yesil.py")
         out.write_text(new + "\n", encoding="utf-8")
-        print(f"\nKaydedildi: {out} (yorum satırları korunmaz)")
+        not_ = "yorumlar ve biçim korundu" if fixer.fix.bicim_korundu else "kod yeniden biçimlendirildi"
+        print(f"\nKaydedildi: {out} ({not_})")
     if a.kanitla:
         m = EnergyMeter()
         data = {"__name__": "yesil_kanit"}

@@ -4,6 +4,8 @@ import json
 import re
 import time
 
+import requests
+
 
 def siparis_raporu(db, siparisler):
     rapor = []
@@ -48,3 +50,24 @@ def siparis_bekle(api):
         if api.yeni_siparis_var_mi():
             return api.siparisi_al()
         time.sleep(0.1)
+
+
+def toplam_ciro(satislar):
+    toplam = 0
+    for _, satir in satislar.iterrows():
+        toplam += satir["adet"] * satir["fiyat"]
+    return toplam
+
+
+def fiyatlari_cek(urun_kodlari):
+    fiyatlar = []
+    for kod in urun_kodlari:
+        fiyatlar.append(requests.get(f"https://api.ornek.com.tr/fiyat/{kod}").json())
+    return fiyatlar
+
+
+def sirayla_isle(isler):
+    biten = []
+    while isler:
+        biten.append(isler.pop(0))
+    return biten

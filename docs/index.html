@@ -110,6 +110,21 @@ video{width:100%;display:block;border-radius:var(--r);background:var(--ink);aspe
 .fixlist{border-top:1px solid var(--rule);padding:10px 14px;font-size:14px;color:var(--ink2);display:flex;flex-direction:column;gap:4px}
 .fixlist b{font-family:var(--mono);font-size:11px;color:var(--ink);margin-right:8px}
 .empty{border:1px dashed var(--ink3);border-radius:var(--r);padding:16px;color:var(--ink2)}
+.kept{font-size:14px;color:var(--moss-ink);background:var(--moss-tint);border-radius:6px;padding:8px 12px}
+.measure{margin-top:16px;background:var(--ink);color:var(--paper);border-radius:var(--r);padding:18px}
+.measure .mh{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.measure h3{font-size:18px;line-height:1.3}
+.measure h3 small{display:block;font-weight:400;font-size:14px;color:#A9B8AE;margin-top:2px;max-width:46ch}
+.measure .go{background:var(--leaf);color:var(--ink)}
+.mres{margin-top:16px;border-top:1px solid #3A4740;padding-top:14px}
+.mres .x{font-family:var(--mono);font-weight:700;font-stretch:112.5%;font-size:clamp(40px,9vw,56px);line-height:1;color:var(--leaf);letter-spacing:-.04em}
+.mres .xl{color:#C9D3CC;margin-top:4px}
+.mrows{display:grid;grid-template-columns:1fr auto;gap:6px 16px;margin-top:14px;font-size:15px;color:#C9D3CC}
+.mrows b{font-family:var(--mono);font-weight:500;color:var(--paper);text-align:right;white-space:nowrap}
+.mrows .ok{color:var(--leaf);grid-column:1/-1}
+.mfine{font-size:13px;color:#A9B8AE;margin-top:12px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
 
 /* sonuçlar */
 .results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -212,6 +227,15 @@ footer ul{list-style:none;display:flex;flex-direction:column;gap:4px}
         <span class="note" id="engine"><span lang="tr">Motor ilk kullanımda yüklenir (yaklaşık 10 MB).</span><span lang="en">The engine loads on first use (about 10 MB).</span></span>
       </div>
     </div>
+    <div class="measure" id="measure" hidden>
+      <div class="mh">
+        <h3><span lang="tr">Telefonunda ölç</span><span lang="en">Measure on your phone</span>
+          <small lang="tr">İki sürüm bu telefonda çalıştırılır, çıktıları karşılaştırılır ve harcadıkları işlemci süresi ölçülür.</small>
+          <small lang="en">Both versions run on this phone; their outputs are compared and their CPU time is measured.</small></h3>
+        <button class="go" id="olcBtn"><span lang="tr">Ölç</span><span lang="en">Measure</span></button>
+      </div>
+      <div id="olcOut" aria-live="polite"></div>
+    </div>
     <div id="out" aria-live="polite"></div>
   </div>
 </section>
@@ -238,8 +262,8 @@ footer ul{list-style:none;display:flex;flex-direction:column;gap:4px}
     <p class="sub" lang="tr">Ölçülmeyen şey optimize edilemez. Yeşil Kod dört adımda çalışır.</p>
     <p class="sub" lang="en">You cannot optimise what you do not measure. Yeşil Kod works in four steps.</p>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3><span lang="tr">Bul</span><span lang="en">Find</span></h3><p lang="tr">Statik analiz kodun sözdizimi ağacını tarar, enerji israf eden altı kalıbı satır satır işaretler.</p><p lang="en">Static analysis walks the syntax tree and flags six energy-wasting patterns, line by line.</p></div>
-      <div class="step"><div class="n">2</div><h3><span lang="tr">Düzelt</span><span lang="en">Fix</span></h3><p lang="tr">Motor dört kalıbı kendisi yeniden yazar: toplu sorgu, kümeyle arama, döngü dışına taşıma, önbellek.</p><p lang="en">The engine rewrites four of them itself: batched query, set lookup, loop hoisting, caching.</p></div>
+      <div class="step"><div class="n">1</div><h3><span lang="tr">Bul</span><span lang="en">Find</span></h3><p lang="tr">Statik analiz kodun sözdizimi ağacını tarar, enerji israf eden dokuz kalıbı satır satır işaretler.</p><p lang="en">Static analysis walks the syntax tree and flags nine energy-wasting patterns, line by line.</p></div>
+      <div class="step"><div class="n">2</div><h3><span lang="tr">Düzelt</span><span lang="en">Fix</span></h3><p lang="tr">Motor dört kalıbı kendisi yeniden yazar: toplu sorgu, kümeyle arama, döngü dışına taşıma, önbellek. Yorumlara ve biçime dokunmaz.</p><p lang="en">The engine rewrites four of them itself: batched query, set lookup, loop hoisting, caching. Comments and formatting stay untouched.</p></div>
       <div class="step"><div class="n">3</div><h3><span lang="tr">Doğrula</span><span lang="en">Verify</span></h3><p lang="tr">İki sürüm de çalıştırılır. Çıktılar birebir aynı değilse düzeltme reddedilir.</p><p lang="en">Both versions are run. If the outputs are not identical, the fix is rejected.</p></div>
       <div class="step"><div class="n">4</div><h3><span lang="tr">Ölç</span><span lang="en">Measure</span></h3><p lang="tr">İşlemcinin enerji sayaçları okunur; aynı iş için harcanan enerji karşılaştırılır ve karbona çevrilir.</p><p lang="en">CPU energy counters are read; the energy for the same work is compared and converted to carbon.</p></div>
     </div>
@@ -320,14 +344,25 @@ footer ul{list-style:none;display:flex;flex-direction:column;gap:4px}
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-let LANG = 'tr', SAMPLES = [], pyReady = null;
+let LANG = 'tr', SAMPLES = [], worker = null, seq = 0, warm = false;
+const pending = new Map();
 const T = {
   tr: {load: 'Motor yükleniyor…', run: 'İnceleniyor…', btn: 'Analiz et ve düzelt', ready: 'Motor hazır. Kod telefonunuzda incelendi.',
        fail: 'Motor yüklenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.', findings: 'bulgu', high: 'yüksek önemli', fixes: 'otomatik düzeltme',
-       none: 'Bilinen bir enerji israfı kalıbı bulunamadı.', diff: 'Motorun önerdiği düzeltme', changes: 'değişiklik', line: 'satır', err: 'Kodu düzeltip tekrar deneyin.'},
+       none: 'Bilinen bir enerji israfı kalıbı bulunamadı.', diff: 'Motorun önerdiği düzeltme', changes: 'değişiklik', line: 'satır', err: 'Kodu düzeltip tekrar deneyin.',
+       kept: 'Yorumlar ve biçim korundu; yalnızca değişen satırlar yeniden yazıldı.',
+       measuring: 'Ölçülüyor… Birkaç saniye sürebilir.', measure: 'Ölç', again: 'Tekrar ölç',
+       less: 'daha az işlemci süresi, birebir aynı sonuç', orig: 'Özgün kod, istek başına', fixed: 'Motorun yazdığı, istek başına',
+       same: n => `${nf(n)} kayıtlık çıktı iki sürümde aynı`, queries: 'Veritabanı sorgusu', notSame: 'İki sürümün çıktısı farklı çıktı; düzeltme reddedildi.',
+       fine: 'Ölçüm bu telefonda yapıldı. Tarayıcı telefonun güç tüketimini okuyamaz; aynı işlemcide enerji, işlemci süresiyle orantılı olduğu için oran süreden hesaplanır. Standdaki panel aynı ölçümü bilgisayarda yapıp karbona çevirir.'},
   en: {load: 'Loading engine…', run: 'Analysing…', btn: 'Analyse and fix', ready: 'Engine ready. Your code was analysed on your phone.',
        fail: 'Could not load the engine. Check your connection and try again.', findings: 'findings', high: 'high severity', fixes: 'automatic fixes',
-       none: 'No known energy-waste pattern found.', diff: 'Fix proposed by the engine', changes: 'changes', line: 'line', err: 'Fix the code and try again.'}
+       none: 'No known energy-waste pattern found.', diff: 'Fix proposed by the engine', changes: 'changes', line: 'line', err: 'Fix the code and try again.',
+       kept: 'Comments and formatting kept; only the changed lines were rewritten.',
+       measuring: 'Measuring… this can take a few seconds.', measure: 'Measure', again: 'Measure again',
+       less: 'less CPU time, identical output', orig: 'Original code, per request', fixed: 'Engine’s version, per request',
+       same: n => `${nf(n)}-row output identical in both versions`, queries: 'Database queries', notSame: 'The outputs differ; the fix was rejected.',
+       fine: 'Measured on this phone. Browsers cannot read the phone’s power draw; on the same processor energy is proportional to CPU time, so the ratio is computed from time. The stand panel runs the same measurement on a computer and converts it to carbon.'}
 };
 const RULE_EN = {
   YK001: ['Database query inside a loop (N+1)', 'Every iteration sends its own request to the database. Fetch everything with one JOIN or a WHERE id IN (...) query.'],
@@ -335,11 +370,30 @@ const RULE_EN = {
   YK003: ['Repeating loop-invariant work', 'This call returns the same value on every iteration. Do it once before the loop and keep the result.'],
   YK004: ['Uncached double recursion', 'The function calls itself more than once, recomputing the same sub-results exponentially. Add @functools.lru_cache or rewrite it as a loop.'],
   YK005: ['Busy polling', 'Spinning in a loop to re-check wastes CPU and network. Use events (webhooks, queues, notifications) or wait longer.'],
-  YK006: ['Nested loop (O(n²))', 'Nested loops slow down quadratically as data grows. If the inner loop is matching, index the data in a dict and do one pass.']
+  YK006: ['Nested loop (O(n²))', 'Nested loops slow down quadratically as data grows. If the inner loop is matching, index the data in a dict and do one pass.'],
+  YK007: ['Iterating a pandas table row by row', 'iterrows, itertuples and apply(axis=1) process every row in a slow Python loop. Use vectorised pandas/numpy operations (column maths, merge, groupby); the work usually drops by tens of times.'],
+  YK008: ['HTTP request without a session in a loop', 'Every requests call opens a new connection and TLS handshake. Open requests.Session() before the loop and send the requests through it so the connection is reused.'],
+  YK009: ['Adding or removing at the front of a list', 'pop(0) and insert(0, ...) shift every element of the list. Use collections.deque: popleft and appendleft run in constant time.']
 };
 const FIX_EN = {YK001: 'Single-row query in the loop replaced by one batched IN query.', YK002: 'List converted to a set before the loop.',
                 YK003: 'Invariant call moved out of the loop; it now runs once.', YK004: 'Cache added; each sub-result is computed once.'};
 const SEV_EN = {'yüksek': 'high', 'orta': 'medium', 'bilgi': 'info'};
+const nf = (v, d = 0) => Number(v).toLocaleString(LANG === 'en' ? 'en-GB' : 'tr-TR', {maximumFractionDigits: d, minimumFractionDigits: d});
+const fmtS = s => s >= 1 ? nf(s, 2) + ' s' : s >= 1e-3 ? nf(s * 1e3, 1) + ' ms' : nf(s * 1e6, 0) + ' µs';
+const big = v => (v >= 100 ? nf(v, 0) : v >= 10 ? nf(v, 1) : nf(v, 2)) + '×';
+
+// Motor ayrı iş parçacığında (docs/motor.js)
+function motor(msg) {
+  if (!worker) {
+    worker = new Worker('motor.js');
+    worker.onmessage = e => {
+      const p = pending.get(e.data.id); pending.delete(e.data.id);
+      if (p) e.data.ok ? p.ok(e.data.sonuc) : p.bad(new Error(e.data.hata));
+    };
+    worker.onerror = e => { for (const p of pending.values()) p.bad(new Error(e.message)); pending.clear(); worker.terminate(); worker = null; };
+  }
+  return new Promise((ok, bad) => { const id = ++seq; pending.set(id, {ok, bad}); worker.postMessage({id, ...msg}); });
+}
 
 function setLang(l) {
   LANG = l; document.documentElement.lang = l; document.body.classList.toggle('en', l === 'en');
@@ -351,49 +405,22 @@ function setLang(l) {
 }
 document.querySelectorAll('.lang button').forEach(b => b.onclick = () => setLang(b.dataset.l));
 
+function current() { return SAMPLES[+($('#chips').dataset.cur || 0)]; }
+function updateMeasure() {
+  const s = current();
+  $('#measure').hidden = !(s && s.id && $('#code').value === s.kod);
+}
 function renderChips() {
   const cur = $('#chips').dataset.cur || '0';
   $('#chips').innerHTML = SAMPLES.map((s, i) =>
     `<button class="chip" data-i="${i}" aria-pressed="${String(i) === cur}">${esc(LANG === 'en' ? s.en : s.tr)}</button>`).join('');
   $('#chips').querySelectorAll('.chip').forEach(c => c.onclick = () => {
-    $('#chips').dataset.cur = c.dataset.i; $('#code').value = SAMPLES[+c.dataset.i].kod; renderChips(); $('#out').innerHTML = '';
+    $('#chips').dataset.cur = c.dataset.i; $('#code').value = SAMPLES[+c.dataset.i].kod; renderChips();
+    $('#out').innerHTML = ''; $('#olcOut').innerHTML = ''; $('#olcBtn').lastChild.textContent = T[LANG].measure;
   });
+  updateMeasure();
 }
-
-function loadScript(src) {
-  return new Promise((ok, bad) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
-}
-function engine() {
-  if (!pyReady) pyReady = (async () => {
-    await loadScript('https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js');
-    const py = await loadPyodide();
-    py.FS.mkdirTree('/home/pyodide/greencode');
-    for (const f of ['__init__.py', 'config.py', 'analyzer.py', 'fixer.py']) {
-      const r = await fetch('py/greencode/' + f);
-      py.FS.writeFile('/home/pyodide/greencode/' + f, await r.text());
-    }
-    py.runPython(`
-import sys, json
-sys.path.insert(0, "/home/pyodide")
-from greencode import analyzer, fixer
-
-def yesil(kod):
-    r = analyzer.analyze(kod)
-    r["fark"], r["duzeltmeler"] = [], []
-    if not r["hata"]:
-        try:
-            new, orig, fixes = fixer.fix(kod)
-            if fixes:
-                r["fark"] = fixer.side_by_side(orig, new)
-                r["duzeltmeler"] = [f.to_dict() for f in fixes]
-        except Exception as e:
-            r["duzeltme_hatasi"] = str(e)
-    return json.dumps(r, ensure_ascii=False)
-`);
-    return py.globals.get('yesil');
-  })().catch(e => { pyReady = null; throw e; });
-  return pyReady;
-}
+$('#code').addEventListener('input', updateMeasure);
 
 function renderDiff(rows) {
   const keep = rows.filter((x, i, a) => x.tur !== 'esit' || a.slice(Math.max(0, i - 2), i + 3).some(y => y.tur !== 'esit'));
@@ -402,11 +429,10 @@ function renderDiff(rows) {
 
 async function analyse() {
   const t = T[LANG], btn = $('#an'), out = $('#out');
-  btn.disabled = true; btn.textContent = pyReady ? t.run : t.load;
+  btn.disabled = true; btn.textContent = warm ? t.run : t.load;
   try {
-    const yesil = await engine();
-    btn.textContent = t.run;
-    const r = JSON.parse(yesil($('#code').value));
+    const r = await motor({tip: 'analiz', kod: $('#code').value});
+    warm = true;
     $('#engine').textContent = t.ready;
     out.innerHTML = '';
     if (r.hata) { out.innerHTML = `<div class="empty">${esc(r.hata)}. ${t.err}</div>`; return; }
@@ -426,6 +452,7 @@ async function analyse() {
       box.innerHTML = `<div class="bar"><span>${t.diff}</span><b>${r.duzeltmeler.length} ${t.changes}</b></div><div class="code">${renderDiff(r.fark)}</div>` +
         `<div class="fixlist">${r.duzeltmeler.map(f => `<div><b>${f.kural}</b>${esc(LANG === 'en' ? FIX_EN[f.kural] : f.aciklama)}</div>`).join('')}</div>`;
       out.appendChild(box);
+      if (r.bicim_korundu) out.insertAdjacentHTML('beforeend', `<div class="kept">${t.kept}</div>`);
     }
   } catch (e) {
     out.innerHTML = `<div class="empty">${t.fail}</div>`;
@@ -433,15 +460,35 @@ async function analyse() {
 }
 $('#an').onclick = analyse;
 
+async function measure() {
+  const t = T[LANG], btn = $('#olcBtn'), out = $('#olcOut'), s = current();
+  if (!s || !s.id) return;
+  btn.disabled = true;
+  out.innerHTML = `<div class="mres"><span class="spin"></span>${t.measuring}</div>`;
+  try {
+    const r = await motor({tip: 'olc', senaryo: s.id});
+    warm = true;
+    if (!r.esdeger) { out.innerHTML = `<div class="mres">${t.notSame}</div>`; return; }
+    out.innerHTML = `<div class="mres"><div class="x">${big(r.kat)}</div><div class="xl">${t.less}</div>
+      <div class="mrows"><span>${t.orig}</span><b>${fmtS(r.ozgun_s)}</b><span>${t.fixed}</span><b>${fmtS(r.duzeltilmis_s)}</b>
+      ${r.sorgu ? `<span>${t.queries}</span><b>${nf(r.sorgu.ozgun)} → ${nf(r.sorgu.duzeltilmis)}</b>` : ''}
+      <span class="ok">✓ ${t.same(r.cikti)}</span></div><p class="mfine">${t.fine}</p></div>`;
+    btn.lastChild.textContent = t.again;
+  } catch (e) {
+    out.innerHTML = `<div class="mres">${t.fail}</div>`;
+  } finally { btn.disabled = false; }
+}
+$('#olcBtn').onclick = measure;
+
 (async () => {
   let l = 'tr';
   try { l = localStorage.getItem('yk-lang') || ((navigator.language || '').toLowerCase().startsWith('tr') ? 'tr' : 'en'); } catch (e) {}
   if (/[?&]lang=en/.test(location.search)) l = 'en';
   if (/[?&]lang=tr/.test(location.search)) l = 'tr';
   try { SAMPLES = await (await fetch('py/ornekler.json')).json(); } catch (e) { SAMPLES = []; }
-  setLang(l);
   if (SAMPLES.length) $('#code').value = SAMPLES[0].kod;
-  if (location.hash === '#dene') engine().catch(() => {});      // QR'dan doğrudan gelen ziyaretçi için motoru önceden yükle
+  setLang(l);
+  if (location.hash === '#dene') motor({tip: 'hazirla'}).then(() => { warm = true; }, () => {});   // QR'dan gelen ziyaretçi için motoru önceden yükle
 })();
 </script>
 </body>

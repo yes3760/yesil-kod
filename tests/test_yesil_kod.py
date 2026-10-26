@@ -18,7 +18,7 @@ def rules(code):
 
 class AnalyzerTests(unittest.TestCase):
     def test_ornek_dosyadaki_tum_kurallar(self):
-        self.assertEqual(sorted(set(rules(ORNEK))), ["YK001", "YK002", "YK003", "YK004", "YK005", "YK006"])
+        self.assertEqual(sorted(set(rules(ORNEK))), [f"YK00{i}" for i in range(1, 10)])
 
     def test_dongu_ifadesi_bir_kez_calisir_isaretlenmez(self):
         code = "def f(db):\n    for r in db.execute('SELECT 1'):\n        print(r)\n"
@@ -31,6 +31,19 @@ class AnalyzerTests(unittest.TestCase):
     def test_donguye_bagli_cagri_tasinmaz(self):
         code = "import json\ndef f(xs):\n    for x in xs:\n        json.loads(x)\n"
         self.assertNotIn("YK003", rules(code))
+
+    def test_pandas_satir_satir(self):
+        self.assertIn("YK007", rules("def f(df):\n    return [r.a for _, r in df.iterrows()]\n"))
+        self.assertIn("YK007", rules("def f(df):\n    return df.apply(g, axis=1)\n"))
+        self.assertNotIn("YK007", rules("def f(df):\n    return df.apply(g)\n"))
+
+    def test_oturumsuz_http(self):
+        self.assertIn("YK008", rules("import requests\ndef f(us):\n    for u in us:\n        requests.get(u)\n"))
+        self.assertNotIn("YK008", rules("import requests\ndef f(s, us):\n    for u in us:\n        s.get(u)\n"))
+
+    def test_liste_basindan_cikarma(self):
+        self.assertIn("YK009", rules("def f(q):\n    while q:\n        q.pop(0)\n"))
+        self.assertNotIn("YK009", rules("def f(q):\n    while q:\n        q.pop()\n"))
 
     def test_sozdizimi_hatasi(self):
         self.assertIsNotNone(analyzer.analyze("def (:")["hata"])
@@ -65,6 +78,41 @@ class FixerTests(unittest.TestCase):
         new, _, fixes = fixer.fix(ORNEK)
         ast.parse(new)
         self.assertGreaterEqual(len(fixes), 4)
+
+    def test_yorumlar_ve_bicim_korunur(self):
+        code = ("import json\n\n\n# Fiyat hesabı\ndef f(xs, ayar):\n    out = []  # sonuç\n"
+                "    for x in xs:  # her eleman\n        cfg = json.loads(ayar)  # israf\n"
+                "        out.append(x * cfg[\"k\"])\n    return out\n")
+        new, orig, fixes = fixer.fix(code)
+        self.assertTrue(fixer.fix.bicim_korundu)
+        self.assertEqual(orig, code)
+        for parca in ("# Fiyat hesabı", "# sonuç", "# her eleman", "# israf", 'cfg["k"]'):
+            self.assertIn(parca, new)
+        degisen = [s for s in fixer.unified_diff(orig, new).splitlines()
+                   if s[:1] in "+-" and not s.startswith(("+++", "---"))]
+        self.assertEqual(len(degisen), 2)                     # yalnızca taşınan satır
+
+    def test_bicim_korunan_sonuc_tam_yeniden_yazimla_ayni(self):
+        for code in [ORNEK] + [s["kod"] for s in scenarios.SCENARIOS]:
+            with self.subTest(code[:30]):
+                new, _, fixes = fixer.fix(code)
+                self.assertTrue(fixer.fix.bicim_korundu)
+                f = fixer.Fixer(code)
+                self.assertEqual(ast.dump(ast.parse(new)), ast.dump(ast.parse(f.run())))
+
+    def test_elif_dali_elif_kalir(self):
+        code = ("def f(xs, k, kayit):\n    if k == 1:\n        return 0\n    elif k == 2:\n"
+                "        kayitlar = list(kayit)\n        return [x for x in xs if x in kayitlar]\n")
+        new, _, fixes = fixer.fix(code)
+        self.assertTrue(fixer.fix.bicim_korundu)
+        self.assertIn("    elif k == 2:", new)
+        self.assertIn("kayitlar_kume = set(kayitlar)", new)
+
+    def test_ayni_satirda_iki_ifade_guvenli_yola_doner(self):
+        code = "def f(xs, k):\n    ks = list(k); return [x for x in xs if x in ks]\n"
+        new, _, fixes = fixer.fix(code)
+        ast.parse(new)
+        self.assertIn("set(ks)", new)
 
 
 class MeterTests(unittest.TestCase):

@@ -101,6 +101,7 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
       <tr><td>03-brochure-A4-2li-baski-EN.pdf</td><td>A4 → A5</td><td>Aynı ayar.</td><td>25 yaprak</td></tr>
       <tr><td>04-masa-karti-A4.pdf</td><td>A4, ortadan katla</td><td>Bristol ya da kuşe 250–300 g, tek taraf. Üst yarı ters basılır; doğru.</td><td>2</td></tr>
       <tr><td>05-proje-ozeti-A4.pdf</td><td>A4, 2 sayfa</td><td>80–100 g, çift taraf.</td><td>15</td></tr>
+      <tr><td>en/05-project-summary-A4-EN.pdf</td><td>A4, 2 sayfa</td><td>Yabancı ziyaretçi ve yetkililer için özetin İngilizcesi. Poster ve sunumun da İngilizcesi <b>pdf/en/</b> klasöründe.</td><td>5</td></tr>
       <tr><td>06-ekran-sunumu-16x9.pdf</td><td>Ekran</td><td>Basılmaz. Toplantılarda ya da panel yerine ekran verilirse tam ekran sunum.</td><td>—</td></tr>
     </tbody>
   </table>
@@ -126,7 +127,8 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
     <div><b>0:20</b><span><b>Canlı panel.</b> <kbd>2</kbd> ile “Yoklama kontrolü”nü seç. “Bu satır listede arama yapıyor; her öğrenci için 6.000 kaydı baştan tarıyor.”</span></div>
     <div><b>0:40</b><span><b>Düzelt.</b> <kbd>Boşluk</kbd>. “Bu kodu ben yazmadım, motor yazdı.” Önce eşdeğerlik testi: “2.000 kayıtlık çıktı birebir aynı.” Sonra iki şerit yarışır ve büyük sayı çıkar.</span></div>
     <div><b>1:10</b><span><b>Ölçek.</b> Alttaki yıllık tasarruf kutusu: günde 1 milyon istekte kg CO₂e ve otomobil kilometresi karşılığı.</span></div>
-    <div><b>1:30</b><span><b>Dürüstlük.</b> “Yalnızca işlemci enerjisini ölçüyoruz; bellek ve ağ dahil değil, yani bu bir alt sınır. Mac’te tahmini mod, Linux’ta gerçek sayaç.”</span></div>
+    <div><b>1:20</b><span><b>Dürüstlük.</b> “Yalnızca işlemci enerjisini ölçüyoruz; bellek ve ağ dahil değil, yani bu bir alt sınır. Mac’te tahmini mod, Linux’ta gerçek sayaç.”</span></div>
+    <div><b>1:35</b><span><b>Ziyaretçinin telefonu.</b> QR’ı okutsun, “Yoklama kontrolü”nü seçip <b>Ölç</b>’e bassın: aynı düzeltme onun telefonunda yüzlerce kat fark çıkarır.</span></div>
     <div><b>1:45</b><span><b>Kapanış.</b> “Açık kaynak, kurulum gerektirmiyor. Sonraki adım JavaScript ve Java, ve üniversitedeki öğrenci projelerinde pilot.” Proje özetini ver.</span></div>
   </div>
 
@@ -149,10 +151,11 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
     <div><b>Gerçekten ölçüyor musunuz, yoksa tahmin mi?</b><span>Linux’ta Intel/AMD işlemcilerin kendi enerji sayaçlarını (RAPL) okuyoruz; bu gerçek ölçüm. Mac ve Windows’ta işlemci süresini çekirdek gücüyle çarpıyoruz; CodeCarbon gibi araçların yedek yöntemi de bu. Bu standdaki bilgisayar tahmini modda; oranlar güvenilir, mutlak değerler yaklaşık.</span></div>
     <div><b>465 kat abartılı değil mi?</b><span>Hayır, algoritmik bir fark. Listede arama her seferinde listeyi baştan tarar (4.500 × 6.000 karşılaştırma); kümede arama sabit sürededir. Kazanç verinin boyutuyla büyür; küçük veride daha küçük olur. Dört ayrı ölçümde 456 ile 698 kat arasında çıktı.</span></div>
     <div><b>Tek istekte birkaç joule, ne fark eder?</b><span>Ölçek. Günde bir milyon istekte yalnızca bu satır yılda yaklaşık 41 kg CO₂e. Büyük bir sistemde bu türden yüzlerce satır olabilir.</span></div>
-    <div><b>Düzeltme kodu bozarsa?</b><span>Doğrulama adımı bunun için var: iki sürüm aynı veriyle çalışır, çıktı birebir aynı değilse düzeltme reddedilir. Projede 13 birim testi var. Gerçek projede yine de projenin kendi testleriyle birlikte kullanılmalı.</span></div>
+    <div><b>Düzeltme kodu bozarsa?</b><span>Doğrulama adımı bunun için var: iki sürüm aynı veriyle çalışır, çıktı birebir aynı değilse düzeltme reddedilir. Projede 20 birim testi var ve her değişiklikte GitHub’da otomatik çalışıyor. Gerçek projede yine de projenin kendi testleriyle birlikte kullanılmalı.</span></div>
     <div><b>Yapay zekâ mı kullanıyorsunuz?</b><span>Hayır. Motor kural tabanlı ve deterministik: Python’un sözdizimi ağacı üzerinde dönüşüm yapıyor. Bu yüzden hızlı, ucuz ve her seferinde aynı sonucu veriyor. İsteğe bağlı olarak bir dil modelinden ek öneri alınabiliyor, ama ekrandaki sonuçların hepsi kural tabanlı motordan.</span></div>
     <div><b>Mevcut araçlardan farkı ne?</b><span>Ölçüm araçları (ör. CodeCarbon) yalnızca ölçer; bazı linterlar performans uyarısı verir ama düzeltmez ve kazancı kanıtlamaz. Yeşil Kod dördünü birleştiriyor: bulur, düzeltir, aynı sonucu verdiğini doğrular, kazancı ölçer.</span></div>
     <div><b>Neden Python?</b><span>En yaygın dillerden biri (veri bilimi, web, otomasyon) ve sözdizimi ağacı modülü standart kütüphanede. Sırada JavaScript/TypeScript ve Java var.</span></div>
+    <div><b>Telefonda ölçüm nasıl çalışıyor?</b><span>Sitede bir senaryo seçip “Ölç”e basınca iki sürüm telefonun tarayıcısında çalışır, çıktıların aynı olduğu doğrulanır ve işlemci süreleri karşılaştırılır. Tarayıcı güç tüketimini okuyamadığı için orada oran süreden hesaplanıyor; aynı işlemcide enerji süreyle orantılı.</span></div>
     <div><b>Kodumu siteye yapıştırırsam bir yere gidiyor mu?</b><span>Hayır. Analiz telefonun tarayıcısında çalışan Python ile yapılıyor (Pyodide); kod cihazdan çıkmıyor ve çalıştırılmıyor, yalnızca yapısı inceleniyor.</span></div>
     <div><b>Karbon yoğunluğu neden 341 gCO₂e/kWh?</b><span>Türkiye şebekesinin son 12 aylık ortalaması (Ağustos 2025–Temmuz 2026, Low-Carbon Power). Şebeke saatten saate değişir; ayarlardan güncellenebilir.</span></div>
   </div>

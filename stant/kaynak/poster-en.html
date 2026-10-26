@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Yeşil Kod · Stand poster A0 (EN)</title>
+<link rel="stylesheet" href="/stant/kaynak/ortak.css">
+<style>
+/* A0 dikey (841 × 1189 mm). A1/A2'ye oranlı küçültülerek basılabilir. */
+@page{size:841mm 1189mm;margin:0}
+.page{width:841mm;height:1189mm;background:var(--mineral);display:flex;flex-direction:column}
+.pad{padding-left:62mm;padding-right:62mm}
+
+.top{padding-top:36mm;padding-bottom:32mm}
+.meta{display:flex;justify-content:space-between;font:600 19pt/1 var(--mono);letter-spacing:.09em;color:var(--mist)}
+.top .word{font-size:212pt;margin-top:20mm;margin-left:-3mm}
+.top h1{font:700 64pt/1.08 var(--sans);letter-spacing:-.015em;margin-top:15mm}
+.top .en{font:400 31pt/1.3 var(--sans);color:var(--mist);margin-top:7mm}
+
+.story{margin-top:20mm;border:.6mm solid var(--line);border-radius:6mm;overflow:hidden}
+.story .q{display:flex;justify-content:space-between;align-items:baseline;gap:20mm;padding:11mm 14mm;border-bottom:.6mm solid var(--line);font:600 30pt/1.2 var(--sans)}
+.story .q span{font-weight:400;font-size:21pt;color:var(--mist)}
+.code{font:400 37pt/1.8 var(--mono);font-stretch:75%;padding:7mm 0}
+.code div{padding:0 14mm;white-space:pre}
+.res{display:flex;align-items:center;gap:16mm;padding:8mm 14mm 10mm;border-top:.6mm solid var(--line)}
+.res .x{font:700 176pt/.9 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf)}
+.res p{font:400 27pt/1.35 var(--sans);color:var(--mist2)}
+.res p b{display:block;font-weight:700;font-size:38pt;color:var(--paper);margin-bottom:3mm}
+.res p i{display:block;font-style:normal;font-size:20pt;color:var(--mist);margin-top:4mm}
+
+.label{font:600 19pt/1 var(--mono);letter-spacing:.09em;color:var(--moss)}
+.label span{color:var(--ink3)}
+.steps{padding-top:26mm;padding-bottom:24mm}
+.steps .row{display:grid;grid-template-columns:repeat(4,1fr);gap:14mm;margin-top:11mm}
+.step{border-top:1.2mm solid var(--ink);padding-top:8mm}
+.step .n{font:700 58pt/1 var(--mono);color:var(--moss)}
+.step h3{font:700 44pt/1.05 var(--sans);margin-top:6mm}
+.step h3 small{display:block;font:400 19pt/1.3 var(--sans);color:var(--ink3);margin-top:2mm}
+.step p{font:400 20.5pt/1.38 var(--sans);color:var(--ink2);margin-top:5mm}
+
+.mid{display:grid;grid-template-columns:1.18fr 1fr;gap:20mm;padding-bottom:26mm}
+.mid h2{font:700 37pt/1.12 var(--sans);letter-spacing:-.01em;margin-top:9mm}
+.mid h2 small{display:block;font:400 20pt/1.3 var(--sans);color:var(--ink3);margin-top:3mm}
+.rows{margin-top:11mm;border-top:1.2mm solid var(--ink)}
+.r{display:flex;justify-content:space-between;align-items:center;gap:8mm;padding:6.5mm 0;border-bottom:.5mm solid var(--rule)}
+.r h4{font:700 31pt/1.1 var(--sans)}
+.r h4 small{display:block;font:400 18.5pt/1.3 var(--sans);color:var(--ink3);margin-top:1.5mm}
+.r .x{font:700 70pt/1 var(--mono);font-stretch:112.5%;letter-spacing:-.045em;color:var(--moss);white-space:nowrap}
+.r .x.sm{font-size:50pt}
+.fine{font:400 15pt/1.4 var(--sans);color:var(--ink3);margin-top:6mm}
+
+.ctx{background:var(--paper);border:.5mm solid var(--rule);border-radius:6mm;padding:13mm 14mm;display:flex;flex-direction:column;gap:11mm}
+.ctx h3{font:700 29pt/1.15 var(--sans)}
+.ctx h3 small{display:block;font:400 18pt/1.3 var(--sans);color:var(--ink3);margin-top:1.5mm}
+.bars{display:grid;grid-template-columns:22mm 1fr;gap:5mm 6mm;align-items:center;margin-top:7mm;font:600 18pt/1 var(--mono)}
+.bar{height:15mm;display:flex;align-items:center}
+.bar i{display:block;height:100%;border-radius:1.5mm}
+.bar b{font:700 24pt/1 var(--mono);margin-left:5mm;white-space:nowrap}
+.src{font:400 14pt/1.35 var(--sans);color:var(--ink3);margin-top:4mm}
+.eq{font:600 36pt/1 var(--mono);margin-top:6mm}
+.ctx ul{list-style:none;margin-top:5mm;display:flex;flex-direction:column;gap:2.5mm;font:400 18.5pt/1.35 var(--sans);color:var(--ink2)}
+.ctx ul b{font-family:var(--mono);font-weight:600;color:var(--ink);display:inline-block;width:13mm}
+.ctx hr{border:0;border-top:.5mm solid var(--rule)}
+
+.bottom{flex:1;padding-top:26mm;padding-bottom:26mm;display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:1fr auto;gap:0 16mm;align-items:center}
+.bottom .qr{width:178mm;padding:9mm;border-radius:5mm}
+.bottom .qr.small{width:96mm;padding:6mm;border-radius:4mm}
+.scan{font:600 19pt/1 var(--mono);letter-spacing:.09em;color:var(--leaf)}
+.bottom h2{font:700 56pt/1.06 var(--sans);letter-spacing:-.015em;margin-top:8mm}
+.bottom .en{font:400 25pt/1.3 var(--sans);color:var(--mist);margin-top:5mm}
+.url{display:inline-flex;align-items:center;gap:6mm;font:500 26pt/1 var(--mono);font-stretch:87.5%;margin-top:11mm;padding:5mm 8mm;border:.6mm solid var(--line);border-radius:99mm}
+.url i{font-style:normal;color:var(--leaf)}
+.repo{text-align:center;font:400 16pt/1.35 var(--sans);color:var(--mist)}
+.repo b{display:block;font:600 19pt/1.3 var(--sans);color:var(--paper);margin-top:5mm}
+.credits{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:20mm;border-top:.6mm solid var(--line);padding-top:9mm;margin-top:14mm}
+.credits p.l{text-align:left}
+.credits p{font:400 18pt/1.45 var(--sans);color:var(--mist2);text-align:right}
+.credits p b{color:var(--paper)}
+.credits .s{font-size:13pt;color:var(--mist);margin-top:3mm}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="dark top pad">
+    <div class="meta"><span>SAKARYA UNIVERSITY · COP31 GREEN ZONE</span><span>ANTALYA 2026</span></div>
+    <div class="word">yeşil<span>kod</span></div>
+    <h1>Measures software energy,<br>fixes the waste, proves the gain.</h1>
+    <p class="en">Yazılımın enerjisini ölçer, israfı düzeltir, kazancı kanıtlar. (“Yeşil Kod” is Turkish for “Green Code”.)</p>
+    <div class="story">
+      <div class="q">How much electricity does this line of code use?<span>Bu satır ne kadar elektrik harcıyor?</span></div>
+      <div class="code">
+        <div class="del">− <s>return [no for no in GELENLER if no in kayitlilar]</s></div>
+        <div class="add">+ kayitlilar_kume = set(kayitlilar)</div>
+        <div class="add">+ return [no for no in GELENLER if no in kayitlilar_kume]</div>
+      </div>
+      <div class="res">
+        <div class="x">465×</div>
+        <p><b>less energy, identical output.</b>At one million requests a day, this single line emitted about 41 kg CO₂e a year. The engine rewrote it by itself.<i>An attendance check: every student number was searched in a 6,000-item list. A set makes each lookup constant-time.</i></p>
+      </div>
+    </div>
+  </header>
+
+  <section class="steps pad">
+    <div class="label">HOW IT WORKS</div>
+    <div class="row">
+      <div class="step"><div class="n">1</div><h3>Find<small>Bul</small></h3><p>Static analysis walks the code’s syntax tree and flags nine energy-wasting patterns, line by line.</p></div>
+      <div class="step"><div class="n">2</div><h3>Fix<small>Düzelt</small></h3><p>The engine rewrites four of them itself: batched query, set lookup, loop hoisting, caching. Comments and formatting stay untouched.</p></div>
+      <div class="step"><div class="n">3</div><h3>Verify<small>Doğrula</small></h3><p>Both versions are run. If the outputs are not identical, the fix is rejected.</p></div>
+      <div class="step"><div class="n">4</div><h3>Measure<small>Ölç</small></h3><p>CPU energy counters are read; the energy for the same work is converted to carbon.</p></div>
+    </div>
+  </section>
+
+  <section class="mid pad">
+    <div>
+      <div class="label">RESULTS</div>
+      <h2>Four real-world wastes. The engine fixed all four.<small>None of the optimised code was written by hand.</small></h2>
+      <div class="rows">
+        <div class="r"><h4>Route count<small>uncached double recursion → lru_cache</small></h4><div class="x">~4,000×</div></div>
+        <div class="r"><h4>Attendance check<small>list lookup inside a loop → set()</small></h4><div class="x">465×</div></div>
+        <div class="r"><h4>Price list<small>loop-invariant work → moved out of the loop</small></h4><div class="x">51×</div></div>
+        <div class="r"><h4>Order report<small>N+1 queries → one batched IN query</small></h4><div class="x sm">4,001 → 2 queries</div></div>
+      </div>
+      <p class="fine">Reduction in CPU energy per request; estimated measurement mode, 26 October 2026. Ratios vary between machines; the stand panel measures live every time.</p>
+    </div>
+    <div class="ctx">
+      <div>
+        <h3>Data-centre electricity use more than doubles in six years.<small>Global data centres, IEA base case.</small></h3>
+        <div class="bars">
+          <span>2024</span><div class="bar"><i style="width:34%;background:var(--ink)"></i><b>415 TWh</b></div>
+          <span>2030</span><div class="bar"><i style="width:78%;background:var(--amber)"></i><b style="color:var(--amber-ink)">~945 TWh</b></div>
+        </div>
+        <p class="src">Source: IEA, Energy and AI (2025). The 2030 value is the base-case projection.</p>
+      </div>
+      <hr>
+      <div>
+        <h3>Carbon accounting<small>Software Carbon Intensity, ISO/IEC 21031:2024</small></h3>
+        <div class="eq">SCI = (E × I + M) / R</div>
+        <ul>
+          <li><b>E</b>measured CPU energy</li>
+          <li><b>I</b>Türkiye grid, 341 gCO₂e/kWh</li>
+          <li><b>M</b>embodied hardware emissions (next phase)</li>
+          <li><b>R</b>per request</li>
+        </ul>
+        <p class="src">Memory, network and cooling are excluded, so the gain shown is a lower bound. Grid data: Low-Carbon Power, Aug 2025–Jul 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="dark bottom pad">
+    <div class="qr"><img src="/stant/qr/qr-try-en.svg" alt="QR"></div>
+    <div>
+      <div class="scan">SCAN ME</div>
+      <h2>Try your own code<br>on your phone.</h2>
+      <p class="en">Paste Python or pick an example, then measure both versions on your own phone. Your code never leaves your device.</p>
+      <div class="url"><i>→</i>{{site_kisa}}</div>
+    </div>
+    <div class="repo"><div class="qr small"><img src="/stant/qr/qr-kaynak-kod.svg" alt="QR"></div><b>Open source</b>Açık kaynak kod</div>
+    <div class="credits">
+      <p class="l"><b>{{proje_adi_en}}</b><br>{{kurum_en}} · Team: {{ekip}} {{advisor_line}}</p>
+      <p class="s">Sources: IEA, Energy and AI (2025)<br>Low-Carbon Power, Türkiye (2025–2026)<br>Green Software Foundation, SCI</p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

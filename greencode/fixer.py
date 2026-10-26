@@ -10,8 +10,10 @@ yine de sonucun aynı olduğu her zaman çalıştırılarak doğrulanmalıdır
   YK003  Döngüde değişmeyen iş            ->  döngüden önce bir kez
   YK004  Önbelleksiz çift özyineleme      ->  @functools.lru_cache
 
-Sınırlama: ast.unparse yorum satırlarını korumaz; çıktı biçimlendirilmiş
-koddur. Fark (diff), iki sürümün aynı biçimlendirmesi üzerinden gösterilir.
+Düzeltmeler özgün kaynağa satır düzeyinde yerleştirilir: yalnızca değişen
+ifadeler yeniden yazılır; yorumlar, boş satırlar ve biçim olduğu gibi kalır.
+Sonuç, tam yeniden yazımla aynı sözdizimi ağacını vermiyorsa (ör. aynı satırda
+iki ifade) motor güvenli yola döner ve bütün kodu ast.unparse ile yazar.
 """
 from __future__ import annotations
 
@@ -286,13 +288,202 @@ class Fixer:
                             return
 
 
+# ------------------------------------------------------------ biçimi koruyarak yerleştirme
+_BLOCKS = ("body", "orelse", "finalbody")
+
+
+def _d(node):
+    return ast.dump(node, include_attributes=False)
+
+
+def _start(node):
+    """İfadenin ilk satırı (varsa dekoratörler dahil)."""
+    return min([node.lineno] + [d.lineno for d in getattr(node, "decorator_list", [])])
+
+
+def _pos(n):
+    return n.lineno, n.col_offset, n.end_lineno, n.end_col_offset
+
+
+def _same_kind(a, b):
+    return type(a) is type(b) and getattr(a, "name", None) == getattr(b, "name", None)
+
+
+def _header(node):
+    """Gövdeler ve dekoratörler dışındaki her şey. Başlık aynıysa yalnızca gövdelere inilir."""
+    h = copy.copy(node)
+    for f in _BLOCKS + ("decorator_list",):
+        if hasattr(h, f):
+            setattr(h, f, [])
+    return _d(h)
+
+
+class _Splice:
+    """Özgün kaynağa yalnızca değişen ifadeleri yerleştirir."""
+
+    def __init__(self, src, tree):
+        self.lines = src.splitlines(keepends=True)
+        self.edits = []                  # (başlangıç, bitiş, sıra, metin); 0 tabanlı satır aralığı
+        # Özgün ifadeler, konumlarına göre: taşınan bir ifade özgün yazımıyla yerleştirilir
+        self.orig = {_pos(n): _d(n) for n in ast.walk(tree) if isinstance(n, ast.stmt)}
+
+    def _edit(self, start, end, text):
+        self.edits.append((start, end, len(self.edits), text))
+
+    def _source(self, n, indent):
+        """n özgün koddan değişmeden geldiyse o satırlar (yeni girintiyle), yoksa None."""
+        if not hasattr(n, "lineno") or self.orig.get(_pos(n)) != _d(n):
+            return None
+        old = self.lines[n.lineno - 1][:n.col_offset]
+        seg = self.lines[_start(n) - 1:n.end_lineno]
+        if not seg[-1].endswith("\n"):
+            seg[-1] += "\n"
+        return "".join(indent + line[len(old):] if line.startswith(old) else line for line in seg)
+
+    def _indent(self, node):
+        return self.lines[node.lineno - 1][:node.col_offset]
+
+    def _put(self, start, end, nodes, indent):
+        text = "".join(self._source(n, indent) or
+                       "".join((indent + line if line else "") + "\n" for line in ast.unparse(n).splitlines())
+                       for n in nodes)
+        self._edit(start, end, text)
+
+    def _after(self, node, nodes):
+        self._put(node.end_lineno, node.end_lineno, nodes, self._indent(node))
+
+    def _before(self, node, nodes):
+        self._put(_start(node) - 1, _start(node) - 1, nodes, self._indent(node))
+        if not self._indent(node) and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) \
+                and all(isinstance(n, (ast.Import, ast.ImportFrom)) for n in nodes):
+            self._edit(_start(node) - 1, _start(node) - 1, "\n\n")      # PEP 8: tanımdan önce iki boş satır
+
+    def stmts(self, old, new):
+        sm = difflib.SequenceMatcher(None, [_d(n) for n in old], [_d(n) for n in new], autojunk=False)
+        for op, i1, i2, j1, j2 in sm.get_opcodes():
+            if op == "equal":
+                continue
+            # Değişen bloktaki ifadeleri eşleştir (sondan başa: motor yeni ifadeleri
+            # her zaman değişen ifadenin önüne ekler, değişenin kendisi en sondadır).
+            pairs, j = [], j2
+            for i in range(i2 - 1, i1 - 1, -1):
+                k = next((x for x in range(j - 1, j1 - 1, -1) if _same_kind(old[i], new[x])), None)
+                if k is not None:
+                    pairs.append((i, k))
+                    j = k
+            pairs.reverse()
+            paired = {i for i, _ in pairs}
+            for i in range(i1, i2):
+                if i not in paired:
+                    self._edit(_start(old[i]) - 1, old[i].end_lineno, "")
+            nxt = j1
+            for i, k in pairs:
+                if k > nxt:
+                    if i == i1 and i1 > 0:
+                        self._after(old[i1 - 1], new[nxt:k])     # ör. import, öncekilerin hemen ardına
+                    else:
+                        self._before(old[i], new[nxt:k])         # ör. döngüden önce kurulan küme
+                self.stmt(old[i], new[k])
+                nxt = k + 1
+            if nxt < j2:
+                if pairs:
+                    self._after(old[pairs[-1][0]], new[nxt:j2])
+                elif i1 > 0:
+                    self._after(old[i1 - 1], new[nxt:j2])
+                else:
+                    self._before(old[i1], new[nxt:j2])
+
+    def _is_elif(self, node):
+        return isinstance(node, ast.If) and self.lines[node.lineno - 1][node.col_offset:].startswith("elif")
+
+    def _replace(self, o, n):
+        """o'nun satırlarını n ile değiştirir (elif dalı elif olarak kalır)."""
+        self._put(_start(o) - 1, o.end_lineno, [n], self._indent(o))
+        if self._is_elif(o):
+            start, end, seq, text = self.edits[-1]
+            self.edits[-1] = (start, end, seq, text.replace("if ", "elif ", 1))
+
+    def _header_end(self, o):
+        """Bileşik ifadenin başlık satırının sonu (gövdeyle aynı satırdaysa None)."""
+        parts = {ast.For: ("target", "iter"), ast.AsyncFor: ("target", "iter"),
+                 ast.While: ("test",), ast.If: ("test",)}.get(type(o))
+        if not parts:
+            return None
+        end = max(getattr(o, f).end_lineno for f in parts)
+        return end if o.body[0].lineno > end else None
+
+    def stmt(self, o, n):
+        if _d(o) == _d(n):
+            return
+        if any(bool(getattr(o, f, None)) != bool(getattr(n, f, None)) for f in _BLOCKS):
+            self._replace(o, n)
+            return
+        if _header(o) != _header(n):
+            end = self._header_end(o)
+            if end is None:
+                self._replace(o, n)
+                return
+            # Yalnızca başlık satırı değişti (ör. döngünün üzerinde döndüğü ifade); gövdeye ayrıca bakılır
+            h = copy.copy(n)
+            h.body, h.orelse = [ast.Pass()], []
+            head = ast.unparse(h).splitlines()[:-1]
+            if self._is_elif(o):
+                head[0] = "el" + head[0]
+            self._edit(o.lineno - 1, end, "".join(self._indent(o) + line + "\n" for line in head))
+            for f in _BLOCKS:
+                if getattr(o, f, None):
+                    self.stmts(getattr(o, f), getattr(n, f))
+            return
+        od = [_d(x) for x in getattr(o, "decorator_list", [])]
+        nd = getattr(n, "decorator_list", [])
+        if od != [_d(x) for x in nd]:
+            k = len(nd) - len(od)
+            if k <= 0 or [_d(x) for x in nd[k:]] != od:
+                self._replace(o, n)
+                return
+            at, ind = _start(o) - 1, self._indent(o)
+            self._edit(at, at, "".join(f"{ind}@{ast.unparse(x)}\n" for x in nd[:k]))
+        for f in _BLOCKS:
+            if getattr(o, f, None):
+                self.stmts(getattr(o, f), getattr(n, f))
+
+    def result(self):
+        lines = list(self.lines)
+        if lines and not lines[-1].endswith("\n"):
+            lines[-1] += "\n"
+        # Sondan başa uygula ki satır numaraları kaymasın. Aynı noktaya yapılan eklemeler
+        # kayıt sırasıyla dizilsin diye önce sonradan kaydedilen uygulanır.
+        for start, end, _, text in sorted(self.edits, reverse=True):
+            lines[start:end] = [text] if text else []
+        return "".join(lines)
+
+
 def fix(code: str):
-    """(düzeltilmiş kod, normalize edilmiş özgün kod, düzeltmeler) döndürür."""
-    original = ast.unparse(ast.parse(code))
+    """(düzeltilmiş kod, karşılaştırılacak özgün kod, düzeltmeler) döndürür.
+
+    Biçim korunabildiyse fix.bicim_korundu True olur ve özgün kod olduğu gibi
+    döner; korunamadıysa iki sürüm de ast.unparse biçimindedir.
+    """
+    fix.bicim_korundu = False
+    original_tree = ast.parse(code)
     f = Fixer(code)
     new = f.run()
     fixes = sorted(f.fixes, key=lambda x: x.satir)
-    return new, original, fixes
+    if not fixes:
+        return code, code, fixes
+    try:
+        sp = _Splice(code, original_tree)
+        sp.stmts(original_tree.body, f.tree.body)
+        spliced = sp.result()
+        if _d(ast.parse(spliced)) == _d(ast.parse(new)):
+            fix.bicim_korundu = True
+            return spliced, code, fixes
+    except (SyntaxError, ValueError, IndexError):
+        pass
+    return new, ast.unparse(original_tree), fixes
+
+
+fix.bicim_korundu = False
 
 
 def unified_diff(a: str, b: str, name="kod.py"):

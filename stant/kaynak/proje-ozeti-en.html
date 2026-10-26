@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Yeşil Kod · Project summary (EN)</title>
+<link rel="stylesheet" href="/stant/kaynak/ortak.css">
+<style>
+@page{size:210mm 297mm;margin:0}
+.page{width:210mm;height:297mm;background:#fff;padding:14mm 16mm 12mm;display:flex;flex-direction:column}
+.bar{display:flex;justify-content:space-between;align-items:center;padding-bottom:4mm;border-bottom:.35mm solid var(--ink)}
+.bar .word{font-size:15pt}
+.bar > span{font:600 6.6pt/1 var(--mono);letter-spacing:.08em;color:var(--ink3)}
+h1{font:700 19pt/1.15 var(--sans);letter-spacing:-.01em;margin-top:6mm;max-width:160mm}
+.meta{font:400 8.6pt/1.45 var(--sans);color:var(--ink3);margin-top:2.5mm}
+.meta b{color:var(--ink);font-weight:600}
+.abs{margin-top:5mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:6mm 7mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
+.abs p{font:400 9.4pt/1.5 var(--sans);color:var(--mist2)}
+.abs p b{color:var(--paper);font-weight:600}
+.abs .k{font:600 6.4pt/1 var(--mono);letter-spacing:.08em;color:var(--leaf);margin-bottom:2.5mm}
+.abs .x{font:700 34pt/.95 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf);text-align:right}
+.abs .x small{display:block;font:400 7.6pt/1.35 var(--sans);letter-spacing:0;color:var(--mist2);margin-top:2mm}
+
+h2{font:700 11.5pt/1.2 var(--sans);margin-top:5.6mm;display:flex;gap:2.5mm;align-items:baseline}
+h2 i{font:700 9pt/1 var(--mono);font-style:normal;color:var(--moss)}
+p.t{font:400 9.1pt/1.52 var(--sans);color:var(--ink2);margin-top:2mm}
+p.t b{color:var(--ink);font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:3mm}
+.step{border-top:.4mm solid var(--ink);padding-top:2mm}
+.step b{display:block;font:700 9.6pt/1.25 var(--sans)}
+.step b i{font:700 8.4pt/1 var(--mono);font-style:normal;color:var(--moss);margin-right:1.5mm}
+.step span{display:block;font:400 7.9pt/1.42 var(--sans);color:var(--ink2);margin-top:1mm}
+table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
+th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
+td{padding:1.25mm 2mm 1.25mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
+td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
+.ok{color:var(--moss);font-weight:600} .no{color:var(--ink3)}
+ul.l{list-style:none;margin-top:2mm;display:flex;flex-direction:column;gap:1.1mm;font:400 8.6pt/1.42 var(--sans);color:var(--ink2)}
+ul.l li{padding-left:3.4mm;position:relative}
+ul.l li::before{content:"";position:absolute;left:0;top:1.75mm;width:1.3mm;height:1.3mm;border-radius:50%;background:var(--moss)}
+ul.l.a li::before{background:var(--amber)}
+ul.l b{color:var(--ink);font-weight:600}
+.sdg{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:3mm}
+.sdg div{background:var(--paper);border:.25mm solid var(--rule);border-radius:2mm;padding:2.6mm 3mm;font:400 7.6pt/1.35 var(--sans);color:var(--ink2)}
+.sdg b{display:block;font:700 13pt/1 var(--mono);color:var(--moss);margin-bottom:1.2mm}
+.fine{font:400 7pt/1.4 var(--sans);color:var(--ink3);margin-top:1.8mm}
+.foot{margin-top:auto;display:grid;grid-template-columns:24mm 1fr 24mm;gap:5mm;align-items:center;padding-top:5mm;border-top:.35mm solid var(--ink)}
+.foot .qr{border:.25mm solid var(--rule);border-radius:1.5mm;padding:1.6mm}
+.foot p{font:400 7.8pt/1.5 var(--sans);color:var(--ink2)}
+.foot p b{color:var(--ink);font-weight:600}
+.foot .c{font:400 6.2pt/1.25 var(--sans);color:var(--ink3);text-align:center;margin-top:1mm}
+.pn{font:600 6.6pt/1 var(--mono);color:var(--ink3);text-align:right;margin-top:3mm}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="bar"><div class="word">yeşil<span>kod</span></div><span>PROJECT SUMMARY · COP31 GREEN ZONE · ANTALYA 2026</span></div>
+  <h1>{{proje_adi_en}}</h1>
+  <div class="meta"><b>{{kurum_en}}</b> · COP31 project of the Social Contribution and Sustainability Coordination Office<br>Team: {{ekip}} {{advisor_line}} · Version: October 2026 · Open source: {{repo_kisa}}</div>
+
+  <div class="abs">
+    <div>
+      <div class="k">SUMMARY</div>
+      <p>Yeşil Kod (“Green Code”) <b>finds</b> energy-wasting patterns in Python code, <b>rewrites</b> the code itself, <b>verifies</b> that both versions return exactly the same result, and <b>measures</b> the energy used for the same work, converting it to gCO₂e with the carbon intensity of the Türkiye grid. In all four realistic scenarios the fix was produced by the engine; CPU energy fell by 2.4 to 4,049 times and the outputs did not change.</p>
+    </div>
+    <div class="x">465×<small>from fixing a single line, same result</small></div>
+  </div>
+
+  <h2><i>01</i>Problem</h2>
+  <p class="t">Data-centre electricity use is expected to grow from <b>415 TWh</b> in 2024 to <b>~945 TWh</b> in 2030 (IEA, 2025). Debates about efficiency usually focus on hardware, while the software itself goes unnoticed: a one-line waste inside a loop becomes a real electricity and carbon load when it runs millions of times a day. Developers cannot see this load, because the energy of a line of code is measured and shown nowhere.</p>
+
+  <h2><i>02</i>Solution: four steps</h2>
+  <div class="steps">
+    <div class="step"><b><i>1</i>Find</b><span>Without running the code, its syntax tree (AST) is scanned and nine waste patterns are flagged line by line.</span></div>
+    <div class="step"><b><i>2</i>Fix</b><span>The engine rewrites four patterns and touches only the changed lines; comments and formatting are kept.</span></div>
+    <div class="step"><b><i>3</i>Verify</b><span>Original and fixed code run on the same data; if the output is not identical, the fix is rejected.</span></div>
+    <div class="step"><b><i>4</i>Measure</b><span>Both versions handle the same number of requests; CPU energy is measured and converted to carbon.</span></div>
+  </div>
+
+  <table>
+    <thead><tr><th>RULE</th><th>WASTE PATTERN</th><th>SEVERITY</th><th>ENGINE’S FIX</th></tr></thead>
+    <tbody>
+      <tr><td>YK001</td><td>Database query inside a loop (N+1)</td><td>high</td><td class="ok">One batched IN query before the loop</td></tr>
+      <tr><td>YK002</td><td>List lookup inside a loop</td><td>high</td><td class="ok">set() built before the loop</td></tr>
+      <tr><td>YK003</td><td>Repeating loop-invariant work</td><td>medium</td><td class="ok">Call moved out of the loop</td></tr>
+      <tr><td>YK004</td><td>Uncached double recursion</td><td>high</td><td class="ok">functools.lru_cache added</td></tr>
+      <tr><td>YK005</td><td>Busy polling</td><td>medium</td><td class="no">Advice: event-driven design</td></tr>
+      <tr><td>YK006</td><td>Nested loop, O(n²)</td><td>info</td><td class="no">Advice: single pass with a dict</td></tr>
+      <tr><td>YK007</td><td>Iterating a pandas table row by row (iterrows, apply axis=1)</td><td>high</td><td class="no">Advice: vectorised pandas/numpy</td></tr>
+      <tr><td>YK008</td><td>HTTP request without a session in a loop</td><td>medium</td><td class="no">Advice: reuse the connection with requests.Session</td></tr>
+      <tr><td>YK009</td><td>Adding or removing at the front of a list</td><td>medium</td><td class="no">Advice: collections.deque</td></tr>
+    </tbody>
+  </table>
+
+  <div class="two">
+    <div>
+      <h2><i>03</i>How it is used</h2>
+      <ul class="l">
+        <li><b>Live panel:</b> fix, equivalence test and energy race on the stand screen.</li>
+        <li><b>Command line:</b> analysis, fixing, measurement and reports.</li>
+        <li><b>Continuous integration:</b> a report on every pull request; the check stops on high-severity findings.</li>
+        <li><b>Web:</b> visitors analyse their own code and measure the scenarios on their phone; the code never leaves the device.</li>
+      </ul>
+    </div>
+    <div>
+      <h2><i>04</i>Technical design</h2>
+      <ul class="l">
+        <li>Python standard library only; no installation or internet needed.</li>
+        <li>Intel/AMD <b>RAPL</b> energy counters on Linux; CPU time × per-core power elsewhere.</li>
+        <li>20 unit tests, run automatically on Python 3.9 and 3.13 with GitHub Actions on every change.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pn">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="bar"><div class="word">yeşil<span>kod</span></div><span>PROJECT SUMMARY · RESULTS AND METHOD</span></div>
+
+  <h2><i>05</i>Results</h2>
+  <p class="t">Each scenario represents a waste that is common in real projects. None of the fixed code was written by hand; the engine produced all of it and every version passed the equivalence test.</p>
+  <table>
+    <thead><tr><th>SCENARIO</th><th>WASTE → ENGINE’S FIX</th><th>IN REAL LIFE</th><th>ENERGY REDUCTION</th></tr></thead>
+    <tbody>
+      <tr><td>Route count</td><td>uncached double recursion → lru_cache</td><td>route, pricing and recommendation maths</td><td class="big">3,640–4,049×</td></tr>
+      <tr><td>Attendance check</td><td>4,500 IDs searched in a 6,000-item list → set()</td><td>attendance, stock and permission checks</td><td class="big">456–698×</td></tr>
+      <tr><td>Price list</td><td>config and regex rebuilt for every product → moved out of the loop</td><td>APIs that read config on every request</td><td class="big">51–55×</td></tr>
+      <tr><td>Order report</td><td>a separate customer query for each of 4,000 orders → batched IN</td><td>e-commerce lists, dashboards</td><td class="big">2.4–2.9×</td></tr>
+    </tbody>
+  </table>
+  <p class="fine">Reduction in CPU energy per request; four separate runs on the same computer (Apple M4) on 26 October 2026, estimated mode. Each run is the mean of 5 repeats. In the order report, database queries drop from 4,001 to 2; the database runs on the same machine, so network savings are not included in this ratio. At one million requests a day, the attendance line emitted about 41–89 kg CO₂e a year.</p>
+
+  <div class="two">
+    <div>
+      <h2><i>06</i>Measurement method</h2>
+      <ul class="l">
+        <li><b>Carbon:</b> SCI = (E × I + M) / R. E measured energy, I Türkiye grid 341 gCO₂e/kWh (Aug 2025–Jul 2026), R per request.</li>
+        <li><b>Fairness:</b> short code is repeated until the counters can measure it; every result is the mean of 5 repeats.</li>
+        <li><b>Caching:</b> caches in the fixed code are cleared before every request, so gains never come from earlier runs.</li>
+        <li><b>Idle power:</b> in RAPL mode the idle power during the measurement is subtracted.</li>
+      </ul>
+    </div>
+    <div>
+      <h2><i>07</i>Honest limits</h2>
+      <ul class="l a">
+        <li>Only CPU energy is measured; memory, network, disk and cooling are excluded. The gain shown is a lower bound.</li>
+        <li>In estimated mode, ratios are more reliable than absolute values; ratios vary between machines.</li>
+        <li>The engine currently supports Python; it fixes four of the nine patterns automatically and advises on the rest.</li>
+        <li>Grid carbon intensity is an annual average; the grid changes hour by hour.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><i>08</i>Roadmap</h2>
+  <ul class="l">
+    <li><b>More languages:</b> the same four-step design for JavaScript/TypeScript and Java.</li>
+    <li><b>Full SCI:</b> include embodied hardware emissions (M) and memory energy.</li>
+    <li><b>Carbon-aware scheduling:</b> shift heavy jobs to cleaner hours using hourly generation data from EPİAŞ (Türkiye’s energy exchange).</li>
+    <li><b>Developer tools:</b> an editor extension and a ready-made CI step.</li>
+    <li><b>Pilot:</b> scan student software projects at the university for waste and report the measured savings.</li>
+  </ul>
+
+  <h2><i>09</i>Sustainable Development Goals</h2>
+  <div class="sdg">
+    <div><b>7</b>Affordable and clean energy: the same work with less electricity</div>
+    <div><b>9</b>Industry, innovation and infrastructure: efficient digital infrastructure</div>
+    <div><b>12</b>Responsible consumption and production: not wasting computing resources</div>
+    <div><b>13</b>Climate action: making the carbon of software measurable</div>
+  </div>
+
+  <div class="foot">
+    <div><div class="qr"><img src="/stant/qr/qr-try-en.svg" alt="QR"></div><div class="c">Project page</div></div>
+    <p><b>{{site_kisa}}</b> · film with English subtitles, results, try it on your phone<br><b>{{repo_kisa}}</b> · source code, setup and tests<br>Sources: IEA, Energy and AI (2025) · Low-Carbon Power, Türkiye (Aug 2025–Jul 2026) · Green Software Foundation, Software Carbon Intensity (ISO/IEC 21031:2024)</p>
+    <div><div class="qr"><img src="/stant/qr/qr-kaynak-kod.svg" alt="QR"></div><div class="c">Source code</div></div>
+  </div>
+  <div class="pn">2 / 2</div>
+</div>
+</body>
+</html>

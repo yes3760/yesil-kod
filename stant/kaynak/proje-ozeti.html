@@ -10,17 +10,17 @@
 .bar{display:flex;justify-content:space-between;align-items:center;padding-bottom:4mm;border-bottom:.35mm solid var(--ink)}
 .bar .word{font-size:15pt}
 .bar > span{font:600 6.6pt/1 var(--mono);letter-spacing:.08em;color:var(--ink3)}
-h1{font:700 19pt/1.15 var(--sans);letter-spacing:-.01em;margin-top:7mm;max-width:160mm}
+h1{font:700 19pt/1.15 var(--sans);letter-spacing:-.01em;margin-top:6mm;max-width:160mm}
 .meta{font:400 8.6pt/1.45 var(--sans);color:var(--ink3);margin-top:2.5mm}
 .meta b{color:var(--ink);font-weight:600}
-.abs{margin-top:6mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:6mm 7mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
+.abs{margin-top:5mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:6mm 7mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
 .abs p{font:400 9.4pt/1.5 var(--sans);color:var(--mist2)}
 .abs p b{color:var(--paper);font-weight:600}
 .abs .k{font:600 6.4pt/1 var(--mono);letter-spacing:.08em;color:var(--leaf);margin-bottom:2.5mm}
 .abs .x{font:700 34pt/.95 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf);text-align:right}
 .abs .x small{display:block;font:400 7.6pt/1.35 var(--sans);letter-spacing:0;color:var(--mist2);margin-top:2mm}
 
-h2{font:700 11.5pt/1.2 var(--sans);margin-top:7mm;display:flex;gap:2.5mm;align-items:baseline}
+h2{font:700 11.5pt/1.2 var(--sans);margin-top:5.6mm;display:flex;gap:2.5mm;align-items:baseline}
 h2 i{font:700 9pt/1 var(--mono);font-style:normal;color:var(--moss)}
 p.t{font:400 9.1pt/1.52 var(--sans);color:var(--ink2);margin-top:2mm}
 p.t b{color:var(--ink);font-weight:600}
@@ -32,12 +32,12 @@ p.t b{color:var(--ink);font-weight:600}
 .step span{display:block;font:400 7.9pt/1.42 var(--sans);color:var(--ink2);margin-top:1mm}
 table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
 th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
-td{padding:1.8mm 2mm 1.8mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
+td{padding:1.25mm 2mm 1.25mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
 td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
 td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
 td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
 .ok{color:var(--moss);font-weight:600} .no{color:var(--ink3)}
-ul.l{list-style:none;margin-top:2mm;display:flex;flex-direction:column;gap:1.4mm;font:400 8.7pt/1.45 var(--sans);color:var(--ink2)}
+ul.l{list-style:none;margin-top:2mm;display:flex;flex-direction:column;gap:1.1mm;font:400 8.6pt/1.42 var(--sans);color:var(--ink2)}
 ul.l li{padding-left:3.4mm;position:relative}
 ul.l li::before{content:"";position:absolute;left:0;top:1.75mm;width:1.3mm;height:1.3mm;border-radius:50%;background:var(--moss)}
 ul.l.a li::before{background:var(--amber)}
@@ -73,8 +73,8 @@ ul.l b{color:var(--ink);font-weight:600}
 
   <h2><i>02</i>Çözüm: dört adım</h2>
   <div class="steps">
-    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; altı israf kalıbı satır satır işaretlenir.</span></div>
-    <div class="step"><b><i>2</i>Düzelt</b><span>Motor dört kalıbı AST üzerinde yeniden yazar ve değişikliği satır satır fark olarak gösterir.</span></div>
+    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; dokuz israf kalıbı satır satır işaretlenir.</span></div>
+    <div class="step"><b><i>2</i>Düzelt</b><span>Motor dört kalıbı yeniden yazar; yalnızca değişen satırlara dokunur, yorumlar ve biçim korunur.</span></div>
     <div class="step"><b><i>3</i>Doğrula</b><span>Özgün ve düzeltilmiş kod aynı veriyle çalıştırılır; çıktı birebir aynı değilse düzeltme reddedilir.</span></div>
     <div class="step"><b><i>4</i>Ölç</b><span>İki sürüm aynı sayıda isteği işler; işlemci enerjisi ölçülür ve karbona çevrilir.</span></div>
   </div>
@@ -88,6 +88,9 @@ ul.l b{color:var(--ink);font-weight:600}
       <tr><td>YK004</td><td>Önbelleksiz çift özyineleme</td><td>yüksek</td><td class="ok">functools.lru_cache ekleme</td></tr>
       <tr><td>YK005</td><td>Sürekli sorgulama (polling)</td><td>orta</td><td class="no">Öneri: olay tabanlı yapı</td></tr>
       <tr><td>YK006</td><td>İç içe döngü, O(n²)</td><td>bilgi</td><td class="no">Öneri: sözlükle tek geçiş</td></tr>
+      <tr><td>YK007</td><td>Pandas tablosunu satır satır gezme (iterrows, apply axis=1)</td><td>yüksek</td><td class="no">Öneri: vektörel pandas/numpy işlemleri</td></tr>
+      <tr><td>YK008</td><td>Döngüde oturumsuz HTTP isteği</td><td>orta</td><td class="no">Öneri: requests.Session ile bağlantıyı yeniden kullanma</td></tr>
+      <tr><td>YK009</td><td>Listenin başından ekleme ya da çıkarma</td><td>orta</td><td class="no">Öneri: collections.deque</td></tr>
     </tbody>
   </table>
 
@@ -98,7 +101,7 @@ ul.l b{color:var(--ink);font-weight:600}
         <li><b>Canlı panel:</b> stant ekranında düzeltme, eşdeğerlik testi ve enerji yarışı.</li>
         <li><b>Komut satırı:</b> analiz, düzeltme, ölçüm ve rapor.</li>
         <li><b>Sürekli entegrasyon:</b> her pull request’te rapor; yüksek bulguda kontrol durur.</li>
-        <li><b>Web:</b> ziyaretçi kendi kodunu telefonunda analiz eder; kod cihazdan çıkmaz.</li>
+        <li><b>Web:</b> ziyaretçi kendi kodunu telefonunda analiz eder ve senaryoları telefonunda ölçer; kod cihazdan çıkmaz.</li>
       </ul>
     </div>
     <div>
@@ -106,7 +109,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l">
         <li>Yalnızca Python standart kütüphanesi; kurulum ve internet gerektirmez.</li>
         <li>Linux’ta Intel/AMD <b>RAPL</b> enerji sayaçları; diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
-        <li>13 birim testi: kurallar, düzeltmeler, eşdeğerlik, ölçer ve rapor.</li>
+        <li>20 birim testi; her değişiklikte GitHub Actions ile Python 3.9 ve 3.13’te otomatik çalışır.</li>
       </ul>
     </div>
   </div>
@@ -144,7 +147,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l a">
         <li>Yalnızca işlemci enerjisi ölçülür; bellek, ağ, disk ve soğutma dahil değildir. Gösterilen kazanç alt sınırdır.</li>
         <li>Tahmini modda mutlak değerlerden çok oranlar güvenilirdir; oranlar makineden makineye değişir.</li>
-        <li>Düzeltme motoru şimdilik Python içindir ve yorum satırlarını korumaz.</li>
+        <li>Düzeltme motoru şimdilik Python içindir; dokuz kalıptan dördünü otomatik düzeltir, diğerleri için öneri verir.</li>
         <li>Karbon yoğunluğu yıllık ortalamadır; şebeke saatten saate değişir.</li>
       </ul>
     </div>

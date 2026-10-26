@@ -1,20 +1,24 @@
 [
  {
+  "id": "liste-arama",
   "tr": "Yoklama kontrolü",
   "en": "Attendance check",
   "kod": "def yoklama_kontrol():\n    kayitlilar = list(KAYITLAR)\n    return [no for no in GELENLER if no in kayitlilar]\n"
  },
  {
+  "id": "n-arti-1",
   "tr": "Sipariş raporu",
   "en": "Order report (N+1)",
   "kod": "def siparis_raporu():\n    rapor = []\n    for sid, mid, tutar in DB.execute(\"SELECT id, musteri_id, tutar FROM siparis ORDER BY id\"):\n        ad, sehir = DB.execute(\"SELECT ad, sehir FROM musteri WHERE id = ?\", (mid,)).fetchone()\n        rapor.append((sid, ad, sehir, tutar))\n    return rapor\n"
  },
  {
+  "id": "tekrar-hesap",
   "tr": "Rota sayısı",
   "en": "Route count",
   "kod": "def rota_sayisi(satir, sutun):\n    if satir == 0 or sutun == 0:\n        return 1\n    return rota_sayisi(satir - 1, sutun) + rota_sayisi(satir, sutun - 1)\n\n\ndef rota_raporu():\n    return [rota_sayisi(n, n) for n in range(8, 12)]\n"
  },
  {
+  "id": "dongu-isi",
   "tr": "Fiyat listesi",
   "en": "Price list",
   "kod": "def fiyat_listesi():\n    sonuc = []\n    for urun in URUNLER:\n        ayar = json.loads(AYAR_JSON)\n        desen = re.compile(r\"^[\\w.+-]+@[\\w-]+\\.[\\w.]+$\")\n        if desen.match(urun[\"eposta\"]):\n            sonuc.append((urun[\"ad\"], round(urun[\"fiyat\"] * (1 + ayar[\"kdv\"]), 2)))\n    return sonuc\n"
@@ -22,6 +26,6 @@
  {
   "tr": "Karışık örnek dosya",
   "en": "Mixed example file",
-  "kod": "\"\"\"Analiz ekranında varsayılan olarak gösterilen örnek kod.\nİçinde bilerek bırakılmış enerji israfı kalıpları var.\"\"\"\nimport json\nimport re\nimport time\n\n\ndef siparis_raporu(db, siparisler):\n    rapor = []\n    for s in siparisler:\n        musteri = db.execute(\"SELECT ad FROM musteri WHERE id = ?\", (s[\"musteri_id\"],)).fetchone()\n        rapor.append((s[\"id\"], musteri[0]))\n    return rapor\n\n\ndef kayitli_mi(aranacaklar, kayit_dosyasi):\n    kayitlar = [satir.strip() for satir in open(kayit_dosyasi)]\n    return [k for k in aranacaklar if k in kayitlar]\n\n\ndef fiyatla(urunler, ayar_metni):\n    sonuc = []\n    for u in urunler:\n        ayar = json.loads(ayar_metni)\n        desen = re.compile(r\"^[\\w.+-]+@[\\w-]+\\.[\\w.]+$\")\n        if desen.match(u[\"eposta\"]):\n            sonuc.append(u[\"fiyat\"] * (1 + ayar[\"kdv\"]))\n    return sonuc\n\n\ndef fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\n\ndef eslestir(ogrenciler, dersler):\n    eslesme = []\n    for o in ogrenciler:\n        for d in dersler:\n            if d[\"ogrenci_id\"] == o[\"id\"]:\n                eslesme.append((o[\"ad\"], d[\"ad\"]))\n    return eslesme\n\n\ndef siparis_bekle(api):\n    while True:\n        if api.yeni_siparis_var_mi():\n            return api.siparisi_al()\n        time.sleep(0.1)\n"
+  "kod": "\"\"\"Analiz ekranında varsayılan olarak gösterilen örnek kod.\nİçinde bilerek bırakılmış enerji israfı kalıpları var.\"\"\"\nimport json\nimport re\nimport time\n\nimport requests\n\n\ndef siparis_raporu(db, siparisler):\n    rapor = []\n    for s in siparisler:\n        musteri = db.execute(\"SELECT ad FROM musteri WHERE id = ?\", (s[\"musteri_id\"],)).fetchone()\n        rapor.append((s[\"id\"], musteri[0]))\n    return rapor\n\n\ndef kayitli_mi(aranacaklar, kayit_dosyasi):\n    kayitlar = [satir.strip() for satir in open(kayit_dosyasi)]\n    return [k for k in aranacaklar if k in kayitlar]\n\n\ndef fiyatla(urunler, ayar_metni):\n    sonuc = []\n    for u in urunler:\n        ayar = json.loads(ayar_metni)\n        desen = re.compile(r\"^[\\w.+-]+@[\\w-]+\\.[\\w.]+$\")\n        if desen.match(u[\"eposta\"]):\n            sonuc.append(u[\"fiyat\"] * (1 + ayar[\"kdv\"]))\n    return sonuc\n\n\ndef fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\n\ndef eslestir(ogrenciler, dersler):\n    eslesme = []\n    for o in ogrenciler:\n        for d in dersler:\n            if d[\"ogrenci_id\"] == o[\"id\"]:\n                eslesme.append((o[\"ad\"], d[\"ad\"]))\n    return eslesme\n\n\ndef siparis_bekle(api):\n    while True:\n        if api.yeni_siparis_var_mi():\n            return api.siparisi_al()\n        time.sleep(0.1)\n\n\ndef toplam_ciro(satislar):\n    toplam = 0\n    for _, satir in satislar.iterrows():\n        toplam += satir[\"adet\"] * satir[\"fiyat\"]\n    return toplam\n\n\ndef fiyatlari_cek(urun_kodlari):\n    fiyatlar = []\n    for kod in urun_kodlari:\n        fiyatlar.append(requests.get(f\"https://api.ornek.com.tr/fiyat/{kod}\").json())\n    return fiyatlar\n\n\ndef sirayla_isle(isler):\n    biten = []\n    while isler:\n        biten.append(isler.pop(0))\n    return biten\n"
  }
 ]

@@ -42,7 +42,19 @@ RULES = {
     "YK006": ("İç içe döngü (O(n²))", "bilgi",
               "İç içe döngüler veri büyüdükçe karesel olarak yavaşlar. İç döngü bir "
               "eşleştirme yapıyorsa sözlük (dict) ile tek geçişe indirin."),
+    "YK007": ("Pandas tablosunu satır satır gezme", "yüksek",
+              "iterrows, itertuples ve axis=1 ile apply her satırı yavaş bir Python döngüsünde "
+              "işler. Sütun işlemleri, merge ve groupby gibi vektörel pandas/numpy işlemlerini "
+              "kullanın; yapılan iş genellikle onlarca kat azalır."),
+    "YK008": ("Döngüde oturumsuz HTTP isteği", "orta",
+              "Her requests çağrısı yeni bir bağlantı ve TLS el sıkışması kurar. Döngüden önce "
+              "requests.Session() açıp istekleri onunla gönderin; bağlantı yeniden kullanılır."),
+    "YK009": ("Listenin başından ekleme ya da çıkarma", "orta",
+              "pop(0) ve insert(0, ...) listenin bütün elemanlarını kaydırır. collections.deque "
+              "kullanın: popleft ve appendleft sabit sürede çalışır."),
 }
+ROW_ITER = {"iterrows", "itertuples"}
+HTTP_METHODS = {"get", "post", "put", "patch", "delete", "head", "request"}
 
 
 def _call_name(node):
@@ -113,7 +125,12 @@ class _Visitor(ast.NodeVisitor):
         self.generic_visit(node)
         self.loop_stack.pop()
 
+    def _row_iter(self, it, at):
+        if isinstance(it, ast.Call) and _call_name(it)[1] in ROW_ITER:
+            self.add("YK007", at, f"{_call_name(it)[1]}()")
+
     def visit_For(self, node):
+        self._row_iter(node.iter, node)
         # Döngünün üzerinde döndüğü ifade (node.iter) yalnızca bir kez çalışır
         self.visit(node.iter)
         if self.loop_stack:
@@ -135,6 +152,7 @@ class _Visitor(ast.NodeVisitor):
     def _visit_comp(self, node):
         tv = set()
         for g in node.generators:
+            self._row_iter(g.iter, node)
             tv |= _targets(g.target)
         self.loop_stack.append(tv)
         self.generic_visit(node)
@@ -144,8 +162,12 @@ class _Visitor(ast.NodeVisitor):
 
     # --- çağrılar
     def visit_Call(self, node):
+        base, name = _call_name(node)
+        if name == "apply" and any(k.arg == "axis" and isinstance(k.value, ast.Constant)
+                                   and k.value.value in (1, "columns") for k in node.keywords):
+            self.add("YK007", node, "apply(..., axis=1)")
         if self.loop_stack:
-            base, name = _call_name(node)
+            invariant = False
             if name in DB_METHODS and base not in (None, "dict", "os", "self") and (
                     name in ("execute", "query", "raw", "find_one", "fetchone")
                     or base in ("session", "db", "cursor", "conn", "objects")):
@@ -155,7 +177,14 @@ class _Visitor(ast.NodeVisitor):
                 for a in node.args + [k.value for k in node.keywords]:
                     args_names |= _names_in(a)
                 if not (args_names & self._loop_vars()):
+                    invariant = True
                     self.add("YK003", node, f"{base}.{name}(...): {INVARIANT_CALLS[(base, name)]}")
+            if base == "requests" and name in HTTP_METHODS and not invariant:
+                self.add("YK008", node, f"requests.{name}(...)")
+            first = node.args[0] if node.args else None
+            if isinstance(first, ast.Constant) and first.value == 0 and base and (
+                    (name == "pop" and len(node.args) == 1) or (name == "insert" and len(node.args) == 2)):
+                self.add("YK009", node, f"{base}.{name}(0{', ...' if name == 'insert' else ''})")
         if self.func_stack:
             fn = self.func_stack[-1]
             if _call_name(node) == (None, fn["name"]):

@@ -47,6 +47,10 @@ BELGELER = [
     ("sunum.html", "06-ekran-sunumu-16x9.pdf"),
     ("stant-rehberi.html", "07-stant-rehberi-A4.pdf"),
     ("video-brif.html", "08-video-brifi-A4.pdf"),
+    # İngilizce sürümler
+    ("poster-en.html", "en/01-poster-A0-EN.pdf"),
+    ("proje-ozeti-en.html", "en/05-project-summary-A4-EN.pdf"),
+    ("sunum-en.html", "en/06-screen-deck-16x9-EN.pdf"),
 ]
 
 
@@ -123,13 +127,13 @@ def site():
         shutil.copy2(f, DOCS / "fonts" / f.name)
     pkg = DOCS / "py" / "greencode"
     pkg.mkdir(parents=True, exist_ok=True)
-    for f in ("__init__.py", "config.py", "analyzer.py", "fixer.py"):
+    for f in ("__init__.py", "config.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"):
         shutil.copy2(ROOT / "greencode" / f, pkg / f)
     sys.path.insert(0, str(ROOT))
     from greencode import scenarios
     en = {"siparis_raporu": "Order report (N+1)", "yoklama_kontrol": "Attendance check",
           "rota_raporu": "Route count", "fiyat_listesi": "Price list"}
-    ornekler = [{"tr": s["baslik"], "en": en.get(s["giris"], s["baslik"]), "kod": s["kod"]}
+    ornekler = [{"id": s["id"], "tr": s["baslik"], "en": en.get(s["giris"], s["baslik"]), "kod": s["kod"]}
                 for s in sorted(scenarios.SCENARIOS, key=lambda s: s["id"] != "liste-arama")]
     ornekler.append({"tr": "Karışık örnek dosya", "en": "Mixed example file",
                      "kod": (ROOT / "ornekler" / "israfli_ornek.py").read_text("utf-8")})
@@ -161,7 +165,7 @@ def qr():
 
 # ------------------------------------------------------------------ PDF
 def pdf(sadece=None):
-    PDF_DIR.mkdir(exist_ok=True)
+    (PDF_DIR / "en").mkdir(parents=True, exist_ok=True)
     ONIZLEME.mkdir(exist_ok=True)
     httpd, base = sunucu()
     profil = tempfile.mkdtemp(prefix="yk-chrome-")
@@ -213,7 +217,7 @@ def onizlemeler():
         import pymupdf
     except ImportError:
         return
-    for f in sorted(PDF_DIR.glob("*.pdf")):
+    for f in sorted(PDF_DIR.rglob("*.pdf")):
         d = pymupdf.open(f)
         for i, page in enumerate(d):
             zoom = 1100 / max(page.rect.width, page.rect.height)
