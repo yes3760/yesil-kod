@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.yesil.py
+stant/kaynak/_render/
+stant/onizleme/
+stant/film/*.mp4

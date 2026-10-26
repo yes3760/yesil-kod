@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:07.400
+How much electricity does this one line of code use?
+
+00:00:08.200 --> 00:00:15.300
+One million requests a day, for a year:
+41 kg CO₂e from this single line.
+
+00:00:16.200 --> 00:00:22.900
+Data-centre electricity use more than doubles in six years:
+415 TWh (2024) → ~945 TWh (2030). Source: IEA.
+
+00:00:23.600 --> 00:00:28.300
+Yeşil Kod (“Green Code”): measures, fixes, proves.
+
+00:00:29.200 --> 00:00:39.800
+Yeşil Kod found the waste and rewrote the line itself.
+The 2,000-row output is identical.
+
+00:00:40.300 --> 00:00:52.300
+The same 62 requests, two versions, measured live.
+465× less energy, same result.
+
+00:00:53.200 --> 00:01:01.800
+Four real-world wastes. The engine fixed all four.
+
+00:01:02.300 --> 00:01:09.300
+Find · Fix · Verify · Measure.
+A working Python prototype: CLI, live panel, report on every change.
+
+00:01:10.200 --> 00:01:15.000
+You can’t optimise what you don’t measure.
+Try your own code at the stand.
+
+00:01:15.600 --> 00:01:24.000
+Scan to try your own Python code on your phone.

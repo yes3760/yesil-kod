@@ -1,0 +1,33 @@
+# Yeşil Kod — her pull request'te enerji israfı raporu
+# Bu dosyayı projenizde .github/workflows/yesil-kod.yml olarak kaydedin ve
+# greencode klasörünü deponuza ekleyin (ya da bir alt modül olarak bağlayın).
+name: Yeşil Kod
+
+on:
+  pull_request:
+    paths: ["**.py"]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  enerji-raporu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Raporu üret
+        run: python -m greencode rapor . --bicim md > yesil-kod.md
+
+      - name: Pull request'e yorum yaz
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment ${{ github.event.pull_request.number }} --body-file yesil-kod.md
+
+      - name: Yüksek önemli bulgu varsa durdur
+        run: python -m greencode rapor . --esik 0 > /dev/null

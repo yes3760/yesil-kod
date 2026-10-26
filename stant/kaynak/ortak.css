@@ -1,0 +1,29 @@
+/* Yeşil Kod basılı malzemeleri: ortak yazı tipleri ve renkler (panel ve filmle aynı kimlik) */
+@font-face{font-family:"Martian";src:url(/web/fonts/martian-mono-latin-standard-normal.woff2) format("woff2");font-weight:100 800;font-stretch:75% 112.5%;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
+@font-face{font-family:"Martian";src:url(/web/fonts/martian-mono-latin-ext-standard-normal.woff2) format("woff2");font-weight:100 800;font-stretch:75% 112.5%;unicode-range:U+0100-0130,U+0132-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20AB,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Hanken";src:url(/web/fonts/hanken-grotesk-latin-wght-normal.woff2) format("woff2");font-weight:100 900;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
+@font-face{font-family:"Hanken";src:url(/web/fonts/hanken-grotesk-latin-ext-wght-normal.woff2) format("woff2");font-weight:100 900;unicode-range:U+0100-0130,U+0132-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20AB,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  --mineral:#DCE1DB; --paper:#EEF1EC; --well:#E5E9E3; --rule:#B8C1BA;
+  --ink:#18211C; --ink2:#3F4C44; --ink3:#55635B; --mist:#A9B8AE; --mist2:#C9D3CC; --line:#3A4740;
+  --amber:#C4601A; --amber-ink:#8E430F; --amber-tint:#F0DCCB; --amber-dk:#4A3022; --amber-lt:#F2C3A0;
+  --moss:#2C6A4A; --moss-ink:#1F5038; --moss-tint:#D3E2D7; --leaf:#66B48A; --leaf-dk:#253F31; --leaf-lt:#BFE5CD;
+  --mono:"Martian", ui-monospace, monospace;
+  --sans:"Hanken", system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.page{position:relative;overflow:hidden;break-after:page}
+.page:last-child{break-after:auto}
+.mono{font-family:var(--mono)}
+.word{font-family:var(--mono);font-weight:700;font-stretch:112.5%;letter-spacing:-.035em;line-height:1}
+.word span{color:var(--moss)}
+.dark{background:var(--ink);color:var(--paper)}
+.dark .word span{color:var(--leaf)}
+.qr{display:block;background:#fff}
+.qr img{display:block;width:100%;height:auto}
+.del{background:var(--amber-dk);color:var(--amber-lt)}
+.del s{text-decoration-color:rgba(242,195,160,.65)}
+.add{background:var(--leaf-dk);color:var(--leaf-lt)}

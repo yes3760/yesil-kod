@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Yeşil Kod · Stant posteri A0</title>
+<link rel="stylesheet" href="/stant/kaynak/ortak.css">
+<style>
+/* A0 dikey (841 × 1189 mm). A1/A2'ye oranlı küçültülerek basılabilir. */
+@page{size:841mm 1189mm;margin:0}
+.page{width:841mm;height:1189mm;background:var(--mineral);display:flex;flex-direction:column}
+.pad{padding-left:62mm;padding-right:62mm}
+
+.top{padding-top:36mm;padding-bottom:32mm}
+.meta{display:flex;justify-content:space-between;font:600 19pt/1 var(--mono);letter-spacing:.09em;color:var(--mist)}
+.top .word{font-size:212pt;margin-top:20mm;margin-left:-3mm}
+.top h1{font:700 64pt/1.08 var(--sans);letter-spacing:-.015em;margin-top:15mm}
+.top .en{font:400 31pt/1.3 var(--sans);color:var(--mist);margin-top:7mm}
+
+.story{margin-top:20mm;border:.6mm solid var(--line);border-radius:6mm;overflow:hidden}
+.story .q{display:flex;justify-content:space-between;align-items:baseline;gap:20mm;padding:11mm 14mm;border-bottom:.6mm solid var(--line);font:600 30pt/1.2 var(--sans)}
+.story .q span{font-weight:400;font-size:21pt;color:var(--mist)}
+.code{font:400 37pt/1.8 var(--mono);font-stretch:75%;padding:7mm 0}
+.code div{padding:0 14mm;white-space:pre}
+.res{display:flex;align-items:center;gap:16mm;padding:8mm 14mm 10mm;border-top:.6mm solid var(--line)}
+.res .x{font:700 176pt/.9 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf)}
+.res p{font:400 27pt/1.35 var(--sans);color:var(--mist2)}
+.res p b{display:block;font-weight:700;font-size:38pt;color:var(--paper);margin-bottom:3mm}
+.res p i{display:block;font-style:normal;font-size:20pt;color:var(--mist);margin-top:4mm}
+
+.label{font:600 19pt/1 var(--mono);letter-spacing:.09em;color:var(--moss)}
+.label span{color:var(--ink3)}
+.steps{padding-top:26mm;padding-bottom:24mm}
+.steps .row{display:grid;grid-template-columns:repeat(4,1fr);gap:14mm;margin-top:11mm}
+.step{border-top:1.2mm solid var(--ink);padding-top:8mm}
+.step .n{font:700 58pt/1 var(--mono);color:var(--moss)}
+.step h3{font:700 44pt/1.05 var(--sans);margin-top:6mm}
+.step h3 small{display:block;font:400 19pt/1.3 var(--sans);color:var(--ink3);margin-top:2mm}
+.step p{font:400 20.5pt/1.38 var(--sans);color:var(--ink2);margin-top:5mm}
+
+.mid{display:grid;grid-template-columns:1.18fr 1fr;gap:20mm;padding-bottom:26mm}
+.mid h2{font:700 37pt/1.12 var(--sans);letter-spacing:-.01em;margin-top:9mm}
+.mid h2 small{display:block;font:400 20pt/1.3 var(--sans);color:var(--ink3);margin-top:3mm}
+.rows{margin-top:11mm;border-top:1.2mm solid var(--ink)}
+.r{display:flex;justify-content:space-between;align-items:center;gap:8mm;padding:6.5mm 0;border-bottom:.5mm solid var(--rule)}
+.r h4{font:700 31pt/1.1 var(--sans)}
+.r h4 small{display:block;font:400 18.5pt/1.3 var(--sans);color:var(--ink3);margin-top:1.5mm}
+.r .x{font:700 70pt/1 var(--mono);font-stretch:112.5%;letter-spacing:-.045em;color:var(--moss);white-space:nowrap}
+.r .x.sm{font-size:50pt}
+.fine{font:400 15pt/1.4 var(--sans);color:var(--ink3);margin-top:6mm}
+
+.ctx{background:var(--paper);border:.5mm solid var(--rule);border-radius:6mm;padding:13mm 14mm;display:flex;flex-direction:column;gap:11mm}
+.ctx h3{font:700 29pt/1.15 var(--sans)}
+.ctx h3 small{display:block;font:400 18pt/1.3 var(--sans);color:var(--ink3);margin-top:1.5mm}
+.bars{display:grid;grid-template-columns:22mm 1fr;gap:5mm 6mm;align-items:center;margin-top:7mm;font:600 18pt/1 var(--mono)}
+.bar{height:15mm;display:flex;align-items:center}
+.bar i{display:block;height:100%;border-radius:1.5mm}
+.bar b{font:700 24pt/1 var(--mono);margin-left:5mm;white-space:nowrap}
+.src{font:400 14pt/1.35 var(--sans);color:var(--ink3);margin-top:4mm}
+.eq{font:600 36pt/1 var(--mono);margin-top:6mm}
+.ctx ul{list-style:none;margin-top:5mm;display:flex;flex-direction:column;gap:2.5mm;font:400 18.5pt/1.35 var(--sans);color:var(--ink2)}
+.ctx ul b{font-family:var(--mono);font-weight:600;color:var(--ink);display:inline-block;width:13mm}
+.ctx hr{border:0;border-top:.5mm solid var(--rule)}
+
+.bottom{flex:1;padding-top:26mm;padding-bottom:26mm;display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:1fr auto;gap:0 16mm;align-items:center}
+.bottom .qr{width:178mm;padding:9mm;border-radius:5mm}
+.bottom .qr.small{width:96mm;padding:6mm;border-radius:4mm}
+.scan{font:600 19pt/1 var(--mono);letter-spacing:.09em;color:var(--leaf)}
+.bottom h2{font:700 56pt/1.06 var(--sans);letter-spacing:-.015em;margin-top:8mm}
+.bottom .en{font:400 25pt/1.3 var(--sans);color:var(--mist);margin-top:5mm}
+.url{display:inline-flex;align-items:center;gap:6mm;font:500 26pt/1 var(--mono);font-stretch:87.5%;margin-top:11mm;padding:5mm 8mm;border:.6mm solid var(--line);border-radius:99mm}
+.url i{font-style:normal;color:var(--leaf)}
+.repo{text-align:center;font:400 16pt/1.35 var(--sans);color:var(--mist)}
+.repo b{display:block;font:600 19pt/1.3 var(--sans);color:var(--paper);margin-top:5mm}
+.credits{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:20mm;border-top:.6mm solid var(--line);padding-top:9mm;margin-top:14mm}
+.credits p.l{text-align:left}
+.credits p{font:400 18pt/1.45 var(--sans);color:var(--mist2);text-align:right}
+.credits p b{color:var(--paper)}
+.credits .s{font-size:13pt;color:var(--mist);margin-top:3mm}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="dark top pad">
+    <div class="meta"><span>SAKARYA ÜNİVERSİTESİ · COP31 YEŞİL BÖLGE</span><span>ANTALYA 2026</span></div>
+    <div class="word">yeşil<span>kod</span></div>
+    <h1>Yazılımın enerjisini ölçer,<br>israfı düzeltir, kazancı kanıtlar.</h1>
+    <p class="en">Measures software energy, fixes the waste, proves the gain.</p>
+    <div class="story">
+      <div class="q">Bu satır ne kadar elektrik harcıyor?<span>How much electricity does this line use?</span></div>
+      <div class="code">
+        <div class="del">− <s>return [no for no in GELENLER if no in kayitlilar]</s></div>
+        <div class="add">+ kayitlilar_kume = set(kayitlilar)</div>
+        <div class="add">+ return [no for no in GELENLER if no in kayitlilar_kume]</div>
+      </div>
+      <div class="res">
+        <div class="x">465×</div>
+        <p><b>daha az enerji, birebir aynı sonuç.</b>Günde 1 milyon istekte bu tek satır yılda yaklaşık 41 kg CO₂e salıyordu. Satırı motor kendisi yeniden yazdı.<i>465× less energy, identical output. The engine rewrote the line itself.</i></p>
+      </div>
+    </div>
+  </header>
+
+  <section class="steps pad">
+    <div class="label">NASIL ÇALIŞIYOR <span>· HOW IT WORKS</span></div>
+    <div class="row">
+      <div class="step"><div class="n">1</div><h3>Bul<small>Find</small></h3><p>Statik analiz kodun sözdizimi ağacını tarar, enerji israf eden altı kalıbı satır satır işaretler.</p></div>
+      <div class="step"><div class="n">2</div><h3>Düzelt<small>Fix</small></h3><p>Motor dört kalıbı kendisi yeniden yazar: toplu sorgu, kümeyle arama, döngü dışına taşıma, önbellek.</p></div>
+      <div class="step"><div class="n">3</div><h3>Doğrula<small>Verify</small></h3><p>İki sürüm de çalıştırılır. Çıktılar birebir aynı değilse düzeltme reddedilir.</p></div>
+      <div class="step"><div class="n">4</div><h3>Ölç<small>Measure</small></h3><p>İşlemcinin enerji sayaçları okunur; aynı iş için harcanan enerji karbona çevrilir.</p></div>
+    </div>
+  </section>
+
+  <section class="mid pad">
+    <div>
+      <div class="label">SONUÇLAR <span>· RESULTS</span></div>
+      <h2>Dört gerçek israf. Dördünü de motor düzeltti.<small>Four real-world wastes, all fixed by the engine. None of the optimised code was written by hand.</small></h2>
+      <div class="rows">
+        <div class="r"><h4>Rota sayısı<small>önbelleksiz çift özyineleme → lru_cache</small></h4><div class="x">~4.000×</div></div>
+        <div class="r"><h4>Yoklama kontrolü<small>döngüde listede arama → set()</small></h4><div class="x">465×</div></div>
+        <div class="r"><h4>Fiyat listesi<small>döngüde değişmeyen iş → döngü dışına</small></h4><div class="x">51×</div></div>
+        <div class="r"><h4>Sipariş raporu<small>N+1 sorgu → tek toplu IN sorgusu</small></h4><div class="x sm">4.001 → 2 sorgu</div></div>
+      </div>
+      <p class="fine">İstek başına işlemci enerjisinde azalma; tahmini ölçüm modu, 26 Ekim 2026. Oranlar bilgisayara göre değişir; standdaki panel her seferinde canlı ölçer.</p>
+    </div>
+    <div class="ctx">
+      <div>
+        <h3>Veri merkezlerinin elektrik tüketimi altı yılda iki katını aşıyor.<small>Data-centre electricity use more than doubles in six years.</small></h3>
+        <div class="bars">
+          <span>2024</span><div class="bar"><i style="width:34%;background:var(--ink)"></i><b>415 TWh</b></div>
+          <span>2030</span><div class="bar"><i style="width:78%;background:var(--amber)"></i><b style="color:var(--amber-ink)">~945 TWh</b></div>
+        </div>
+        <p class="src">Kaynak: IEA, Energy and AI (2025). 2030 değeri temel senaryo beklentisidir.</p>
+      </div>
+      <hr>
+      <div>
+        <h3>Karbon hesabı<small>Software Carbon Intensity, ISO/IEC 21031:2024</small></h3>
+        <div class="eq">SCI = (E × I + M) / R</div>
+        <ul>
+          <li><b>E</b>ölçülen işlemci enerjisi</li>
+          <li><b>I</b>Türkiye şebekesi, 341 gCO₂e/kWh</li>
+          <li><b>M</b>donanımın gömülü emisyonu (sonraki aşama)</li>
+          <li><b>R</b>istek başına</li>
+        </ul>
+        <p class="src">Bellek, ağ ve soğutma dahil değildir; gösterilen kazanç alt sınırdır. Şebeke verisi: Low-Carbon Power, Ağustos 2025–Temmuz 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="dark bottom pad">
+    <div class="qr"><img src="/stant/qr/qr-kodunu-dene.svg" alt="QR"></div>
+    <div>
+      <div class="scan">TELEFONUNLA TARA · SCAN ME</div>
+      <h2>Kendi kodunu<br>telefonunda dene.</h2>
+      <p class="en">Try your own Python code on your phone. It never leaves your device.</p>
+      <div class="url"><i>→</i>{{site_kisa}}</div>
+    </div>
+    <div class="repo"><div class="qr small"><img src="/stant/qr/qr-kaynak-kod.svg" alt="QR"></div><b>Açık kaynak kod</b>Open source</div>
+    <div class="credits">
+      <p class="l"><b>{{proje_adi}}</b><br>{{kurum}} · Proje ekibi: {{ekip}} {{danisman_satiri}}</p>
+      <p class="s">Kaynaklar: IEA, Energy and AI (2025)<br>Low-Carbon Power, Türkiye (2025–2026)<br>Green Software Foundation, SCI</p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

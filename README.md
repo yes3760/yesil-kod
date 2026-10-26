@@ -1,0 +1,119 @@
+# Yeşil Kod
+
+Yazılımın enerjisini ölçer, israfı otomatik düzeltir, kazancı kanıtlar.
+Sakarya Üniversitesi · COP31 Yeşil Bölge projesi
+
+## Ne yapar
+
+1. **Bulur.** Statik analiz, Python kodunun sözdizimi ağacını (AST) tarar ve enerji israf eden altı kalıbı satır satır işaretler.
+2. **Düzeltir.** Düzeltme motoru dört kalıbı kendisi yeniden yazar: döngüdeki tek kayıt sorgularını toplu `IN` sorgusuna, listede aramayı kümeye, döngüde değişmeyen işi döngü dışına taşır ve çift özyinelemeye önbellek ekler.
+3. **Doğrular.** Özgün ve düzeltilmiş kod çalıştırılır; çıktılar birebir aynı değilse düzeltme reddedilir.
+4. **Ölçer.** İşlemcinin enerji sayaçları okunur, aynı sayıda istek için harcanan enerji karşılaştırılır ve Türkiye şebekesinin karbon yoğunluğuyla gCO₂e'ye çevrilir.
+
+Demo senaryolarındaki optimize kod elle yazılmadı; motor üretti.
+
+| Senaryo | Kalıp | Motorun düzeltmesi | Sonuç (tahmini mod, 26 Ekim 2026) |
+|---|---|---|---|
+| Sipariş raporu | N+1 sorgu | toplu IN sorgusu | 2,9 kat az enerji, sorgu 4.001 → 2 |
+| Yoklama kontrolü | listede arama | `set()` | 465 kat az enerji |
+| Rota sayısı | önbelleksiz özyineleme | `lru_cache` | yaklaşık 4.000 kat az enerji |
+| Fiyat listesi | döngüde değişmeyen iş | döngü dışına taşıma | 51 kat az enerji |
+
+## Kurulum ve çalıştırma
+
+Gereken tek şey **Python 3.9 veya üstü**. Ek paket kurulmaz, internet gerekmez.
+
+| Sistem | Komut |
+|---|---|
+| Windows | `baslat.bat` dosyasına çift tıklayın |
+| Linux / Mac | `./baslat.sh` |
+| Elle | `python -m greencode` |
+
+Tarayıcıda `http://127.0.0.1:8000` açılır. Stant ekranında **F** ile tam ekran, **T** ile otomatik tur. Otomatik turda dört senaryo sırayla düzeltilir, doğrulanır ve canlı ölçülür.
+
+## Panel
+
+- **Canlı ölçüm:** Motorun yaptığı değişiklik (fark), iki sürümün aynı sayıda isteği işlerken harcadığı enerjinin canlı şeritleri ve biriken enerji grafiği, eşdeğerlik testi, sorgu sayısı ve yıllık tasarruf.
+- **Kodunu dene:** Ziyaretçi kendi Python kodunu yapıştırır; bulgular ve motorun önerdiği düzeltme gösterilir. Kod çalıştırılmaz.
+- **Nasıl çalışıyor:** Yöntem, SCI formülü, sınırlar ve kaynaklar.
+
+## Komut satırı
+
+```bash
+python -m greencode senaryolar                 # 4 senaryoyu düzelt, doğrula, ölç
+python -m greencode analiz dosya.py            # israf kalıplarını listele
+python -m greencode duzelt dosya.py            # düzeltmenin farkını göster
+python -m greencode duzelt dosya.py --yaz      # dosya.yesil.py olarak kaydet
+python -m greencode duzelt dosya.py --kanitla rapor_uret
+                                               # parametresiz fonksiyonu iki sürümde
+                                               # çalıştır, karşılaştır, ölç
+python -m greencode olc betik.py               # betiğin enerjisini ölç
+python -m greencode rapor src/ --bicim md      # CI raporu (md, html, json)
+python -m greencode rapor src/ --esik 0        # yüksek bulgu varsa çıkış kodu 1
+```
+
+## Sürekli entegrasyon
+
+`ornekler/github-action.yml`, her pull request'te raporu üretip PR'a yorum olarak yazar ve yüksek önemli bulgu varsa kontrolü durdurur.
+
+## Testler
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+13 test: analiz kuralları, her senaryonun düzeltilip aynı sonucu vermesi, N+1 düzeltmesinin sorgu sayısını düşürmesi, ölçer ve rapor.
+
+## Ölçüm modları
+
+| Mod | Ne zaman | Nasıl |
+|---|---|---|
+| Gerçek ölçüm (RAPL) | Linux + Intel/AMD işlemci | İşlemcinin enerji sayaçları okunur, boşta tüketim çıkarılır |
+| Tahmini ölçüm | Windows, Mac, sanal makine | İşlemci süresi × çekirdek başına güç (varsayılan 10 W) |
+
+Linux'ta gerçek ölçüm için: `sudo chmod -R a+r /sys/class/powercap/intel-rapl` (`baslat.sh` bunu sorar). Panelin sağ üstündeki yeşil nokta gerçek, turuncu nokta tahmini ölçümü gösterir. Jüriye hangi modda ölçtüğünüzü söyleyin.
+
+Adalet kuralları: kısa süren kod sayaçların ölçebileceği süreye kadar tekrarlanır; her sonuç 5 tekrarın ortalamasıdır; düzeltilmiş koddaki önbellekler her istekten önce temizlenir.
+
+## Ayarlar (ortam değişkenleri)
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YK_CARBON_INTENSITY` | 341 | Şebeke karbon yoğunluğu, gCO₂e/kWh |
+| `YK_CPU_W_PER_CORE` | 10 | Tahmini modda çekirdek başına güç (W) |
+| `YK_DAILY_CALLS` | 1000000 | Yıllık projeksiyon için günlük istek |
+| `YK_REPEATS` | 5 | Her ölçümün tekrar sayısı |
+| `YK_PORT` | 8000 | Panel portu |
+| `ANTHROPIC_API_KEY` | (boş) | Tanımlanırsa "Kodunu dene" ekranında yapay zekâ önerisi de istenebilir |
+
+## Proje yapısı
+
+```
+greencode/
+  analyzer.py   AST tabanlı statik analiz, 6 kural
+  fixer.py      AST tabanlı otomatik düzeltme, 4 dönüşüm, fark üretimi
+  proof.py      eşdeğerlik testi, sorgu sayacı, ölçüm, canlı yarış
+  meter.py      enerji ölçer (RAPL + tahmini mod), karbon ve yıllık projeksiyon
+  scenarios.py  4 gerçekçi israflı kod senaryosu ve ortak verileri
+  report.py     CI raporu (md, html, json)
+  server.py     standart kütüphaneyle web sunucusu, API ve canlı akış (SSE)
+  config.py     katsayılar ve kaynakları
+web/            panel ve yazı tipleri (Martian Mono, Hanken Grotesk; SIL OFL)
+tests/          unittest paketi
+ornekler/       örnek israflı kod, GitHub Action
+```
+
+## Dürüst sınırlar
+
+- Yalnızca işlemci enerjisi ölçülür; bellek, ağ, disk ve soğutma dahil değildir. Gösterilen kazanç alt sınırdır.
+- Sipariş raporu senaryosunda veritabanı aynı bilgisayardadır. Gerçek sistemde her sorgu ağdan geçer; bu yüzden sorgu sayısı ayrıca gösterilir.
+- Tahmini modda mutlak değerlerden çok oranlar güvenilirdir.
+- Düzeltme motoru şimdilik Python içindir ve yorum satırlarını korumaz (`ast.unparse`).
+- Karbon yoğunluğu yıllık ortalamadır; şebeke saatten saate değişir.
+
+## Kaynaklar
+
+- Türkiye şebekesi 341 gCO₂e/kWh: Low-Carbon Power, Ağustos 2025–Temmuz 2026
+- SCI: Green Software Foundation, Software Carbon Intensity (ISO standardı, 2024)
+- Otomobil 96,7 gCO₂/km: EEA, 2025 yeni otomobil ortalaması (geçici veri)
+- Veri merkezleri 2024'te ~415 TWh: IEA, Energy and AI (2025)

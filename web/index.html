@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yeşil Kod</title>
+<style>
+@font-face{font-family:"Martian";src:url(/fonts/martian-mono-latin-standard-normal.woff2) format("woff2");font-weight:100 800;font-stretch:75% 112.5%;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
+@font-face{font-family:"Martian";src:url(/fonts/martian-mono-latin-ext-standard-normal.woff2) format("woff2");font-weight:100 800;font-stretch:75% 112.5%;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20AB,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Hanken";src:url(/fonts/hanken-grotesk-latin-wght-normal.woff2) format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
+@font-face{font-family:"Hanken";src:url(/fonts/hanken-grotesk-latin-ext-wght-normal.woff2) format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20AB,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  --mineral:#DCE1DB; --paper:#EEF1EC; --well:#E5E9E3; --rule:#B8C1BA;
+  --ink:#18211C; --ink2:#3F4C44; --ink3:#55635B;
+  --amber:#C4601A; --amber-ink:#8E430F; --amber-tint:rgba(196,96,26,.13);
+  --moss:#2C6A4A; --moss-ink:#1F5038; --moss-tint:rgba(44,106,74,.14);
+  --mono:"Martian", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --sans:"Hanken", "Segoe UI", system-ui, sans-serif;
+  --r:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:clamp(14px, 0.86vw, 19px)}
+body{background:var(--mineral);color:var(--ink);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:4px}
+.app{max-width:1800px;margin:0 auto;padding:1.6rem 2.2rem 2rem;display:flex;flex-direction:column;gap:1.4rem;min-height:100vh}
+
+header{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.word{font-family:var(--mono);font-weight:700;font-stretch:112.5%;font-size:1.7rem;letter-spacing:-.02em}
+.word span{color:var(--moss)}
+.desc{color:var(--ink2);font-size:1rem}
+.tabs{display:flex;background:var(--well);border:1px solid var(--rule);border-radius:999px;padding:4px;margin-left:auto}
+.tabs button{padding:.55rem 1.2rem;border-radius:999px;font-weight:600;font-size:.98rem;color:var(--ink2);white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--paper)}
+.status{display:flex;align-items:center;gap:.6rem;font-size:.92rem;color:var(--ink2)}
+.led{width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px var(--amber-tint)}
+.led.on{background:var(--moss);box-shadow:0 0 0 3px var(--moss-tint)}
+.status b{color:var(--ink);font-weight:600}
+.view{display:none;flex:1;min-height:0} .view.on{display:flex}
+@media (min-width:1101px){.app{height:100vh} #canli .main{min-height:0} .meter{min-height:0;overflow:hidden} .facts{margin-top:auto}}
+
+#canli{gap:1.6rem;align-items:stretch}
+.side{width:18.5rem;flex-shrink:0;display:flex;flex-direction:column;gap:.6rem}
+.sc{text-align:left;padding:1rem 1.1rem;border-radius:var(--r);background:var(--paper);border:1px solid var(--rule);display:flex;flex-direction:column;gap:.25rem;transition:background .2s,color .2s}
+.sc:hover{border-color:var(--ink3)}
+.sc strong{font-size:1.08rem}
+.sc small{font-size:.88rem;color:var(--ink3)}
+.sc[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sc[aria-pressed=true] small{color:#B9C6BE}
+.side .spacer{flex:1}
+.toggle{display:flex;align-items:center;gap:.7rem;font-size:.95rem;color:var(--ink2);padding:.4rem 0;cursor:pointer}
+.toggle input{width:2.6rem;height:1.4rem;appearance:none;background:var(--rule);border-radius:999px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle input::after{content:"";position:absolute;top:3px;left:3px;width:calc(1.4rem - 6px);height:calc(1.4rem - 6px);border-radius:50%;background:var(--paper);transition:transform .2s}
+.toggle input:checked{background:var(--moss)} .toggle input:checked::after{transform:translateX(1.2rem)}
+.keys{font-size:.82rem;color:var(--ink3);line-height:1.9}
+.keys kbd{font-family:var(--mono);font-size:.72rem;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:0 .35rem;background:var(--paper)}
+
+.main{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-rows:auto 1fr;gap:1.2rem 1.6rem}
+.leftcol{display:flex;flex-direction:column;gap:1.4rem;min-height:0}
+.leftcol .diff{flex:1}
+.head{grid-column:1/-1;display:flex;align-items:flex-end;gap:2rem;justify-content:space-between}
+.head h2{font-family:var(--mono);font-weight:600;font-size:2.1rem;letter-spacing:-.03em;line-height:1.1}
+.head p{color:var(--ink2);font-size:1.08rem;max-width:52ch;margin-top:.4rem}
+.go{background:var(--ink);color:var(--paper);font-weight:700;font-size:1.05rem;padding:.95rem 1.6rem;border-radius:999px;white-space:nowrap;transition:transform .15s}
+.go:hover{transform:translateY(-1px)} .go:disabled{opacity:.6;cursor:progress;transform:none}
+
+.diff{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.diff .bar{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem;border-bottom:1px solid var(--rule);font-size:.9rem;color:var(--ink2)}
+.diff .bar b{color:var(--ink);font-weight:600}
+.code{font-family:var(--mono);font-stretch:75%;font-size:.86rem;line-height:1.75;overflow:auto;padding:.7rem 0;flex:1}
+.ln{display:grid;grid-template-columns:2.2rem 1fr;white-space:pre;padding-right:1rem;min-width:max-content}
+.ln i{font-style:normal;text-align:center;color:var(--ink3);user-select:none}
+.ln.sil{background:var(--amber-tint)} .ln.sil i{color:var(--amber-ink)}
+.ln.ekle{background:var(--moss-tint)} .ln.ekle i{color:var(--moss-ink)}
+.ln.sil span{text-decoration:line-through;text-decoration-color:rgba(142,67,15,.5)}
+.fixes{border-top:1px solid var(--rule);padding:.8rem 1rem;display:flex;flex-direction:column;gap:.35rem;font-size:.92rem;color:var(--ink2)}
+.fixes b{font-family:var(--mono);font-size:.76rem;color:var(--ink);margin-right:.5rem}
+.reveal .ln.ekle{animation:grow .45s both}
+.reveal .ln.sil span{animation:strike .7s both}
+@keyframes grow{from{opacity:0;transform:translateX(-14px)}}
+@keyframes strike{from{text-decoration-color:transparent}}
+
+.meter{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:1.2rem}
+.readout{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;min-height:5.6rem}
+.readout .x{font-family:var(--mono);font-weight:700;font-stretch:112.5%;font-size:4.6rem;line-height:1;letter-spacing:-.04em;color:var(--moss);font-variant-numeric:tabular-nums}
+.readout .xl{font-size:1.25rem;color:var(--ink2);max-width:14ch;line-height:1.25}
+.trace{flex:1;min-height:12rem;display:flex;flex-direction:column;gap:.5rem;border-top:1px solid var(--rule);padding-top:1rem}
+.trace .cap{display:flex;justify-content:space-between;font-size:.92rem;color:var(--ink2)}
+.trace canvas{flex:1;width:100%;min-height:10rem}
+.readout.idle .x{color:var(--rule)}
+.mode{font-size:.92rem;color:var(--ink2)}
+.tape{display:grid;grid-template-columns:8.5rem 1fr;gap:.4rem 1rem;align-items:center}
+.tape .name{font-weight:600;font-size:1rem}
+.tape .name small{display:block;font-weight:400;color:var(--ink3);font-size:.82rem}
+.track{position:relative;height:2.4rem;background:var(--well);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.track::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),rgba(24,33,28,.16) calc(10% - 1px) 10%)}
+.fill{position:absolute;inset:0 auto 0 0;width:0;transition:width .25s linear}
+.amber .fill{background:var(--amber)} .moss .fill{background:var(--moss)}
+.fill.slow{transition:width 1.6s cubic-bezier(.6,0,.2,1)}
+.tape .val{grid-column:2;display:flex;justify-content:space-between;gap:1rem;font-family:var(--mono);font-stretch:87.5%;font-size:.84rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+.tape .val b{color:var(--ink);font-weight:600;font-size:1.05rem}
+
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem}
+.fact{border-top:2px solid var(--ink);padding-top:.8rem}
+.fact .v{font-family:var(--mono);font-weight:600;font-size:1.35rem;white-space:nowrap;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}
+.fact .l{font-size:.95rem;color:var(--ink2);margin-top:.25rem}
+.fact.ok .v{color:var(--moss)}
+
+#dene{gap:1.6rem}
+.editor{flex:1.1;min-width:0;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
+.editor label{padding:.8rem 1rem;border-bottom:1px solid var(--rule);font-size:.95rem;color:var(--ink2)}
+.editor textarea{flex:1;min-height:30rem;resize:none;border:0;outline:0;background:transparent;color:var(--ink);font:.84rem/1.75 var(--mono);font-stretch:87.5%;padding:1rem;tab-size:4}
+.editor .row{display:flex;gap:.8rem;align-items:center;padding:.8rem 1rem;border-top:1px solid var(--rule);flex-wrap:wrap}
+.ghost{border:1px solid var(--rule);border-radius:999px;padding:.85rem 1.3rem;font-weight:600;font-size:.98rem;color:var(--ink2);background:var(--paper)}
+.ghost:hover{border-color:var(--ink3)}
+.out{flex:1;min-width:0;display:flex;flex-direction:column;gap:.8rem;overflow:auto;max-height:calc(100vh - 9rem)}
+.empty{border:1px dashed var(--ink3);border-radius:var(--r);padding:2rem;color:var(--ink2);font-size:1.02rem;line-height:1.6}
+.tally{display:flex;gap:2.4rem;padding:.2rem 0 .4rem}
+.tally div{font-size:.95rem;color:var(--ink2)} .tally b{display:block;font-family:var(--mono);font-size:2rem;color:var(--ink);line-height:1.2}
+.find{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:.8rem 1rem;display:grid;grid-template-columns:auto 1fr auto;gap:.2rem .9rem;align-items:baseline;text-align:left;width:100%}
+.find:hover{border-color:var(--ink3)}
+.sev{font-family:var(--mono);font-size:.72rem;font-weight:600;padding:.15rem .45rem;border-radius:4px}
+.sev.yüksek{background:var(--amber-tint);color:var(--amber-ink)} .sev.orta{background:#E9E2C9;color:#6B5714} .sev.bilgi{background:var(--well);color:var(--ink2)}
+.find h4{font-size:1rem;font-weight:600} .find .where{font-family:var(--mono);font-size:.76rem;color:var(--ink3)}
+.find p{grid-column:2/-1;font-size:.92rem;color:var(--ink2)}
+.out .diff{flex:none}
+.out .code{max-height:24rem}
+
+#nasil{flex-direction:column;gap:2rem}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6rem}
+.step{border-top:2px solid var(--ink);padding-top:1rem}
+.step .n{font-family:var(--mono);font-weight:700;font-size:2.4rem;color:var(--moss);line-height:1}
+.step h3{font-size:1.3rem;margin:.6rem 0 .4rem}
+.step p{color:var(--ink2);font-size:1.02rem;max-width:34ch}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem}
+.box{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:1.4rem 1.6rem}
+.box h3{font-size:1.2rem;margin-bottom:.8rem}
+.eq{font-family:var(--mono);font-weight:600;font-size:1.6rem;margin:.4rem 0 1rem}
+.box ul{padding-left:1.2rem;display:flex;flex-direction:column;gap:.45rem;color:var(--ink2)}
+.src{font-size:.88rem;color:var(--ink3);line-height:1.7;margin-top:1rem}
+
+@media (max-width:1100px){
+  #canli{flex-direction:column} .side{width:auto;flex-direction:row;flex-wrap:wrap} .side .sc{flex:1 1 14rem} .side .spacer,.keys{display:none}
+  .main{grid-template-columns:1fr} .head{flex-direction:column;align-items:flex-start}
+  #dene{flex-direction:column} .out{max-height:none} .steps{grid-template-columns:repeat(2,minmax(0,1fr))} .cols{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .app{padding:1rem} .tabs{margin-left:0;width:100%;overflow-x:auto} .facts,.steps{grid-template-columns:1fr} .readout .x{font-size:3.2rem}
+  .tape{grid-template-columns:1fr} .tape .val{grid-column:1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <div class="word">yeşil<span>kod</span></div>
+      <div class="desc">Yazılımın enerjisini ölçer, israfı düzeltir, kazancı kanıtlar.</div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Bölümler">
+      <button role="tab" aria-selected="true" data-v="canli">Canlı ölçüm</button>
+      <button role="tab" aria-selected="false" data-v="dene">Kodunu dene</button>
+      <button role="tab" aria-selected="false" data-v="nasil">Nasıl çalışıyor</button>
+    </div>
+    <div class="status"><span class="led" id="led"></span><span id="modeTxt">Bağlanıyor</span></div>
+  </header>
+
+  <section class="view on" id="canli" role="tabpanel">
+    <nav class="side" aria-label="Senaryolar">
+      <div id="list" style="display:contents"></div>
+      <div class="spacer"></div>
+      <label class="toggle"><input type="checkbox" id="auto"> Otomatik tur</label>
+      <p class="keys"><kbd>Boşluk</kbd> düzelt ve ölç<br><kbd>1</kbd>–<kbd>4</kbd> senaryo seç<br><kbd>T</kbd> otomatik tur &nbsp; <kbd>F</kbd> tam ekran</p>
+    </nav>
+    <div class="main">
+      <div class="head">
+        <div><h2 id="title"></h2><p id="summary"></p></div>
+        <button class="go" id="go">Düzelt ve ölç</button>
+      </div>
+      <div class="leftcol">
+      <div class="diff">
+        <div class="bar"><span>Motorun yaptığı değişiklik</span><b id="diffCount"></b></div>
+        <div class="code" id="diff" aria-live="polite"></div>
+        <div class="fixes" id="fixes"></div>
+      </div>
+      <div class="facts">
+        <div class="fact" id="f1"><div class="v">—</div><div class="l"></div></div>
+        <div class="fact" id="f2"><div class="v">—</div><div class="l"></div></div>
+        <div class="fact" id="f3"><div class="v">—</div><div class="l"></div></div>
+      </div>
+      </div>
+      <div class="meter">
+        <div class="readout idle" id="readout"><span class="x" id="x">—</span><span class="xl" id="xl">daha az enerji, aynı sonuç</span></div>
+        <div class="mode" id="tapeMode"></div>
+        <div class="tape amber">
+          <div class="name">Özgün kod<small>insanın yazdığı</small></div>
+          <div class="track"><div class="fill" id="fa"></div></div>
+          <div class="val"><span id="na">0 istek</span><b id="ea">0 J</b></div>
+        </div>
+        <div class="tape moss">
+          <div class="name">Düzeltilmiş<small>motorun yazdığı</small></div>
+          <div class="track"><div class="fill" id="fb"></div></div>
+          <div class="val"><span id="nb">0 istek</span><b id="eb">0 J</b></div>
+        </div>
+        <div class="trace"><div class="cap"><span>Biriken enerji, işlenen isteğe göre</span><span id="traceMax"></span></div><canvas id="cv" aria-label="Biriken enerji grafiği" role="img"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="dene" role="tabpanel">
+    <div class="editor">
+      <label for="code">Python kodunuzu yapıştırın. Kod çalıştırılmaz, yalnızca yapısı incelenir.</label>
+      <textarea id="code" spellcheck="false"></textarea>
+      <div class="row">
+        <button class="go" id="an">Analiz et ve düzelt</button>
+        <button class="ghost" id="sample">Örnek kodu yükle</button>
+        <label class="toggle" id="aiWrap"><input type="checkbox" id="ai"> Yapay zekâdan da öneri iste</label>
+      </div>
+    </div>
+    <div class="out" id="out">
+      <div class="empty">Sonuçlar burada görünecek: hangi satırın enerji israf ettiği, neden israf ettiği ve motorun önerdiği düzeltme.</div>
+    </div>
+  </section>
+
+  <section class="view" id="nasil" role="tabpanel">
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Bul</h3><p>Statik analiz kodun sözdizimi ağacını tarar ve enerji israf eden altı kalıbı satır satır işaretler.</p></div>
+      <div class="step"><div class="n">2</div><h3>Düzelt</h3><p>Motor dört kalıbı kendisi yeniden yazar: toplu sorgu, küme ile arama, döngü dışına taşıma, önbellek.</p></div>
+      <div class="step"><div class="n">3</div><h3>Doğrula</h3><p>İki sürüm de çalıştırılır. Çıktılar birebir aynı değilse düzeltme reddedilir.</p></div>
+      <div class="step"><div class="n">4</div><h3>Ölç</h3><p>İşlemcinin enerji sayaçları okunur; aynı sayıda istek için harcanan enerji karşılaştırılır ve karbona çevrilir.</p></div>
+    </div>
+    <div class="cols">
+      <div class="box">
+        <h3>Karbon hesabı</h3>
+        <div class="eq">SCI = (E × I + M) / R</div>
+        <ul>
+          <li>E: ölçülen enerji. Linux'ta Intel/AMD RAPL sayaçları, diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
+          <li>I: Türkiye şebekesinin karbon yoğunluğu, <span id="ci2">341</span> gCO₂e/kWh.</li>
+          <li>M: donanımın gömülü emisyonu; sonraki aşamada eklenecek.</li>
+          <li>R: istek başına.</li>
+        </ul>
+        <p class="src">SCI, Green Software Foundation'ın 2024'te ISO standardı olan spesifikasyonudur.</p>
+      </div>
+      <div class="box">
+        <h3>Dürüst sınırlar</h3>
+        <ul>
+          <li>Yalnızca işlemci enerjisi ölçülür; bellek, ağ ve soğutma dahil değildir. Gerçek kazanç daha büyüktür.</li>
+          <li>Sipariş raporunda veritabanı aynı bilgisayarda çalışır. Gerçek sistemde her sorgu ağdan geçer; bu yüzden sorgu sayısındaki düşüş ayrıca gösterilir.</li>
+          <li>Tahmini modda mutlak değerlerden çok oranlar güvenilirdir.</li>
+          <li>Düzeltilmiş koddaki önbellekler her istekten önce temizlenir; kazanç önceki ölçümden kalan sonuçlardan gelmez.</li>
+        </ul>
+        <p class="src">Kaynaklar: Low-Carbon Power, Türkiye, Ağustos 2025–Temmuz 2026; EEA, 2025 yeni otomobil ortalaması 96,7 gCO₂/km (geçici veri); Green Software Foundation, SCI.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const nf = (v, d = 0) => Number(v).toLocaleString('tr-TR', {maximumFractionDigits: d, minimumFractionDigits: d});
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+let SC = [], cur = 0, busy = false, INFO = null, autoT = null, es = null;
+const trace = {
+  n: 1, ymax: 1, a: [], b: [],
+  reset() { this.n = 1; this.ymax = 1; this.a = []; this.b = []; $('#traceMax').textContent = ''; this.draw(); },
+  draw() {
+    const cv = $('#cv'), dpr = window.devicePixelRatio || 1;
+    const W = cv.clientWidth, H = cv.clientHeight;
+    if (!W || !H) return;
+    cv.width = W * dpr; cv.height = H * dpr;
+    const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    const L = 64, R = 12, T = 10, B = 26, pw = W - L - R, ph = H - T - B;
+    const X = v => L + v / this.n * pw, Y = v => T + ph - v / this.ymax * ph;
+    const css = getComputedStyle(document.documentElement);
+    g.font = '11px Martian, monospace'; g.textBaseline = 'middle';
+    for (let i = 0; i <= 4; i++) {
+      const v = this.ymax * i / 4, y = Y(v);
+      g.strokeStyle = 'rgba(24,33,28,.12)'; g.lineWidth = 1; g.beginPath(); g.moveTo(L, y); g.lineTo(W - R, y); g.stroke();
+      g.fillStyle = css.getPropertyValue('--ink3'); g.textAlign = 'right'; g.fillText(v === 0 ? '0' : fmtJ(v).replace(' ', ' '), L - 8, y);
+    }
+    g.textAlign = 'left'; g.fillText('0', L, H - 10); g.textAlign = 'right'; g.fillText(nf(this.n) + ' istek', W - R, H - 10);
+    const line = (pts, color, fill) => {
+      if (pts.length < 2) return;
+      g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)));
+      if (fill) { g.save(); g.lineTo(X(pts.at(-1)[0]), Y(0)); g.lineTo(X(0), Y(0)); g.closePath(); g.fillStyle = fill; g.fill(); g.restore();
+        g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y))); }
+      g.strokeStyle = color; g.lineWidth = 3; g.lineJoin = 'round'; g.stroke();
+      const [lx, ly] = pts.at(-1); g.fillStyle = color; g.beginPath(); g.arc(X(lx), Y(ly), 4.5, 0, 7); g.fill();
+    };
+    line(this.a, css.getPropertyValue('--amber'), 'rgba(196,96,26,.10)');
+    line(this.b, css.getPropertyValue('--moss'));
+  }
+};
+window.addEventListener('resize', () => trace.draw());
+const TAPE_IDLE ='İki sürüm aynı sayıda isteği işler. Şeritler işlenen isteği gösterir.';
+
+function fmtJ(j) {
+  if (j >= 1000) return nf(j / 1000, 2) + ' kJ';
+  if (j >= 1) return nf(j, 2) + ' J';
+  if (j >= 1e-3) return nf(j * 1e3, 1) + ' mJ';
+  return nf(j * 1e6, 1) + ' µJ';
+}
+function big(v) { return v >= 100 ? nf(v, 0) : v >= 10 ? nf(v, 1) : nf(v, 2); }
+async function api(p, body) {
+  const r = await fetch(p, body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)} : {});
+  return r.json();
+}
+function renderDiff(el, rows, reveal) {
+  el.classList.remove('reveal'); void el.offsetWidth;
+  let k = 0;
+  el.innerHTML = rows.map(r => {
+    const sign = r.tur === 'sil' ? '−' : r.tur === 'ekle' ? '+' : '';
+    const delay = r.tur === 'ekle' ? ` style="animation-delay:${0.55 + 0.08 * (k++)}s"` : '';
+    return `<div class="ln ${r.tur}"${delay}><i>${sign}</i><span>${esc(r.metin) || ' '}</span></div>`;
+  }).join('');
+  if (reveal) el.classList.add('reveal');
+}
+function setFact(id, v, l, ok) {
+  const f = $(id); f.querySelector('.v').textContent = v; f.querySelector('.l').textContent = l; f.classList.toggle('ok', !!ok);
+}
+function resetMeter() {
+  $('#readout').classList.add('idle'); $('#x').textContent = '—'; trace.reset();
+  ['#fa', '#fb'].forEach(q => { $(q).classList.remove('slow'); $(q).style.width = '0'; });
+  $('#na').textContent = '0 istek'; $('#nb').textContent = '0 istek'; $('#ea').textContent = '0 J'; $('#eb').textContent = '0 J';
+  $('#tapeMode').textContent = TAPE_IDLE;
+}
+
+function pick(i) {
+  if (busy) return;
+  cur = i; const s = SC[i];
+  document.querySelectorAll('.sc').forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+  $('#title').textContent = s.baslik;
+  $('#summary').textContent = s.ozet;
+  const ch = s.fark.filter(r => r.tur !== 'esit').length;
+  $('#diffCount').textContent = `${s.duzeltmeler.length} düzeltme, ${ch} satır`;
+  renderDiff($('#diff'), s.fark, false);
+  $('#fixes').innerHTML = s.duzeltmeler.map(f => `<div><b>${f.kural}</b>${esc(f.aciklama)}</div>`).join('');
+  resetMeter();
+  setFact('#f1', '—', 'İki sürümün çıktısı karşılaştırılacak');
+  setFact('#f2', s.kalip, s.gercek_hayat);
+  setFact('#f3', '—', 'Günde 1 milyon istekte yıllık tasarruf');
+}
+
+function finish(done) { busy = false; $('#go').disabled = false; $('#go').textContent = 'Tekrar ölç'; done(); }
+
+function run() {
+  if (busy) return Promise.resolve();
+  busy = true; $('#go').disabled = true; $('#go').textContent = 'Doğrulanıyor';
+  const s = SC[cur];
+  resetMeter();
+  renderDiff($('#diff'), s.fark, true);
+  return new Promise(async done => {
+    try {
+      const p = await api('/api/kanitla', {id: s.id, olc: false});
+      if (!p.esdeger) throw new Error(p.hata || 'Sonuçlar farklı');
+      setFact('#f1', 'Aynı sonuç', `${nf(p.cikti_sayisi)} kayıtlık çıktı iki sürümde birebir eşleşti`, true);
+      if (p.sorgu_sayisi) setFact('#f2', `${nf(p.sorgu_sayisi.ozgun)} → ${nf(p.sorgu_sayisi.duzeltilmis)}`, 'veritabanı sorgusu, istek başına', true);
+    } catch (e) { setFact('#f1', 'Doğrulanamadı', e.message); finish(done); return; }
+
+    $('#go').textContent = 'Ölçülüyor';
+    let n = 1;
+    es = new EventSource('/api/yaris?id=' + encodeURIComponent(s.id));
+    es.onmessage = ev => {
+      const d = JSON.parse(ev.data);
+      if (d.tur === 'basla') { n = d.istek; trace.n = n; trace.a = [[0, 0]]; trace.draw(); }
+      else if (d.tur === 'ilerleme') {
+        const a = d.surum === 'ozgun';
+        if (a) {
+          if (trace.a.length === 1) {               // ilk parçadan son enerjiyi kestir, ölçeği sabitle
+            trace.ymax = d.enerji_j / d.bitti * n * 1.08;
+            $('#traceMax').textContent = 'Ölçek ilk ölçümden kestirildi';
+          }
+          trace.a.push([d.bitti, d.enerji_j]);
+          trace.ymax = Math.max(trace.ymax, d.enerji_j * 1.04);
+        } else {
+          trace.b = [[0, 0], [n, d.enerji_j]];
+          trace.ymax = Math.max(trace.ymax, d.enerji_j * 1.1);
+        }
+        trace.draw();
+        $(a ? '#fa' : '#fb').style.width = (d.bitti / n * 100) + '%';
+        $(a ? '#na' : '#nb').textContent = `${nf(d.bitti)} / ${nf(n)} istek, ${nf(d.sure_s, 2)} s`;
+        $(a ? '#ea' : '#eb').textContent = fmtJ(d.enerji_j);
+      } else if (d.tur === 'son') {
+        es.close(); es = null;
+        $('#traceMax').textContent = `özgün ${fmtJ(d.ozgun_j)}, düzeltilmiş ${fmtJ(d.duzeltilmis_j)}`;
+        setTimeout(() => {
+          $('#tapeMode').textContent = `Şeritler artık ${nf(n)} istek için harcanan enerjiyi gösteriyor.`;
+          $('#fb').classList.add('slow');
+          $('#fb').style.width = Math.max(d.duzeltilmis_j / d.ozgun_j * 100, 0.4) + '%';
+          $('#readout').classList.remove('idle');
+          $('#x').textContent = (d.kat >= 100 ? nf(d.kat, 0) : nf(d.kat, 1)) + '×';
+          const yr = e => e * INFO.daily_calls * 365 / 3.6e6;
+          const kwh = yr(d.ozgun_j / n) - yr(d.duzeltilmis_j / n);
+          const kg = kwh * INFO.carbon_intensity / 1000;
+          setFact('#f3', `${big(kg)} kg CO₂e`, `yıllık tasarruf, günde 1 milyon istekte. ${big(kg * 1000 / INFO.car_g_per_km)} km otomobil yolculuğu kadar.`, true);
+          finish(done);
+        }, 600);
+      }
+    };
+    es.onerror = () => { if (es) { es.close(); es = null; setFact('#f1', 'Bağlantı kesildi', 'Paneli yenileyip tekrar deneyin'); finish(done); } };
+  });
+}
+
+async function tour() {
+  while ($('#auto').checked) {
+    await run();
+    await new Promise(r => autoT = setTimeout(r, 7000));
+    if (!$('#auto').checked) break;
+    pick((cur + 1) % SC.length);
+    await new Promise(r => autoT = setTimeout(r, 1500));
+  }
+}
+
+async function analyze() {
+  const btn = $('#an'); btn.disabled = true; btn.textContent = 'İnceleniyor';
+  try {
+    const r = await api('/api/analiz', {kod: $('#code').value, ai: $('#ai').checked});
+    const out = $('#out'); out.innerHTML = '';
+    if (r.hata) { out.innerHTML = `<div class="empty">${esc(r.hata)}. Kodu düzeltip tekrar deneyin.</div>`; return; }
+    const B = r.bulgular, c = s => B.filter(b => b.onem === s).length;
+    out.insertAdjacentHTML('beforeend', `<div class="tally"><div><b>${B.length}</b>bulgu</div><div><b>${c('yüksek')}</b>yüksek önemli</div><div><b>${r.duzeltmeler.length}</b>otomatik düzeltme</div></div>`);
+    if (!B.length) out.insertAdjacentHTML('beforeend', '<div class="empty">Bilinen bir enerji israfı kalıbı bulunamadı.</div>');
+    B.forEach(b => {
+      const el = document.createElement('button'); el.className = 'find';
+      el.innerHTML = `<span class="sev ${b.onem}">${b.onem}</span><h4></h4><span class="where">satır ${b.satir}</span><p></p>`;
+      el.querySelector('h4').textContent = b.baslik; el.querySelector('p').textContent = b.oneri;
+      el.onclick = () => gotoLine(b.satir); out.appendChild(el);
+    });
+    if (r.fark && r.fark.length) {
+      const box = document.createElement('div'); box.className = 'diff';
+      box.innerHTML = `<div class="bar"><span>Motorun önerdiği düzeltme</span><b>${r.duzeltmeler.length} değişiklik</b></div><div class="code"></div>`;
+      out.appendChild(box);
+      renderDiff(box.querySelector('.code'), r.fark.filter((x, i, a) => x.tur !== 'esit' || a.slice(Math.max(0, i - 2), i + 3).some(y => y.tur !== 'esit')), true);
+    }
+    if (r.ai) {
+      const d = document.createElement('div'); d.className = 'diff';
+      d.innerHTML = '<div class="bar"><span>Yapay zekâ önerisi</span></div><div class="code" style="white-space:pre-wrap;padding:1rem"></div>';
+      d.querySelector('.code').textContent = r.ai; out.appendChild(d);
+    }
+  } finally { btn.disabled = false; btn.textContent = 'Analiz et ve düzelt'; }
+}
+function gotoLine(n) {
+  const ta = $('#code'), L = ta.value.split('\n'); let s = 0;
+  for (let i = 0; i < n - 1; i++) s += L[i].length + 1;
+  ta.focus(); ta.setSelectionRange(s, s + (L[n - 1] || '').length);
+  ta.scrollTop = Math.max(0, (n - 6) * parseFloat(getComputedStyle(ta).lineHeight));
+}
+
+async function init() {
+  INFO = await api('/api/bilgi');
+  $('#led').classList.toggle('on', INFO.mode === 'rapl');
+  $('#modeTxt').innerHTML = `<b>${INFO.mode === 'rapl' ? 'Gerçek ölçüm' : 'Tahmini ölçüm'}</b>, şebeke ${nf(INFO.carbon_intensity)} gCO₂e/kWh`;
+  $('#ci2').textContent = nf(INFO.carbon_intensity);
+  if (!INFO.ai_aktif) $('#aiWrap').style.display = 'none';
+  SC = await api('/api/senaryolar');
+  $('#list').innerHTML = SC.map((s, i) => `<button class="sc" aria-pressed="false" data-i="${i}"><strong>${esc(s.baslik)}</strong><small>${esc(s.kalip)}</small></button>`).join('');
+  document.querySelectorAll('.sc').forEach(b => b.onclick = () => pick(+b.dataset.i));
+  pick(0); trace.draw();
+  $('#code').value = (await api('/api/ornek')).kod;
+}
+
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === b.dataset.v));
+  requestAnimationFrame(() => trace.draw());
+});
+$('#go').onclick = run;
+$('#auto').onchange = e => { clearTimeout(autoT); if (e.target.checked) tour(); };
+$('#an').onclick = analyze;
+$('#sample').onclick = async () => { $('#code').value = (await api('/api/ornek')).kod; };
+document.addEventListener('keydown', e => {
+  if (['TEXTAREA', 'INPUT'].includes(e.target.tagName)) return;
+  if (e.code === 'Space') { e.preventDefault(); run(); }
+  else if (/^[1-4]$/.test(e.key)) pick(+e.key - 1);
+  else if (e.key.toLowerCase() === 't') { $('#auto').checked = !$('#auto').checked; $('#auto').onchange({target: $('#auto')}); }
+  else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+});
+init();
+</script>
+</body>
+</html>

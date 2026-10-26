@@ -1,0 +1,27 @@
+<!doctype html>
+<!-- Filmin sonuna eklenen QR kapanış kartı. Arka plan filmin son karesidir; alttaki
+     logo ve COP31 satırı yerinde kalır, yalnızca üst alan değişir. -->
+<meta charset="utf-8">
+<style>
+@font-face{font-family:H;src:url(/web/fonts/hanken-grotesk-latin-wght-normal.woff2);font-weight:100 900;unicode-range:U+0000-00FF,U+0131}
+@font-face{font-family:H;src:url(/web/fonts/hanken-grotesk-latin-ext-wght-normal.woff2);font-weight:100 900;unicode-range:U+0100-0130,U+0132-02FF}
+@font-face{font-family:M;src:url(/web/fonts/martian-mono-latin-standard-normal.woff2);font-weight:100 800;font-stretch:75% 112.5%;unicode-range:U+0000-00FF,U+0131}
+@font-face{font-family:M;src:url(/web/fonts/martian-mono-latin-ext-standard-normal.woff2);font-weight:100 800;font-stretch:75% 112.5%;unicode-range:U+0100-0130,U+0132-02FF}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#DCE2DB}
+img.bg{position:absolute;inset:0;width:1920px;height:1080px}
+.cover{position:absolute;left:0;top:0;width:1920px;height:870px;background:#DCE2DB}
+.k{position:absolute;left:180px;top:226px;font:600 26px/1 M;letter-spacing:.06em;color:#2C6A4A}
+h1{position:absolute;left:180px;top:272px;margin:0;font:600 92px/1.04 H;letter-spacing:-.02em;color:#18211C}
+.en{position:absolute;left:180px;top:500px;margin:0;font:400 38px/1.3 H;color:#3F4C44}
+.url{position:absolute;left:180px;top:604px;display:flex;align-items:center;gap:20px;font:500 36px/1 M;font-stretch:87.5%;color:#18211C}
+.url i{font-style:normal;display:inline-block;width:44px;height:44px;border-radius:50%;background:#18211C;color:#DCE2DB;font:700 26px/44px H;text-align:center}
+.card{position:absolute;left:1236px;top:150px;width:504px;height:504px;background:#fff;border-radius:22px;box-shadow:0 1px 0 rgba(24,33,28,.08)}
+.card img{position:absolute;left:42px;top:42px;width:420px;height:420px}
+</style>
+<img class="bg" src="son-kare.png" alt="">
+<div class="cover"></div>
+<div class="k">TELEFONUNLA TARA · SCAN ME</div>
+<h1>Kendi kodunu<br>telefonunda dene.</h1>
+<p class="en">Try your own Python code on your phone.</p>
+<div class="url"><i>→</i>{{site_kisa}}</div>
+<div class="card"><img src="/stant/qr/qr-kodunu-dene.svg" alt=""></div>

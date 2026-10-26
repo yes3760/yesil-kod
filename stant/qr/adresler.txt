@@ -1,0 +1,4 @@
+qr-proje-sayfasi: https://yes3760.github.io/yesil-kod/
+qr-kodunu-dene: https://yes3760.github.io/yesil-kod/#dene
+qr-kaynak-kod: https://github.com/yes3760/yesil-kod
+qr-try-en: https://yes3760.github.io/yesil-kod/?lang=en#dene
