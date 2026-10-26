@@ -100,6 +100,7 @@ def race(code, entry, data, meter: EnergyMeter, seconds=8.0, tick=0.12):
     """Canlı yarış: iki sürüm AYNI sayıda isteği işler. Her parça gerçekten
     çalıştırılıp ölçülür; ilerleme olay olarak akıtılır (generator)."""
     run_a, run_b, *_ = prepare(code, entry, data)
+    tick = max(tick, meter.min_window / 2)          # örneklemeli ölçerde parçalar çok kısa olmasın
     t0 = time.perf_counter()
     run_a()
     per_a = max(time.perf_counter() - t0, 1e-6)

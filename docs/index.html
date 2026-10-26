@@ -272,13 +272,13 @@ footer ul{list-style:none;display:flex;flex-direction:column;gap:4px}
         <h3><span lang="tr">Karbon hesabı</span><span lang="en">Carbon accounting</span></h3>
         <div class="eq">SCI = (E × I + M) / R</div>
         <ul lang="tr">
-          <li>E: ölçülen enerji. Linux’ta Intel/AMD RAPL sayaçları, diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
+          <li>E: ölçülen enerji. Linux’ta Intel/AMD RAPL sayaçları, Mac’te Apple’ın işlemci güç verisi (powermetrics), izin yoksa işlemci süresi × çekirdek gücü.</li>
           <li>I: Türkiye şebekesi, 341 gCO₂e/kWh (Ağustos 2025–Temmuz 2026).</li>
           <li>M: donanımın gömülü emisyonu; sonraki aşamada eklenecek.</li>
           <li>R: istek başına.</li>
         </ul>
         <ul lang="en">
-          <li>E: measured energy. Intel/AMD RAPL counters on Linux; CPU time × per-core power elsewhere.</li>
+          <li>E: measured energy. Intel/AMD RAPL counters on Linux, Apple’s CPU power data (powermetrics) on Mac, CPU time × per-core power without permission.</li>
           <li>I: Türkiye grid, 341 gCO₂e/kWh (Aug 2025–Jul 2026).</li>
           <li>M: embodied hardware emissions; planned for the next phase.</li>
           <li>R: per request.</li>

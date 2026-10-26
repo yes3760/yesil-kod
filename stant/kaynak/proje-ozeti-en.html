@@ -108,7 +108,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <h2><i>04</i>Technical design</h2>
       <ul class="l">
         <li>Python standard library only; no installation or internet needed.</li>
-        <li>Intel/AMD <b>RAPL</b> energy counters on Linux; CPU time × per-core power elsewhere.</li>
+        <li>Intel/AMD <b>RAPL</b> counters on Linux, Apple’s CPU power data (<b>powermetrics</b>) on Mac; CPU time × per-core power without permission.</li>
         <li>20 unit tests, run automatically on Python 3.9 and 3.13 with GitHub Actions on every change.</li>
       </ul>
     </div>
@@ -139,7 +139,7 @@ ul.l b{color:var(--ink);font-weight:600}
         <li><b>Carbon:</b> SCI = (E × I + M) / R. E measured energy, I Türkiye grid 341 gCO₂e/kWh (Aug 2025–Jul 2026), R per request.</li>
         <li><b>Fairness:</b> short code is repeated until the counters can measure it; every result is the mean of 5 repeats.</li>
         <li><b>Caching:</b> caches in the fixed code are cleared before every request, so gains never come from earlier runs.</li>
-        <li><b>Idle power:</b> in RAPL mode the idle power during the measurement is subtracted.</li>
+        <li><b>Idle power:</b> in hardware mode the machine’s idle power is measured and subtracted from every result.</li>
       </ul>
     </div>
     <div>

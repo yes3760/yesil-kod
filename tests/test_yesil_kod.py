@@ -1,13 +1,15 @@
 """Test paketi:  python -m unittest discover -s tests -v"""
 import ast
+import plistlib
 import sys
+import time
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from greencode import analyzer, fixer, proof, report, scenarios  # noqa: E402
-from greencode.meter import EnergyMeter, to_co2_g, yearly_projection  # noqa: E402
+from greencode.meter import EnergyMeter, _PowerMetrics, to_co2_g, yearly_projection  # noqa: E402
 
 ORNEK = (Path(__file__).resolve().parent.parent / "ornekler" / "israfli_ornek.py").read_text("utf-8")
 
@@ -128,6 +130,48 @@ class MeterTests(unittest.TestCase):
     def test_olcum_pozitif(self):
         r = EnergyMeter().measure(lambda: sum(range(20000)), repeats=2, min_seconds=0.05)
         self.assertGreater(r.energy_j, 0)
+
+
+class PowerMetricsTests(unittest.TestCase):
+    """macOS donanım ölçümü: ayrıştırma ve pencere hesabı (sudo gerektirmez)."""
+
+    def test_apple_silicon_ornegi(self):
+        ornek = plistlib.dumps({"elapsed_ns": 100_000_000, "processor": {"cpu_energy": 250, "cpu_power": 2500.0}})
+        dt, e = _PowerMetrics.parse(ornek + b"\n")
+        self.assertAlmostEqual(dt, 0.1)
+        self.assertAlmostEqual(e, 0.25)                    # 250 mJ
+
+    def test_akistaki_ornekler_ayirici_beklenmeden_okunur(self):
+        # Gerçek akış: <plist>…</plist>\n\0<plist>…; son örneğin ayırıcısı henüz gelmemiş
+        ornek = lambda mj: plistlib.dumps({"elapsed_ns": 100_000_000, "is_delta": True,
+                                           "processor": {"cpu_energy": mj, "cpu_power": mj * 10.0, "clusters": []}})
+        akis = ornek(200) + b"\0" + ornek(300)
+        pm = _PowerMetrics(start=False)
+
+        class Akis:
+            def __init__(self, parcalar): self.parcalar = list(parcalar)
+            def read1(self, n): return self.parcalar.pop(0) if self.parcalar else b""
+
+        pm._proc = type("P", (), {"stdout": Akis([akis[:50], akis[50:]])})()
+        pm._read()
+        self.assertEqual([round(e, 3) for _, _, e in pm.samples], [0.2, 0.3])
+
+    def test_yalnizca_guc_varsa_sureyle_carpilir(self):
+        ornek = plistlib.dumps({"elapsed_ns": 200_000_000, "processor": {"cpu_power": 1500.0}})
+        self.assertAlmostEqual(_PowerMetrics.parse(ornek)[1], 0.3)
+
+    def test_bozuk_ornek_yok_sayilir(self):
+        self.assertIsNone(_PowerMetrics.parse(b""))
+        self.assertIsNone(_PowerMetrics.parse(b"<?xml version"))
+        self.assertIsNone(_PowerMetrics.parse(plistlib.dumps({"elapsed_ns": 0, "processor": {}})))
+
+    def test_pencere_enerjisi_ortusen_orneklerden(self):
+        pm = _PowerMetrics(start=False)
+        now = time.perf_counter()
+        for k in range(10):                                 # 2 W sabit, 100 ms örnekler
+            pm.samples.append((now - 1 + 0.1 * (k + 1), 0.1, 0.2))
+        self.assertAlmostEqual(pm.energy_between(now - 0.75, now - 0.25), 1.0, places=6)
+        self.assertAlmostEqual(pm.energy_between(now - 0.05, now), 0.1, places=6)
 
 
 class ReportTests(unittest.TestCase):

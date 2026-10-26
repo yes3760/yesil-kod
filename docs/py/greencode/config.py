@@ -26,6 +26,9 @@ LED_WATTS = 10.0
 # Ölçeklendirme senaryosu: fonksiyon günde kaç kez çağrılıyor?
 DAILY_CALLS = int(os.getenv("YK_DAILY_CALLS", "1000000"))
 
+# macOS'ta powermetrics ile donanım ölçümü (yönetici izni gerekir; 0 = kapalı)
+POWERMETRICS = os.getenv("YK_POWERMETRICS", "1") != "0"
+
 # Her ölçüm kaç kez tekrarlanıp ortalaması alınacak
 REPEATS = int(os.getenv("YK_REPEATS", "5"))
 

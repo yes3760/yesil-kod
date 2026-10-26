@@ -43,7 +43,7 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
 .demo div{display:grid;grid-template-columns:15mm 1fr;gap:3mm;font:400 8.6pt/1.5 var(--sans);color:var(--ink2)}
 .demo div b:first-child{font:700 7.4pt/1.5 var(--mono);color:var(--moss)}
 .qa{margin-top:2mm;display:flex;flex-direction:column}
-.qa div{padding:2.1mm 0;border-bottom:.2mm solid var(--rule)}
+.qa div{padding:1.6mm 0;border-bottom:.2mm solid var(--rule)}
 .qa b{display:block;font:600 8.9pt/1.35 var(--sans);color:var(--ink)}
 .qa span{display:block;font:400 8.3pt/1.48 var(--sans);color:var(--ink2);margin-top:.7mm}
 .pn{margin-top:auto;font:600 6.6pt/1 var(--mono);color:var(--ink3);text-align:right;padding-top:3mm}
@@ -70,12 +70,12 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
     <div>
       <h2><i>02</i>Kurulum (15 dakika)</h2>
       <ol class="l">
-        <li>Dizüstünde <code>baslat.sh</code> (Mac/Linux) ya da <code>baslat.bat</code> (Windows). Panel <code>127.0.0.1:8000</code> adresinde açılır; internet gerekmez.</li>
+        <li>Mac’in kendi Terminal uygulamasında <code>./baslat.sh</code>. “Donanım ölçümü açılsın mı?” sorusuna <b>E</b> deyip Mac şifresini gir. Panel <code>127.0.0.1:8000</code> adresinde açılır; internet gerekmez. (Windows: <code>baslat.bat</code>)</li>
         <li>Ekrana bağla. <kbd>F</kbd> tam ekran, <kbd>T</kbd> otomatik tur: dört senaryo sırayla düzeltilir, doğrulanır, ölçülür.</li>
         <li>Ekran yalnızca USB’den video oynatıyorsa: <code>yesil-kod-stant-dongu-sessiz.mp4</code> (14 dk, sessiz).</li>
         <li>Masa kartını QR yüzü ziyaretçiye bakacak şekilde koy; broşürleri yanına.</li>
         <li>Kendi telefonunla QR’ı tara; sitede “Analiz et” düğmesinin çalıştığını gör (ilk açılış ~10 MB indirir).</li>
-        <li>Panelin sağ üstü: turuncu nokta tahmini ölçüm (Mac/Windows), yeşil nokta gerçek RAPL ölçümü (Linux). Jüriye hangisi olduğunu söyle.</li>
+        <li>Panelin sağ üstünde <b>yeşil nokta ve “Donanım ölçümü”</b> yazmalı (Mac’te powermetrics). Turuncu “Tahmini ölçüm” görürsen şifre adımı atlanmıştır; paneli kapatıp <code>./baslat.sh</code>’ı yeniden çalıştır.</li>
       </ol>
     </div>
     <div>
@@ -127,7 +127,7 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
     <div><b>0:20</b><span><b>Canlı panel.</b> <kbd>2</kbd> ile “Yoklama kontrolü”nü seç. “Bu satır listede arama yapıyor; her öğrenci için 6.000 kaydı baştan tarıyor.”</span></div>
     <div><b>0:40</b><span><b>Düzelt.</b> <kbd>Boşluk</kbd>. “Bu kodu ben yazmadım, motor yazdı.” Önce eşdeğerlik testi: “2.000 kayıtlık çıktı birebir aynı.” Sonra iki şerit yarışır ve büyük sayı çıkar.</span></div>
     <div><b>1:10</b><span><b>Ölçek.</b> Alttaki yıllık tasarruf kutusu: günde 1 milyon istekte kg CO₂e ve otomobil kilometresi karşılığı.</span></div>
-    <div><b>1:20</b><span><b>Dürüstlük.</b> “Yalnızca işlemci enerjisini ölçüyoruz; bellek ve ağ dahil değil, yani bu bir alt sınır. Mac’te tahmini mod, Linux’ta gerçek sayaç.”</span></div>
+    <div><b>1:20</b><span><b>Dürüstlük.</b> “Yalnızca işlemci enerjisini ölçüyoruz; bellek ve ağ dahil değil, yani bu bir alt sınır. Bu Mac’te Apple’ın işlemci güç verisini okuyoruz ve boştaki tüketimi çıkarıyoruz.”</span></div>
     <div><b>1:35</b><span><b>Ziyaretçinin telefonu.</b> QR’ı okutsun, “Yoklama kontrolü”nü seçip <b>Ölç</b>’e bassın: aynı düzeltme onun telefonunda yüzlerce kat fark çıkarır.</span></div>
     <div><b>1:45</b><span><b>Kapanış.</b> “Açık kaynak, kurulum gerektirmiyor. Sonraki adım JavaScript ve Java, ve üniversitedeki öğrenci projelerinde pilot.” Proje özetini ver.</span></div>
   </div>
@@ -148,7 +148,7 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
 
   <h2><i>09</i>Sık sorulacak sorular</h2>
   <div class="qa">
-    <div><b>Gerçekten ölçüyor musunuz, yoksa tahmin mi?</b><span>Linux’ta Intel/AMD işlemcilerin kendi enerji sayaçlarını (RAPL) okuyoruz; bu gerçek ölçüm. Mac ve Windows’ta işlemci süresini çekirdek gücüyle çarpıyoruz; CodeCarbon gibi araçların yedek yöntemi de bu. Bu standdaki bilgisayar tahmini modda; oranlar güvenilir, mutlak değerler yaklaşık.</span></div>
+    <div><b>Gerçekten ölçüyor musunuz, yoksa tahmin mi?</b><span>Ölçüyoruz. Bu Mac’te Apple’ın powermetrics aracıyla işlemcinin güç verisini 100 ms’de bir okuyor, ölçüm süresine düşen enerjiyi topluyor ve bilgisayarın boştaki tüketimini çıkarıyoruz. Linux’ta aynısını Intel/AMD’nin RAPL sayaçlarıyla yapıyoruz. İzin yoksa işlemci süresi × çekirdek gücüyle tahmin ediyoruz ve panel bunu turuncu noktayla açıkça gösteriyor. Apple bu değerlerin farklı cihazları kıyaslamak için değil, aynı cihazda verimliliği karşılaştırmak için kullanılmasını öneriyor; biz de tam olarak bunu yapıyoruz.</span></div>
     <div><b>465 kat abartılı değil mi?</b><span>Hayır, algoritmik bir fark. Listede arama her seferinde listeyi baştan tarar (4.500 × 6.000 karşılaştırma); kümede arama sabit sürededir. Kazanç verinin boyutuyla büyür; küçük veride daha küçük olur. Dört ayrı ölçümde 456 ile 698 kat arasında çıktı.</span></div>
     <div><b>Tek istekte birkaç joule, ne fark eder?</b><span>Ölçek. Günde bir milyon istekte yalnızca bu satır yılda yaklaşık 41 kg CO₂e. Büyük bir sistemde bu türden yüzlerce satır olabilir.</span></div>
     <div><b>Düzeltme kodu bozarsa?</b><span>Doğrulama adımı bunun için var: iki sürüm aynı veriyle çalışır, çıktı birebir aynı değilse düzeltme reddedilir. Projede 20 birim testi var ve her değişiklikte GitHub’da otomatik çalışıyor. Gerçek projede yine de projenin kendi testleriyle birlikte kullanılmalı.</span></div>
@@ -168,6 +168,7 @@ td:first-child{font-family:var(--mono);font-size:7.2pt;color:var(--ink);white-sp
       <tr><td>Windows’ta Python yok</td><td>python.org’dan kur, “Add to PATH” kutusunu işaretle, <code>baslat.bat</code>’ı yeniden çalıştır.</td></tr>
       <tr><td>Stantta internet yok</td><td>Panel internetsiz çalışır. QR’daki site için ziyaretçinin mobil verisi yeterli.</td></tr>
       <tr><td>Ekran bağlanmıyor</td><td>Filmi USB bellekten TV’de oynat ya da dizüstünün kendi ekranını ziyaretçiye çevir.</td></tr>
+      <tr><td>Turuncu nokta (tahmini)</td><td>Paneli kapat (Ctrl+C), Mac’in Terminal uygulamasında <code>./baslat.sh</code>, soruya <b>E</b>, şifre. Kontrol için: <code>python3 -m greencode olcer</code></td></tr>
       <tr><td>Ölçüm yavaş ya da oynak</td><td>Diğer uygulamaları kapat, şarj kablosunu tak (pil tasarruf modu ölçümü etkiler), <kbd>Boşluk</kbd> ile tekrar ölç.</td></tr>
     </tbody>
   </table>

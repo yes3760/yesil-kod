@@ -243,7 +243,7 @@ header{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
         <h3>Karbon hesabı</h3>
         <div class="eq">SCI = (E × I + M) / R</div>
         <ul>
-          <li>E: ölçülen enerji. Linux'ta Intel/AMD RAPL sayaçları, diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
+          <li>E: ölçülen enerji. Linux'ta Intel/AMD RAPL sayaçları, Mac'te Apple'ın işlemci güç verisi (powermetrics), diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
           <li>I: Türkiye şebekesinin karbon yoğunluğu, <span id="ci2">341</span> gCO₂e/kWh.</li>
           <li>M: donanımın gömülü emisyonu; sonraki aşamada eklenecek.</li>
           <li>R: istek başına.</li>
@@ -457,8 +457,10 @@ function gotoLine(n) {
 
 async function init() {
   INFO = await api('/api/bilgi');
-  $('#led').classList.toggle('on', INFO.mode === 'rapl');
-  $('#modeTxt').innerHTML = `<b>${INFO.mode === 'rapl' ? 'Gerçek ölçüm' : 'Tahmini ölçüm'}</b>, şebeke ${nf(INFO.carbon_intensity)} gCO₂e/kWh`;
+  $('#led').classList.toggle('on', INFO.mode !== 'tahmini');
+  const kip = {rapl: 'Gerçek ölçüm', powermetrics: 'Donanım ölçümü', tahmini: 'Tahmini ölçüm'}[INFO.mode] || INFO.mode;
+  $('#modeTxt').innerHTML = `<b>${kip}</b>, şebeke ${nf(INFO.carbon_intensity)} gCO₂e/kWh`;
+  $('#modeTxt').title = INFO.mode_label + (INFO.idle_w != null ? ` · boşta ${nf(INFO.idle_w, 2)} W çıkarılıyor` : '');
   $('#ci2').textContent = nf(INFO.carbon_intensity);
   if (!INFO.ai_aktif) $('#aiWrap').style.display = 'none';
   SC = await api('/api/senaryolar');

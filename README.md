@@ -74,9 +74,10 @@ python -m unittest discover -s tests -v
 | Mod | Ne zaman | Nasıl |
 |---|---|---|
 | Gerçek ölçüm (RAPL) | Linux + Intel/AMD işlemci | İşlemcinin enerji sayaçları okunur, boşta tüketim çıkarılır |
-| Tahmini ölçüm | Windows, Mac, sanal makine | İşlemci süresi × çekirdek başına güç (varsayılan 10 W) |
+| Donanım ölçümü (powermetrics) | Mac, yönetici izniyle | Apple'ın işlemci güç verisi 100 ms'de bir örneklenir; ölçüm penceresiyle örtüşen örnekler toplanır, boşta tüketim çıkarılır |
+| Tahmini ölçüm | Windows, sanal makine ya da izin yoksa | İşlemci süresi × çekirdek başına güç (varsayılan 10 W) |
 
-Linux'ta gerçek ölçüm için: `sudo chmod -R a+r /sys/class/powercap/intel-rapl` (`baslat.sh` bunu sorar). Panelin sağ üstündeki yeşil nokta gerçek, turuncu nokta tahmini ölçümü gösterir. Jüriye hangi modda ölçtüğünüzü söyleyin.
+Linux'ta gerçek ölçüm için: `sudo chmod -R a+r /sys/class/powercap/intel-rapl` (`baslat.sh` bunu sorar). Mac'te `baslat.sh` "Donanım ölçümü açılsın mı?" diye sorar ve şifreyi bir kez ister; şifre Python'a gitmez, powermetrics aynı terminalden `sudo -n` ile başlatılır. Elle: `sudo -v && python3 -m greencode`. Hangi modda olduğunuzu `python3 -m greencode olcer` gösterir. Panelin sağ üstündeki yeşil nokta donanım ölçümünü, turuncu nokta tahmini ölçümü gösterir. Jüriye hangi modda ölçtüğünüzü söyleyin.
 
 Adalet kuralları: kısa süren kod sayaçların ölçebileceği süreye kadar tekrarlanır; her sonuç 5 tekrarın ortalamasıdır; düzeltilmiş koddaki önbellekler her istekten önce temizlenir.
 
@@ -89,6 +90,7 @@ Adalet kuralları: kısa süren kod sayaçların ölçebileceği süreye kadar t
 | `YK_DAILY_CALLS` | 1000000 | Yıllık projeksiyon için günlük istek |
 | `YK_REPEATS` | 5 | Her ölçümün tekrar sayısı |
 | `YK_PORT` | 8000 | Panel portu |
+| `YK_POWERMETRICS` | 1 | Mac'te donanım ölçümünü kapatmak için 0 |
 | `ANTHROPIC_API_KEY` | (boş) | Tanımlanırsa "Kodunu dene" ekranında yapay zekâ önerisi de istenebilir |
 
 ## Proje yapısı
@@ -98,7 +100,7 @@ greencode/
   analyzer.py   AST tabanlı statik analiz, 9 kural
   fixer.py      AST tabanlı otomatik düzeltme, 4 dönüşüm; değişikliği özgün koda satır düzeyinde yerleştirir
   proof.py      eşdeğerlik testi, sorgu sayacı, ölçüm, canlı yarış
-  meter.py      enerji ölçer (RAPL + tahmini mod), karbon ve yıllık projeksiyon
+  meter.py      enerji ölçer (RAPL, Mac powermetrics, tahmini mod), karbon ve yıllık projeksiyon
   scenarios.py  4 gerçekçi israflı kod senaryosu ve ortak verileri
   report.py     CI raporu (md, html, json)
   server.py     standart kütüphaneyle web sunucusu, API ve canlı akış (SSE)

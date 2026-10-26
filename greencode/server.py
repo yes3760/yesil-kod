@@ -12,6 +12,7 @@ GET  /api/ornek             analiz ekranı için örnek kod
 from __future__ import annotations
 
 import json
+import sys
 import threading
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
@@ -143,8 +144,12 @@ def serve(host=None, port=None, open_browser=True):
     m = meter()
     print("\n  Yeşil Kod · Dijital Karbon Ayak İzi Optimizasyon Aracı")
     print(f"  Ölçüm      : {m.info()['mode_label']}")
-    if m.mode == "tahmini":
+    if m.mode == "tahmini" and sys.platform == "darwin":
+        print("  (Mac'te donanım ölçümü için: ./baslat.sh ya da sudo -v && python3 -m greencode)")
+    elif m.mode == "tahmini":
         print("  (Linux'ta gerçek ölçüm için: sudo chmod -R a+r /sys/class/powercap/intel-rapl)")
+    elif m.info()["idle_w"] is not None:
+        print(f"  Boşta güç : {m.info()['idle_w']:.2f} W (her ölçümden çıkarılır)")
     print(f"  Şebeke     : {config.CARBON_INTENSITY_G_PER_KWH:g} gCO2e/kWh (Türkiye)")
     print("  Hazırlanıyor…", end="", flush=True)
     data(); scenario_list()

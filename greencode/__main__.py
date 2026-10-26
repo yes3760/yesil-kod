@@ -8,6 +8,7 @@
         --kanitla FONKSIYON                    parametresiz FONKSIYON'u iki sürümde
                                                çalıştırıp sonucu karşılaştırır ve ölçer
   python -m greencode olc dosya.py             betiği çalıştırıp enerjisini ölçer
+  python -m greencode olcer                    ölçüm modunu ve boşta gücü gösterir
   python -m greencode rapor DİZİN [--bicim md|html|json] [--esik N]
 """
 import argparse
@@ -108,6 +109,20 @@ def cmd_olc(a):
     print(f"  Karbon : {r.co2_g * 1000:.3f} mg CO2e")
 
 
+def cmd_olcer(_):
+    m = EnergyMeter()
+    i = m.info()
+    print(f"\nÖlçüm modu : {i['mode_label']}")
+    if i["idle_w"] is not None:
+        print(f"Boşta güç  : {i['idle_w']:.2f} W (ölçümlerden çıkarılır)")
+    elif sys.platform == "darwin":
+        print("Mac'te donanım ölçümü için: sudo -v && python3 -m greencode olcer")
+    yuk = lambda: sum(k * k for k in range(300_000))
+    r = m.measure(yuk, repeats=3)
+    print(f"Deneme yükü: {fmt_j(r.energy_j)} (± {fmt_j(r.energy_j_std)}), {r.wall_s * 1000:.1f} ms, "
+          f"ortalama {r.energy_j / r.wall_s:.2f} W ek güç\n")
+
+
 def cmd_rapor(a):
     rep = report.scan(a.yollar)
     out = {"md": report.to_markdown, "html": report.to_html, "json": report.to_json}[a.bicim](rep)
@@ -126,6 +141,7 @@ def main():
     pd.add_argument("--yaz", action="store_true"); pd.add_argument("--kanitla", metavar="FONKSIYON")
     po = sub.add_parser("olc"); po.add_argument("dosya"); po.add_argument("args", nargs="*")
     po.add_argument("--tekrar", type=int, default=3)
+    sub.add_parser("olcer")
     pr = sub.add_parser("rapor"); pr.add_argument("yollar", nargs="+")
     pr.add_argument("--bicim", choices=["md", "html", "json"], default="md")
     pr.add_argument("--esik", type=int, default=None)
@@ -135,7 +151,7 @@ def main():
         serve()
     else:
         {"senaryolar": cmd_senaryolar, "analiz": cmd_analiz, "duzelt": cmd_duzelt,
-         "olc": cmd_olc, "rapor": cmd_rapor}[a.komut](a)
+         "olc": cmd_olc, "olcer": cmd_olcer, "rapor": cmd_rapor}[a.komut](a)
 
 
 if __name__ == "__main__":

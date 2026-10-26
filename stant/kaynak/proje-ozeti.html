@@ -108,7 +108,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <h2><i>04</i>Teknik yapı</h2>
       <ul class="l">
         <li>Yalnızca Python standart kütüphanesi; kurulum ve internet gerektirmez.</li>
-        <li>Linux’ta Intel/AMD <b>RAPL</b> enerji sayaçları; diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
+        <li>Linux’ta Intel/AMD <b>RAPL</b> sayaçları, Mac’te Apple’ın işlemci güç verisi (<b>powermetrics</b>); izin yoksa işlemci süresi × çekirdek gücü.</li>
         <li>20 birim testi; her değişiklikte GitHub Actions ile Python 3.9 ve 3.13’te otomatik çalışır.</li>
       </ul>
     </div>
@@ -139,7 +139,7 @@ ul.l b{color:var(--ink);font-weight:600}
         <li><b>Karbon:</b> SCI = (E × I + M) / R. E ölçülen enerji, I Türkiye şebekesi 341 gCO₂e/kWh (Ağu 2025–Tem 2026), R istek başına.</li>
         <li><b>Adalet:</b> kısa süren kod, sayaçların ölçebileceği süreye kadar tekrarlanır; her sonuç 5 tekrarın ortalamasıdır.</li>
         <li><b>Önbellek:</b> düzeltilmiş koddaki önbellekler her istekten önce temizlenir; kazanç önceki çalıştırmadan gelmez.</li>
-        <li><b>Boşta tüketim:</b> RAPL modunda ölçüm sırasındaki boşta güç çıkarılır.</li>
+        <li><b>Boşta tüketim:</b> donanım ölçümünde bilgisayarın boştaki gücü ölçülür ve her sonuçtan çıkarılır.</li>
       </ul>
     </div>
     <div>
