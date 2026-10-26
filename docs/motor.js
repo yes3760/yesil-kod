@@ -23,7 +23,7 @@ from greencode import analyzer, fixer
 
 def yesil(kod):
     r = analyzer.analyze(kod)
-    r["fark"], r["duzeltmeler"], r["bicim_korundu"] = [], [], False
+    r["fark"], r["duzeltmeler"], r["bicim_korundu"], r["duzeltilmis"] = [], [], False, None
     if not r["hata"]:
         try:
             new, orig, fixes = fixer.fix(kod)
@@ -31,6 +31,7 @@ def yesil(kod):
                 r["fark"] = fixer.side_by_side(orig, new)
                 r["duzeltmeler"] = [f.to_dict() for f in fixes]
                 r["bicim_korundu"] = fixer.fix.bicim_korundu
+                r["duzeltilmis"] = new
         except Exception as e:
             r["duzeltme_hatasi"] = str(e)
     return json.dumps(r, ensure_ascii=False)

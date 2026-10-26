@@ -47,6 +47,12 @@ class AnalyzerTests(unittest.TestCase):
         self.assertIn("YK009", rules("def f(q):\n    while q:\n        q.pop(0)\n"))
         self.assertNotIn("YK009", rules("def f(q):\n    while q:\n        q.pop()\n"))
 
+    def test_her_kuralin_ornegi_kendi_kuralini_tetikler(self):
+        klasor = Path(__file__).resolve().parent.parent / "ornekler" / "kurallar"
+        for kod in analyzer.RULES:
+            with self.subTest(kod):
+                self.assertIn(kod, rules((klasor / f"{kod}.py").read_text("utf-8")))
+
     def test_sozdizimi_hatasi(self):
         self.assertIsNotNone(analyzer.analyze("def (:")["hata"])
 

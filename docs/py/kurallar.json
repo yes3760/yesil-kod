@@ -1,0 +1,74 @@
+[
+ {
+  "kural": "YK001",
+  "baslik": "Döngü içinde veritabanı sorgusu (N+1)",
+  "onem": "yüksek",
+  "oneri": "Her döngü adımı veritabanına ayrı bir istek gönderiyor. Verinin tamamını tek bir JOIN ya da 'WHERE id IN (...)' sorgusuyla çekin.",
+  "ornek": "def siparis_raporu(db, siparisler):\n    rapor = []\n    for s in siparisler:\n        ad = db.execute(\"SELECT ad FROM musteri WHERE id = ?\", (s[\"musteri_id\"],)).fetchone()\n        rapor.append((s[\"id\"], ad))\n    return rapor\n",
+  "otomatik": true
+ },
+ {
+  "kural": "YK002",
+  "baslik": "Döngü içinde listede arama",
+  "onem": "yüksek",
+  "oneri": "Listede 'in' araması her seferinde listeyi baştan sona tarar. Döngüden önce listeyi set() ile kümeye çevirin; arama sabit sürede yapılır.",
+  "ornek": "def yoklama(gelenler, kayit):\n    kayitlilar = list(kayit)\n    return [no for no in gelenler if no in kayitlilar]\n",
+  "otomatik": true
+ },
+ {
+  "kural": "YK003",
+  "baslik": "Döngüde değişmeyen işi tekrar yapma",
+  "onem": "orta",
+  "oneri": "Bu çağrının sonucu döngü boyunca değişmiyor. Döngüden önce bir kez yapın ve sonucu bir değişkende tutun.",
+  "ornek": "import json\n\n\ndef fiyatla(urunler, ayar_metni):\n    sonuc = []\n    for u in urunler:\n        ayar = json.loads(ayar_metni)\n        sonuc.append(u[\"fiyat\"] * (1 + ayar[\"kdv\"]))\n    return sonuc\n",
+  "otomatik": true
+ },
+ {
+  "kural": "YK004",
+  "baslik": "Önbelleksiz çift özyineleme",
+  "onem": "yüksek",
+  "oneri": "Fonksiyon kendini birden fazla kez çağırıyor; aynı ara sonuçlar katlanarak yeniden hesaplanır. @functools.lru_cache ekleyin ya da döngüye çevirin.",
+  "ornek": "def fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n",
+  "otomatik": true
+ },
+ {
+  "kural": "YK005",
+  "baslik": "Sürekli sorgulama (polling)",
+  "onem": "orta",
+  "oneri": "Sonsuz döngüde bekleyip tekrar kontrol etmek işlemciyi ve ağı boşuna meşgul eder. Olay tabanlı yapı (webhook, kuyruk, bildirim) kullanın ya da bekleme süresini artırın.",
+  "ornek": "import time\n\n\ndef siparis_bekle(api):\n    while True:\n        if api.yeni_siparis_var_mi():\n            return api.siparisi_al()\n        time.sleep(0.1)\n",
+  "otomatik": false
+ },
+ {
+  "kural": "YK006",
+  "baslik": "İç içe döngü (O(n²))",
+  "onem": "bilgi",
+  "oneri": "İç içe döngüler veri büyüdükçe karesel olarak yavaşlar. İç döngü bir eşleştirme yapıyorsa sözlük (dict) ile tek geçişe indirin.",
+  "ornek": "def eslestir(ogrenciler, dersler):\n    eslesme = []\n    for o in ogrenciler:\n        for d in dersler:\n            if d[\"ogrenci_id\"] == o[\"id\"]:\n                eslesme.append((o[\"ad\"], d[\"ad\"]))\n    return eslesme\n",
+  "otomatik": false
+ },
+ {
+  "kural": "YK007",
+  "baslik": "Pandas tablosunu satır satır gezme",
+  "onem": "yüksek",
+  "oneri": "iterrows, itertuples ve axis=1 ile apply her satırı yavaş bir Python döngüsünde işler. Sütun işlemleri, merge ve groupby gibi vektörel pandas/numpy işlemlerini kullanın; yapılan iş genellikle onlarca kat azalır.",
+  "ornek": "def toplam_ciro(satislar):\n    toplam = 0\n    for _, satir in satislar.iterrows():\n        toplam += satir[\"adet\"] * satir[\"fiyat\"]\n    return toplam\n",
+  "otomatik": false
+ },
+ {
+  "kural": "YK008",
+  "baslik": "Döngüde oturumsuz HTTP isteği",
+  "onem": "orta",
+  "oneri": "Her requests çağrısı yeni bir bağlantı ve TLS el sıkışması kurar. Döngüden önce requests.Session() açıp istekleri onunla gönderin; bağlantı yeniden kullanılır.",
+  "ornek": "import requests\n\n\ndef fiyatlari_cek(urun_kodlari):\n    return [requests.get(f\"https://api.ornek.com.tr/fiyat/{kod}\").json() for kod in urun_kodlari]\n",
+  "otomatik": false
+ },
+ {
+  "kural": "YK009",
+  "baslik": "Listenin başından ekleme ya da çıkarma",
+  "onem": "orta",
+  "oneri": "pop(0) ve insert(0, ...) listenin bütün elemanlarını kaydırır. collections.deque kullanın: popleft ve appendleft sabit sürede çalışır.",
+  "ornek": "def sirayla_isle(isler):\n    biten = []\n    while isler:\n        biten.append(isler.pop(0))\n    return biten\n",
+  "otomatik": false
+ }
+]

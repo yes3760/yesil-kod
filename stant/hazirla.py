@@ -138,6 +138,15 @@ def site():
     ornekler.append({"tr": "Karışık örnek dosya", "en": "Mixed example file",
                      "kod": (ROOT / "ornekler" / "israfli_ornek.py").read_text("utf-8")})
     (DOCS / "py" / "ornekler.json").write_text(json.dumps(ornekler, ensure_ascii=False, indent=1), "utf-8")
+    # Kurallar sayfası: her kuralın açıklaması, örneği ve motorun onu kendisi düzeltip düzeltmediği
+    from greencode import analyzer, fixer
+    kurallar = []
+    for kod, (baslik, onem, oneri) in analyzer.RULES.items():
+        ornek = (ROOT / "ornekler" / "kurallar" / f"{kod}.py").read_text("utf-8")
+        duzeltmeler = fixer.fix(ornek)[2]
+        kurallar.append({"kural": kod, "baslik": baslik, "onem": onem, "oneri": oneri, "ornek": ornek,
+                         "otomatik": any(f.kural == kod for f in duzeltmeler)})
+    (DOCS / "py" / "kurallar.json").write_text(json.dumps(kurallar, ensure_ascii=False, indent=1), "utf-8")
     (DOCS / ".nojekyll").write_text("")            # GitHub Pages __init__.py dosyasını gizlemesin
     print("site    docs/ güncellendi")
 

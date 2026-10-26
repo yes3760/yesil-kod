@@ -112,7 +112,7 @@ ornekler/       örnek israflı kod, GitHub Action
 
 ## Proje sayfası ve stant malzemeleri
 
-`docs/` klasörü GitHub Pages ile yayınlanır. Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder; standdaki motor Pyodide ile tarayıcıda (ayrı bir Web Worker'da) çalışır ve kod hiçbir yere gönderilmez. Hazır senaryolarda **Telefonunda ölç** düğmesi iki sürümü telefonda çalıştırır, çıktıların aynı olduğunu doğrular ve işlemci sürelerini karşılaştırır.
+`docs/` klasörü GitHub Pages ile yayınlanır. Site dört bölümden oluşur: **Proje** (tanıtım ve film), **Dashboard** (kodu yapıştır ya da dosya aç; bulgular editörde satır satır işaretlenir, düzeltme kopyalanır ya da indirilir), **Analizler** (bu cihazda yapılan bütün analizlerin geçmişi, grafikler, JSON/CSV dışa aktarma; yalnızca tarayıcıda saklanır) ve **Kurallar** (dokuz kuralın açıklaması ve denenebilir örnekleri, `ornekler/kurallar/`). Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder; standdaki motor Pyodide ile tarayıcıda (ayrı bir Web Worker'da) çalışır ve kod hiçbir yere gönderilmez. Hazır senaryolarda **Telefonunda ölç** düğmesi iki sürümü telefonda çalıştırır, çıktıların aynı olduğunu doğrular ve işlemci sürelerini karşılaştırır.
 
 `stant/` klasöründe COP31 için her şey var:
 
