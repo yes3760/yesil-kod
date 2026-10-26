@@ -107,7 +107,12 @@ def render_html(ad):
     """kaynak/ad dosyasını ayarlarla doldurup kaynak/_render/ altına yazar; sunucu yolunu döndürür."""
     hedef = KAYNAK / "_render" / ad
     hedef.parent.mkdir(exist_ok=True)
-    hedef.write_text(doldur((KAYNAK / ad).read_text("utf-8")), "utf-8")
+    metin = doldur((KAYNAK / ad).read_text("utf-8"))
+    if "{{video_md}}" in metin:
+        import markdown                         # pip install markdown
+        md = (FILM_DIR / "video-prompt.md").read_text("utf-8")
+        metin = metin.replace("{{video_md}}", markdown.markdown(md, extensions=["tables", "fenced_code"]))
+    hedef.write_text(metin, "utf-8")
     return "/" + hedef.relative_to(ROOT).as_posix()
 
 
@@ -164,7 +169,11 @@ def pdf(sadece=None):
         for kaynak, cikti in BELGELER:
             if (sadece and sadece not in kaynak) or not (KAYNAK / kaynak).exists():
                 continue
-            yol = render_html(kaynak)
+            try:
+                yol = render_html(kaynak)
+            except ImportError as e:
+                print(f"        ({cikti} atlandı: {e.name} gerekli, pip install {e.name})")
+                continue
             chrome(["--no-pdf-header-footer", f"--print-to-pdf={PDF_DIR / cikti}", base + yol], profil)
             print(f"pdf     {cikti}")
         if not sadece or "brosur" in sadece:

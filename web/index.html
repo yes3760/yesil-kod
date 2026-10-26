@@ -54,6 +54,10 @@ header{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .toggle input::after{content:"";position:absolute;top:3px;left:3px;width:calc(1.4rem - 6px);height:calc(1.4rem - 6px);border-radius:50%;background:var(--paper);transition:transform .2s}
 .toggle input:checked{background:var(--moss)} .toggle input:checked::after{transform:translateX(1.2rem)}
 .keys{font-size:.82rem;color:var(--ink3);line-height:1.9}
+.qrbox{display:flex;flex-direction:column;gap:.7rem;align-items:center;text-align:center;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:1rem}
+.qrbox img{width:10.5rem;height:10.5rem;background:#fff;padding:.5rem;border-radius:6px}
+.qrbox b{display:block;font-size:1rem;line-height:1.25}
+.qrbox small{display:block;font-size:.78rem;color:var(--ink3);margin-top:.3rem;font-family:var(--mono);font-stretch:75%}
 .keys kbd{font-family:var(--mono);font-size:.72rem;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:0 .35rem;background:var(--paper)}
 
 .main{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-rows:auto 1fr;gap:1.2rem 1.6rem}
@@ -106,6 +110,7 @@ header{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .fact .v{font-family:var(--mono);font-weight:600;font-size:1.35rem;white-space:nowrap;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}
 .fact .l{font-size:.95rem;color:var(--ink2);margin-top:.25rem}
 .fact.ok .v{color:var(--moss)}
+#f2 .v{white-space:normal;font-size:1.05rem;line-height:1.3}
 
 #dene{gap:1.6rem}
 .editor{flex:1.1;min-width:0;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
@@ -141,7 +146,7 @@ header{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .src{font-size:.88rem;color:var(--ink3);line-height:1.7;margin-top:1rem}
 
 @media (max-width:1100px){
-  #canli{flex-direction:column} .side{width:auto;flex-direction:row;flex-wrap:wrap} .side .sc{flex:1 1 14rem} .side .spacer,.keys{display:none}
+  #canli{flex-direction:column} .side{width:auto;flex-direction:row;flex-wrap:wrap} .side .sc{flex:1 1 14rem} .side .spacer,.keys,.qrbox{display:none}
   .main{grid-template-columns:1fr} .head{flex-direction:column;align-items:flex-start}
   #dene{flex-direction:column} .out{max-height:none} .steps{grid-template-columns:repeat(2,minmax(0,1fr))} .cols{grid-template-columns:1fr}
 }
@@ -171,6 +176,8 @@ header{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
     <nav class="side" aria-label="Senaryolar">
       <div id="list" style="display:contents"></div>
       <div class="spacer"></div>
+      <!-- QR: stant/hazirla.py qr adımındaki "qr-kodunu-dene" ile aynı adres -->
+      <div class="qrbox"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMzAiIGhlaWdodD0iMzMwIj48cGF0aCB0cmFuc2Zvcm09InNjYWxlKDEwKSIgc3Ryb2tlPSIjMTgyMTFjIiBkPSJNMCAwLjVoN20yIDBoMW0xIDBoMm0xIDBoMW0zIDBoMW0yIDBoMW0yIDBoMW0xIDBoN20tMzMgMWgxbTUgMGgxbTEgMGgxbTIgMGgxbTIgMGgxbTEgMGgybTEgMGgxbTEgMGgxbTQgMGgxbTUgMGgxbS0zMyAxaDFtMSAwaDNtMSAwaDFtNiAwaDFtMyAwaDVtMSAwaDFtMiAwaDFtMSAwaDNtMSAwaDFtLTMzIDFoMW0xIDBoM20xIDBoMW0xIDBoM20yIDBoMW0yIDBoMW00IDBoMW0yIDBoMW0xIDBoMW0xIDBoM20xIDBoMW0tMzMgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTEgMGgybTEgMGgxbTMgMGgybTEgMGgybTIgMGgxbTEgMGgxbTEgMGgzbTEgMGgxbS0zMyAxaDFtNSAwaDFtMiAwaDJtMSAwaDFtMSAwaDJtMiAwaDFtMSAwaDJtMSAwaDFtMiAwaDFtNSAwaDFtLTMzIDFoN20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoN20tMjUgMWgzbTcgMGgzbTIgMGgxbS0yMyAxaDFtMSAwaDRtMSAwaDFtMiAwaDJtMSAwaDJtMSAwaDRtMSAwaDJtMSAwaDJtMSAwaDJtMSAwaDFtLTMxIDFoMW0xIDBoMW0zIDBoMTBtMSAwaDJtMyAwaDJtMyAwaDNtLTMxIDFoMm0xIDBoNG0xIDBoMW0xIDBoM20yIDBoMW0xIDBoMm0xIDBoNG0xIDBoMW0yIDBoM20xIDBoMW0tMzMgMWgzbTEgMGgybTEgMGgxbTIgMGgybTEgMGgybTEgMGgybTQgMGgxbTEgMGgxbTIgMGgxbTIgMGgzbS0zMiAxaDNtMiAwaDNtMSAwaDJtMiAwaDVtMSAwaDFtMiAwaDVtLTI3IDFoMW0yIDBoMm0xIDBoMW0yIDBoNG0xIDBoMW0xIDBoMW0xIDBoMW0zIDBoM20xIDBoMW0xIDBoMW0tMzAgMWg4bTUgMGgybTIgMGgybTIgMGgybTEgMGgxbTEgMGgxbTEgMGgybS0zMCAxaDFtMSAwaDFtNSAwaDNtMiAwaDJtMSAwaDJtMSAwaDFtMiAwaDFtMiAwaDFtMyAwaDJtMSAwaDFtLTMzIDFoMW0xIDBoMW0xIDBoM20xIDBoMW0xIDBoNG0yIDBoMW0yIDBoMm0yIDBoMW0xIDBoNG0tMjYgMWgybTIgMGgybTIgMGg0bTEgMGgxbTEgMGgzbTEgMGgxbTEgMGgzbTEgMGgxbTEgMGgxbTEgMGgxbS0zMCAxaDRtMSAwaDJtNCAwaDFtMyAwaDRtMSAwaDFtMyAwaDFtMSAwaDJtMSAwaDFtLTMyIDFoNG00IDBoM200IDBoMW0yIDBoMW0yIDBoM20xIDBoMW0xIDBoM20xIDBoMW0tMzIgMWgxbTEgMGgxbTIgMGgybTEgMGgxbTQgMGgxbTEgMGg0bTQgMGgxbTIgMGgxbTEgMGgxbTEgMGgybS0zMyAxaDJtMyAwaDFtMSAwaDFtMSAwaDFtOCAwaDFtMSAwaDRtMyAwaDJtLTI5IDFoMW0xIDBoMW0yIDBoMm00IDBoMW0yIDBoM20zIDBoMW0xIDBoMm00IDBoMW0xIDBoM20tMzMgMWgxbTEgMGgxbTEgMGgybTQgMGgybTIgMGgxbTEgMGgxbTEgMGgxbTMgMGgxbTIgMGgxbTIgMGgxbTEgMGgybS0zMiAxaDNtMyAwaDJtMiAwaDNtMiAwaDVtNCAwaDZtMSAwaDFtLTI0IDFoMm0xIDBoMW00IDBoMW00IDBoMW0xIDBoMm0zIDBoMW0xIDBoMm0tMzIgMWg3bTYgMGgybTMgMGgzbTIgMGgybTEgMGgxbTEgMGgxbTEgMGgxbS0zMSAxaDFtNSAwaDFtMSAwaDFtMSAwaDFtMSAwaDdtMSAwaDFtMSAwaDNtMyAwaDNtLTMxIDFoMW0xIDBoM20xIDBoMW0xIDBoMW02IDBoMW0yIDBoM20xIDBoN20yIDBoMW0tMzIgMWgxbTEgMGgzbTEgMGgxbTEgMGgybTEgMGgxbTYgMGgxbTMgMGgxbTEgMGgybTEgMGgxbTIgMGgxbTEgMGgxbS0zMyAxaDFtMSAwaDNtMSAwaDFtMiAwaDNtMSAwaDdtNCAwaDJtMSAwaDJtMSAwaDNtLTMzIDFoMW01IDBoMW0xIDBoMW0zIDBoMW0yIDBoM20xIDBoMW0yIDBoMW0yIDBoMW0xIDBoNm0tMzMgMWg3bTQgMGgzbTMgMGgzbTMgMGgybTEgMGg0Ii8+PC9zdmc+Cg==" alt="Proje sayfası QR kodu"><div><b>Telefonunla tara, kendi kodunu dene</b><small>yes3760.github.io/yesil-kod</small></div></div>
       <label class="toggle"><input type="checkbox" id="auto"> Otomatik tur</label>
       <p class="keys"><kbd>Boşluk</kbd> düzelt ve ölç<br><kbd>1</kbd>–<kbd>4</kbd> senaryo seç<br><kbd>T</kbd> otomatik tur &nbsp; <kbd>F</kbd> tam ekran</p>
     </nav>

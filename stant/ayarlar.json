@@ -9,6 +9,9 @@
   "kurum_en": "Sakarya University",
   "etkinlik": "COP31 Yeşil Bölge · Antalya · 13–14 Kasım 2026",
   "etkinlik_en": "COP31 Green Zone · Antalya · 13–14 November 2026",
-  "ekip": ["Yunus Emre Sevindik"],
+  "ekip": [
+    "Yunus Emre Sevindik",
+    "Mehmet Zahid Görgeç"
+  ],
   "danisman": ""
 }

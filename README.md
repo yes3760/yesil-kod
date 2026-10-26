@@ -19,6 +19,9 @@ Demo senaryolarındaki optimize kod elle yazılmadı; motor üretti.
 | Rota sayısı | önbelleksiz özyineleme | `lru_cache` | yaklaşık 4.000 kat az enerji |
 | Fiyat listesi | döngüde değişmeyen iş | döngü dışına taşıma | 51 kat az enerji |
 
+**Proje sayfası:** https://yes3760.github.io/yesil-kod/ (film, sonuçlar ve telefonda kod deneme; Türkçe/İngilizce)
+**Proje ekibi:** Yunus Emre Sevindik, Mehmet Zahid Görgeç
+
 ## Kurulum ve çalıştırma
 
 Gereken tek şey **Python 3.9 veya üstü**. Ek paket kurulmaz, internet gerekmez.
@@ -102,6 +105,32 @@ web/            panel ve yazı tipleri (Martian Mono, Hanken Grotesk; SIL OFL)
 tests/          unittest paketi
 ornekler/       örnek israflı kod, GitHub Action
 ```
+
+## Proje sayfası ve stant malzemeleri
+
+`docs/` klasörü GitHub Pages ile yayınlanır. Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder: standdaki `analyzer.py` ve `fixer.py`, Pyodide ile tarayıcıda çalışır; kod hiçbir yere gönderilmez.
+
+`stant/` klasöründe COP31 için her şey var:
+
+| Dosya | Ne |
+|---|---|
+| `pdf/01-poster-A0.pdf` | Stant posteri (A1/A2'ye oranlı küçülür) |
+| `pdf/02-brosur-*-TR.pdf`, `pdf/03-brochure-*-EN.pdf` | A5 broşür; `A4-2li-baski` sürümü kırtasiyede A4'e basılıp ortadan kesilir |
+| `pdf/04-masa-karti-A4.pdf` | Ortadan katlanan masa kartı (bir yüz Türkçe, bir yüz İngilizce) |
+| `pdf/05-proje-ozeti-A4.pdf` | Yetkililer ve jüri için 2 sayfalık özet |
+| `pdf/06-ekran-sunumu-16x9.pdf` | 9 slaytlık ekran sunumu |
+| `pdf/07-stant-rehberi-A4.pdf` | Ekip için: takvim, kurulum, baskı listesi, konuşma metinleri, sorular |
+| `pdf/08-video-brifi-A4.pdf`, `film/video-prompt.md` | Filmi yeniden yaptırmak için brif, yapay zekâ promptları ve seslendirme metni |
+| `qr/` | QR kodları (SVG baskı için, PNG genel kullanım için) |
+
+Ekip adı ya da adres değişirse `stant/ayarlar.json` dosyasını düzenleyip yeniden üretin:
+
+```bash
+python3 stant/hazirla.py            # site, QR, PDF ve film
+python3 stant/hazirla.py pdf        # yalnızca PDF'ler (Google Chrome gerekir)
+```
+
+QR adımı `pip install segno`, film adımı `ffmpeg` ister.
 
 ## Dürüst sınırlar
 

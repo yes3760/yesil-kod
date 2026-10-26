@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Yeşil Kod · Proje özeti</title>
+<link rel="stylesheet" href="/stant/kaynak/ortak.css">
+<style>
+@page{size:210mm 297mm;margin:0}
+.page{width:210mm;height:297mm;background:#fff;padding:14mm 16mm 12mm;display:flex;flex-direction:column}
+.bar{display:flex;justify-content:space-between;align-items:center;padding-bottom:4mm;border-bottom:.35mm solid var(--ink)}
+.bar .word{font-size:15pt}
+.bar > span{font:600 6.6pt/1 var(--mono);letter-spacing:.08em;color:var(--ink3)}
+h1{font:700 19pt/1.15 var(--sans);letter-spacing:-.01em;margin-top:7mm;max-width:160mm}
+.meta{font:400 8.6pt/1.45 var(--sans);color:var(--ink3);margin-top:2.5mm}
+.meta b{color:var(--ink);font-weight:600}
+.abs{margin-top:6mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:6mm 7mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
+.abs p{font:400 9.4pt/1.5 var(--sans);color:var(--mist2)}
+.abs p b{color:var(--paper);font-weight:600}
+.abs .k{font:600 6.4pt/1 var(--mono);letter-spacing:.08em;color:var(--leaf);margin-bottom:2.5mm}
+.abs .x{font:700 34pt/.95 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf);text-align:right}
+.abs .x small{display:block;font:400 7.6pt/1.35 var(--sans);letter-spacing:0;color:var(--mist2);margin-top:2mm}
+
+h2{font:700 11.5pt/1.2 var(--sans);margin-top:7mm;display:flex;gap:2.5mm;align-items:baseline}
+h2 i{font:700 9pt/1 var(--mono);font-style:normal;color:var(--moss)}
+p.t{font:400 9.1pt/1.52 var(--sans);color:var(--ink2);margin-top:2mm}
+p.t b{color:var(--ink);font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:3mm}
+.step{border-top:.4mm solid var(--ink);padding-top:2mm}
+.step b{display:block;font:700 9.6pt/1.25 var(--sans)}
+.step b i{font:700 8.4pt/1 var(--mono);font-style:normal;color:var(--moss);margin-right:1.5mm}
+.step span{display:block;font:400 7.9pt/1.42 var(--sans);color:var(--ink2);margin-top:1mm}
+table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
+th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
+td{padding:1.8mm 2mm 1.8mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
+td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
+.ok{color:var(--moss);font-weight:600} .no{color:var(--ink3)}
+ul.l{list-style:none;margin-top:2mm;display:flex;flex-direction:column;gap:1.4mm;font:400 8.7pt/1.45 var(--sans);color:var(--ink2)}
+ul.l li{padding-left:3.4mm;position:relative}
+ul.l li::before{content:"";position:absolute;left:0;top:1.75mm;width:1.3mm;height:1.3mm;border-radius:50%;background:var(--moss)}
+ul.l.a li::before{background:var(--amber)}
+ul.l b{color:var(--ink);font-weight:600}
+.sdg{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:3mm}
+.sdg div{background:var(--paper);border:.25mm solid var(--rule);border-radius:2mm;padding:2.6mm 3mm;font:400 7.6pt/1.35 var(--sans);color:var(--ink2)}
+.sdg b{display:block;font:700 13pt/1 var(--mono);color:var(--moss);margin-bottom:1.2mm}
+.fine{font:400 7pt/1.4 var(--sans);color:var(--ink3);margin-top:1.8mm}
+.foot{margin-top:auto;display:grid;grid-template-columns:24mm 1fr 24mm;gap:5mm;align-items:center;padding-top:5mm;border-top:.35mm solid var(--ink)}
+.foot .qr{border:.25mm solid var(--rule);border-radius:1.5mm;padding:1.6mm}
+.foot p{font:400 7.8pt/1.5 var(--sans);color:var(--ink2)}
+.foot p b{color:var(--ink);font-weight:600}
+.foot .c{font:400 6.2pt/1.25 var(--sans);color:var(--ink3);text-align:center;margin-top:1mm}
+.pn{font:600 6.6pt/1 var(--mono);color:var(--ink3);text-align:right;margin-top:3mm}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="bar"><div class="word">yeşil<span>kod</span></div><span>PROJE ÖZETİ · COP31 YEŞİL BÖLGE · ANTALYA 2026</span></div>
+  <h1>{{proje_adi}}</h1>
+  <div class="meta"><b>{{kurum}}</b> · Toplumsal Katkı ve Sürdürülebilirlik Koordinatörlüğü COP31 projesi<br>Proje ekibi: {{ekip}} {{danisman_satiri}} · Sürüm: Ekim 2026 · Açık kaynak: {{repo_kisa}}</div>
+
+  <div class="abs">
+    <div>
+      <div class="k">ÖZET</div>
+      <p>Yeşil Kod, Python kodunda enerji israf eden kalıpları <b>bulur</b>, kodu kendisi <b>yeniden yazar</b>, iki sürümün birebir aynı sonucu verdiğini <b>doğrular</b> ve aynı iş için harcanan enerjiyi <b>ölçüp</b> Türkiye şebekesinin karbon yoğunluğuyla gCO₂e’ye çevirir. Dört gerçekçi senaryonun dördünde de düzeltmeyi motor üretti; işlemci enerjisi 2,4 ile 4.049 kat arasında azaldı ve çıktılar değişmedi.</p>
+    </div>
+    <div class="x">465×<small>yalnızca bir satır düzeltmeyle, aynı sonuç</small></div>
+  </div>
+
+  <h2><i>01</i>Problem</h2>
+  <p class="t">Veri merkezlerinin elektrik tüketiminin 2024’teki <b>415 TWh</b> düzeyinden 2030’da <b>~945 TWh</b>’a çıkması bekleniyor (IEA, 2025). Donanım verimliliği tartışılırken yazılımın kendisi çoğu zaman gözden kaçıyor: bir döngüdeki tek satırlık israf, günde milyonlarca kez çalıştığında gerçek bir elektrik ve karbon yüküne dönüşüyor. Geliştiriciler bu yükü göremiyor, çünkü kod satırının enerjisi hiçbir yerde ölçülmüyor ve gösterilmiyor.</p>
+
+  <h2><i>02</i>Çözüm: dört adım</h2>
+  <div class="steps">
+    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; altı israf kalıbı satır satır işaretlenir.</span></div>
+    <div class="step"><b><i>2</i>Düzelt</b><span>Motor dört kalıbı AST üzerinde yeniden yazar ve değişikliği satır satır fark olarak gösterir.</span></div>
+    <div class="step"><b><i>3</i>Doğrula</b><span>Özgün ve düzeltilmiş kod aynı veriyle çalıştırılır; çıktı birebir aynı değilse düzeltme reddedilir.</span></div>
+    <div class="step"><b><i>4</i>Ölç</b><span>İki sürüm aynı sayıda isteği işler; işlemci enerjisi ölçülür ve karbona çevrilir.</span></div>
+  </div>
+
+  <table>
+    <thead><tr><th>KURAL</th><th>İSRAF KALIBI</th><th>ÖNEM</th><th>MOTORUN DÜZELTMESİ</th></tr></thead>
+    <tbody>
+      <tr><td>YK001</td><td>Döngü içinde veritabanı sorgusu (N+1)</td><td>yüksek</td><td class="ok">Döngüden önce tek toplu IN sorgusu</td></tr>
+      <tr><td>YK002</td><td>Döngü içinde listede arama</td><td>yüksek</td><td class="ok">Döngüden önce set() ile küme</td></tr>
+      <tr><td>YK003</td><td>Döngüde değişmeyen işi tekrar yapma</td><td>orta</td><td class="ok">Çağrıyı döngü dışına taşıma</td></tr>
+      <tr><td>YK004</td><td>Önbelleksiz çift özyineleme</td><td>yüksek</td><td class="ok">functools.lru_cache ekleme</td></tr>
+      <tr><td>YK005</td><td>Sürekli sorgulama (polling)</td><td>orta</td><td class="no">Öneri: olay tabanlı yapı</td></tr>
+      <tr><td>YK006</td><td>İç içe döngü, O(n²)</td><td>bilgi</td><td class="no">Öneri: sözlükle tek geçiş</td></tr>
+    </tbody>
+  </table>
+
+  <div class="two">
+    <div>
+      <h2><i>03</i>Nasıl kullanılır</h2>
+      <ul class="l">
+        <li><b>Canlı panel:</b> stant ekranında düzeltme, eşdeğerlik testi ve enerji yarışı.</li>
+        <li><b>Komut satırı:</b> analiz, düzeltme, ölçüm ve rapor.</li>
+        <li><b>Sürekli entegrasyon:</b> her pull request’te rapor; yüksek bulguda kontrol durur.</li>
+        <li><b>Web:</b> ziyaretçi kendi kodunu telefonunda analiz eder; kod cihazdan çıkmaz.</li>
+      </ul>
+    </div>
+    <div>
+      <h2><i>04</i>Teknik yapı</h2>
+      <ul class="l">
+        <li>Yalnızca Python standart kütüphanesi; kurulum ve internet gerektirmez.</li>
+        <li>Linux’ta Intel/AMD <b>RAPL</b> enerji sayaçları; diğer sistemlerde işlemci süresi × çekirdek gücü.</li>
+        <li>13 birim testi: kurallar, düzeltmeler, eşdeğerlik, ölçer ve rapor.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pn">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="bar"><div class="word">yeşil<span>kod</span></div><span>PROJE ÖZETİ · SONUÇLAR VE YÖNTEM</span></div>
+
+  <h2><i>05</i>Sonuçlar</h2>
+  <p class="t">Her senaryo gerçek projelerde sık görülen bir israfı temsil eder. Düzeltilmiş kodların hiçbiri elle yazılmadı; hepsini motor üretti ve hepsi eşdeğerlik testinden geçti.</p>
+  <table>
+    <thead><tr><th>SENARYO</th><th>İSRAF → MOTORUN DÜZELTMESİ</th><th>GERÇEK HAYATTA</th><th>ENERJİ AZALMASI</th></tr></thead>
+    <tbody>
+      <tr><td>Rota sayısı</td><td>önbelleksiz çift özyineleme → lru_cache</td><td>rota, fiyat ve öneri hesapları</td><td class="big">3.640–4.049×</td></tr>
+      <tr><td>Yoklama kontrolü</td><td>4.500 numara, 6.000’lik listede aranıyor → set()</td><td>yoklama, stok, yetki kontrolleri</td><td class="big">456–698×</td></tr>
+      <tr><td>Fiyat listesi</td><td>ayar ve desen her üründe yeniden hazırlanıyor → döngü dışına</td><td>her istekte ayar okuyan API’ler</td><td class="big">51–55×</td></tr>
+      <tr><td>Sipariş raporu</td><td>4.000 sipariş için ayrı müşteri sorgusu → toplu IN</td><td>e-ticaret listeleri, paneller</td><td class="big">2,4–2,9×</td></tr>
+    </tbody>
+  </table>
+  <p class="fine">İstek başına işlemci enerjisindeki azalma; 26 Ekim 2026’da aynı bilgisayarda (Apple M4) dört ayrı ölçüm, tahmini mod. Her ölçüm 5 tekrarın ortalamasıdır. Sipariş raporunda veritabanı sorgu sayısı 4.001’den 2’ye iner; veritabanı aynı bilgisayarda olduğundan ağ tasarrufu bu orana dahil değildir. Yoklama satırı günde 1 milyon istekte yılda yaklaşık 41–89 kg CO₂e salıyordu.</p>
+
+  <div class="two">
+    <div>
+      <h2><i>06</i>Ölçüm yöntemi</h2>
+      <ul class="l">
+        <li><b>Karbon:</b> SCI = (E × I + M) / R. E ölçülen enerji, I Türkiye şebekesi 341 gCO₂e/kWh (Ağu 2025–Tem 2026), R istek başına.</li>
+        <li><b>Adalet:</b> kısa süren kod, sayaçların ölçebileceği süreye kadar tekrarlanır; her sonuç 5 tekrarın ortalamasıdır.</li>
+        <li><b>Önbellek:</b> düzeltilmiş koddaki önbellekler her istekten önce temizlenir; kazanç önceki çalıştırmadan gelmez.</li>
+        <li><b>Boşta tüketim:</b> RAPL modunda ölçüm sırasındaki boşta güç çıkarılır.</li>
+      </ul>
+    </div>
+    <div>
+      <h2><i>07</i>Dürüst sınırlar</h2>
+      <ul class="l a">
+        <li>Yalnızca işlemci enerjisi ölçülür; bellek, ağ, disk ve soğutma dahil değildir. Gösterilen kazanç alt sınırdır.</li>
+        <li>Tahmini modda mutlak değerlerden çok oranlar güvenilirdir; oranlar makineden makineye değişir.</li>
+        <li>Düzeltme motoru şimdilik Python içindir ve yorum satırlarını korumaz.</li>
+        <li>Karbon yoğunluğu yıllık ortalamadır; şebeke saatten saate değişir.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><i>08</i>Yol haritası</h2>
+  <ul class="l">
+    <li><b>Daha fazla dil:</b> JavaScript/TypeScript ve Java için aynı dört adımlı yapı.</li>
+    <li><b>Tam SCI:</b> donanımın gömülü emisyonunu (M) ve bellek enerjisini hesaba katmak.</li>
+    <li><b>Karbon-farkında zamanlama:</b> EPİAŞ’ın saatlik üretim verisiyle ağır işleri şebekenin temiz olduğu saatlere kaydırmak.</li>
+    <li><b>Geliştirici araçları:</b> editör eklentisi ve hazır sürekli entegrasyon adımı.</li>
+    <li><b>Pilot:</b> üniversitedeki öğrenci yazılım projelerinde israf taraması ve ölçülen tasarrufun raporlanması.</li>
+  </ul>
+
+  <h2><i>09</i>Sürdürülebilir Kalkınma Amaçları</h2>
+  <div class="sdg">
+    <div><b>7</b>Erişilebilir ve temiz enerji: aynı işi daha az elektrikle yapmak</div>
+    <div><b>9</b>Sanayi, yenilikçilik ve altyapı: verimli dijital altyapı</div>
+    <div><b>12</b>Sorumlu üretim ve tüketim: hesaplama kaynağını israf etmemek</div>
+    <div><b>13</b>İklim eylemi: yazılımın karbonunu ölçülebilir kılmak</div>
+  </div>
+
+  <div class="foot">
+    <div><div class="qr"><img src="/stant/qr/qr-proje-sayfasi.svg" alt="QR"></div><div class="c">Proje sayfası</div></div>
+    <p><b>{{site_kisa}}</b> · film, sonuçlar ve telefonda deneme<br><b>{{repo_kisa}}</b> · kaynak kod, kurulum ve testler<br>Kaynaklar: IEA, Energy and AI (2025) · Low-Carbon Power, Türkiye (Ağu 2025–Tem 2026) · Green Software Foundation, Software Carbon Intensity (ISO/IEC 21031:2024)</p>
+    <div><div class="qr"><img src="/stant/qr/qr-kaynak-kod.svg" alt="QR"></div><div class="c">Kaynak kod</div></div>
+  </div>
+  <div class="pn">2 / 2</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Yeşil Kod · Ekran sunumu 16:9</title>
+<link rel="stylesheet" href="/stant/kaynak/ortak.css">
+<style>
+/* 16:9 slaytlar (1280 × 720 px). Dijital ekranda tam ekran PDF olarak ya da
+   toplantılarda sunum olarak kullanılır. */
+@page{size:1280px 720px;margin:0}
+.page{width:1280px;height:720px;padding:64px 80px;display:flex;flex-direction:column;background:var(--mineral)}
+.page.dark{background:var(--ink)}
+.k{font:600 13px/1 var(--mono);letter-spacing:.09em;color:var(--moss)}
+.dark .k{color:var(--leaf)}
+.k span{color:var(--ink3)} .dark .k span{color:var(--mist)}
+h2{font:700 50px/1.08 var(--sans);letter-spacing:-.02em;margin-top:22px;max-width:980px}
+.sub{font:400 22px/1.45 var(--sans);color:var(--ink2);margin-top:16px;max-width:900px}
+.dark .sub{color:var(--mist2)}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;font:400 13px/1 var(--sans);color:var(--ink3)}
+.dark .foot{color:var(--mist)}
+.foot .word{font-size:20px}
+.n{font:600 13px/1 var(--mono)}
+
+/* 1 kapak */
+.cover .meta{display:flex;justify-content:space-between;font:600 13px/1 var(--mono);letter-spacing:.09em;color:var(--mist)}
+.cover .word{font-size:160px;margin-top:120px;margin-left:-4px}
+.cover h1{font:600 32px/1.25 var(--sans);margin-top:34px;max-width:900px;color:var(--paper)}
+.cover p{font:400 20px/1.5 var(--sans);color:var(--mist);margin-top:16px}
+
+/* 2 problem */
+.bars{display:grid;grid-template-columns:80px 1fr;gap:20px 20px;align-items:center;margin-top:56px;font:600 20px/1 var(--mono)}
+.bar{height:64px;display:flex;align-items:center}
+.bar i{display:block;height:100%;border-radius:4px}
+.bar b{font:700 34px/1 var(--mono);margin-left:20px;white-space:nowrap}
+.src{font:400 14px/1.4 var(--sans);color:var(--ink3);margin-top:22px}
+
+/* 3 tek satır / 5 düzeltme */
+.code{margin-top:40px;border:1px solid var(--line);border-radius:10px;overflow:hidden;font:400 26px/1.9 var(--mono);font-stretch:75%;padding:10px 0}
+.code div{padding:0 28px;white-space:pre}
+.light .code{border-color:var(--rule);background:var(--paper)}
+.light .code .eq{color:var(--ink2)}
+.code.tight{font-size:23px;line-height:1.75;margin-top:30px}
+.big .x .u{font-family:var(--sans);font-weight:700;font-stretch:100%;letter-spacing:-.02em;margin-left:14px}
+.light .del{background:var(--amber-tint);color:var(--amber-ink)}
+.light .del s{text-decoration-color:rgba(142,67,15,.5)}
+.light .add{background:var(--moss-tint);color:var(--moss-ink)}
+.big{display:flex;align-items:baseline;gap:28px;margin-top:44px}
+.big .x{font:700 128px/.9 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf)}
+.light .big .x{color:var(--moss)}
+.big p{font:400 24px/1.4 var(--sans);color:var(--mist2);max-width:620px}
+.light .big p{color:var(--ink2)}
+.big p b{color:var(--paper);font-weight:700}
+.light .big p b{color:var(--ink)}
+.check{display:flex;align-items:center;gap:14px;margin-top:28px;font:600 22px/1 var(--sans)}
+.check i{width:30px;height:30px;border-radius:50%;border:3px solid var(--moss);display:inline-flex;align-items:center;justify-content:center;font:700 16px/1 var(--sans);font-style:normal;color:var(--moss)}
+
+/* 4 adımlar */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:36px;margin-top:64px}
+.step{border-top:3px solid var(--ink);padding-top:22px}
+.step .num{font:700 56px/1 var(--mono);color:var(--moss)}
+.step h3{font:700 34px/1.1 var(--sans);margin-top:16px}
+.step p{font:400 19px/1.45 var(--sans);color:var(--ink2);margin-top:12px}
+
+/* 6 sonuçlar */
+.rows{margin-top:36px;border-top:3px solid var(--paper)}
+.r{display:flex;justify-content:space-between;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}
+.r h4{font:700 30px/1.1 var(--sans);color:var(--paper)}
+.r h4 small{display:block;font:400 17px/1.3 var(--sans);color:var(--mist);margin-top:4px}
+.r .x{font:700 60px/1 var(--mono);font-stretch:112.5%;letter-spacing:-.045em;color:var(--leaf);white-space:nowrap}
+.r .x.sm{font-size:42px}
+
+/* 7 yöntem */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}
+.box{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:28px 32px}
+.box h3{font:700 26px/1.2 var(--sans)}
+.box .eq{font:600 28px/1 var(--mono);margin:18px 0 18px;white-space:nowrap}
+.box ul{list-style:none;display:flex;flex-direction:column;gap:10px;font:400 18px/1.45 var(--sans);color:var(--ink2)}
+.box ul b{font-family:var(--mono);color:var(--ink);display:inline-block;width:30px}
+.box ul.dot li{padding-left:20px;position:relative}
+.box ul.dot li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--amber)}
+
+/* 8 yol haritası */
+.road{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;margin-top:36px}
+.road ul{list-style:none;display:flex;flex-direction:column;gap:16px}
+.road li{font:400 19px/1.4 var(--sans);color:var(--ink2);padding-left:24px;position:relative}
+.road li::before{content:"";position:absolute;left:0;top:9px;width:10px;height:10px;border-radius:50%;background:var(--moss)}
+.road li b{color:var(--ink);font-weight:700}
+.sdg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sdg div{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;font:400 16px/1.35 var(--sans);color:var(--ink2)}
+.sdg b{display:block;font:700 36px/1 var(--mono);color:var(--moss);margin-bottom:8px}
+
+/* 9 kapanış */
+.end{display:grid;grid-template-columns:1fr 340px;gap:72px;align-items:center;margin-top:30px}
+.end h2{font-size:60px;margin-top:0}
+.end .qr{padding:22px;border-radius:14px}
+.url{display:inline-flex;align-items:center;gap:12px;font:500 22px/1 var(--mono);font-stretch:87.5%;margin-top:32px;padding:14px 22px;border:1px solid var(--line);border-radius:99px;color:var(--paper)}
+.url i{font-style:normal;color:var(--leaf)}
+</style>
+</head>
+<body>
+
+<div class="page dark cover">
+  <div class="meta"><span>SAKARYA ÜNİVERSİTESİ · COP31 YEŞİL BÖLGE</span><span>ANTALYA · 2026</span></div>
+  <div class="word">yeşil<span>kod</span></div>
+  <h1>{{proje_adi}}</h1>
+  <p>Proje ekibi: {{ekip}} {{danisman_satiri}}</p>
+  <div class="foot"><span>Yazılımın enerjisini ölçer, israfı düzeltir, kazancı kanıtlar.</span><span class="n">01</span></div>
+</div>
+
+<div class="page light">
+  <div class="k">PROBLEM</div>
+  <h2>Veri merkezlerinin elektrik tüketimi altı yılda iki katını aşıyor.</h2>
+  <div class="bars">
+    <span>2024</span><div class="bar"><i style="width:40%;background:var(--ink)"></i><b>415 TWh</b></div>
+    <span>2030</span><div class="bar"><i style="width:84%;background:var(--amber)"></i><b style="color:var(--amber-ink)">~945 TWh</b></div>
+  </div>
+  <p class="src">Kaynak: IEA, Energy and AI (2025). 2030 değeri temel senaryo beklentisidir.</p>
+  <p class="sub" style="margin-top:40px">Bu enerjinin bir kısmı kimsenin fark etmediği yazılım israfına gidiyor. Kod satırının enerjisi hiçbir yerde ölçülmüyor ve gösterilmiyor.</p>
+  <div class="foot"><div class="word">yeşil<span>kod</span></div><span class="n">02</span></div>
+</div>
+
+<div class="page dark">
+  <div class="k">TEK SATIR</div>
+  <h2>Bu satır ne kadar elektrik harcıyor?</h2>
+  <div class="code"><div>def yoklama_kontrol():</div><div>    kayitlilar = list(KAYITLAR)</div><div>    return [no for no in GELENLER if no in kayitlilar]</div></div>
+  <div class="big"><div class="x">41<span class="u">kg</span></div><p><b>CO₂e, yılda, yalnızca bu satırdan.</b><br>Günde 1 milyon istek, bir yıl boyunca, Türkiye şebekesinde.</p></div>
+  <div class="foot"><div class="word">yeşil<span>kod</span></div><span class="n">03</span></div>
+</div>
+
+<div class="page light">
+  <div class="k">ÇÖZÜM</div>
+  <h2>Ölçülmeyen şey optimize edilemez. Yeşil Kod dört adımda çalışır.</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Bul</h3><p>Kodun sözdizimi ağacını tarar, enerji israf eden altı kalıbı satır satır işaretler.</p></div>
+    <div class="step"><div class="num">2</div><h3>Düzelt</h3><p>Dört kalıbı kendisi yeniden yazar: toplu sorgu, küme, döngü dışına taşıma, önbellek.</p></div>
+    <div class="step"><div class="num">3</div><h3>Doğrula</h3><p>İki sürümü de çalıştırır. Çıktılar birebir aynı değilse düzeltmeyi reddeder.</p></div>
+    <div class="step"><div class="num">4</div><h3>Ölç</h3><p>İşlemcinin enerji sayaçlarını okur, kazancı karbona çevirir.</p></div>
+  </div>
+  <div class="foot"><div class="word">yeşil<span>kod</span></div><span class="n">04</span></div>
+</div>
+
+<div class="page light">
+  <div class="k">DÜZELTME</div>
+  <h2>Motor satırı kendisi yeniden yazdı.</h2>
+  <div class="code tight"><div class="eq">  def yoklama_kontrol():</div><div class="eq">      kayitlilar = list(KAYITLAR)</div><div class="del">− <s>    return [no for no in GELENLER if no in kayitlilar]</s></div><div class="add">+     kayitlilar_kume = set(kayitlilar)</div><div class="add">+     return [no for no in GELENLER if no in kayitlilar_kume]</div></div>
+  <div class="check"><i>✓</i>2.000 kayıtlık çıktı iki sürümde birebir aynı.</div>
+  <div class="big" style="margin-top:20px"><div class="x" style="font-size:96px">465×</div><p><b>daha az enerji, aynı sonuç.</b><br>Aynı sayıda istek, iki sürüm, aynı bilgisayar.</p></div>
+  <div class="foot"><div class="word">yeşil<span>kod</span></div><span class="n">05</span></div>
+</div>
+
+<div class="page dark">
+  <div class="k">SONUÇLAR</div>
+  <h2>Dört gerçek israf. Dördünü de motor düzeltti.</h2>
+  <div class="rows">
+    <div class="r"><h4>Rota sayısı<small>önbelleksiz çift özyineleme → lru_cache</small></h4><div class="x">~4.000×</div></div>
+    <div class="r"><h4>Yoklama kontrolü<small>döngüde listede arama → set()</small></h4><div class="x">465×</div></div>
+    <div class="r"><h4>Fiyat listesi<small>döngüde değişmeyen iş → döngü dışına</small></h4><div class="x">51×</div></div>
+    <div class="r"><h4>Sipariş raporu<small>N+1 sorgu → tek toplu IN sorgusu</small></h4><div class="x sm">4.001 → 2 sorgu</div></div>
+  </div>
+  <div class="foot"><span>İstek başına işlemci enerjisinde azalma · tahmini mod · 26 Ekim 2026 · düzeltmelerin hiçbiri elle yazılmadı</span><span class="n">06</span></div>
+</div>
+
+<div class="page light">
+  <div class="k">YÖNTEM</div>
+  <h2>Kazancı abartmadan ölçüyoruz.</h2>
+  <div class="cols">
+    <div class="box">
+      <h3>Karbon hesabı</h3>
+      <div class="eq">SCI = (E × I + M) / R</div>
+      <ul>
+        <li><b>E</b>ölçülen işlemci enerjisi (Linux’ta RAPL sayaçları)</li>
+        <li><b>I</b>Türkiye şebekesi, 341 gCO₂e/kWh</li>
+        <li><b>M</b>donanımın gömülü emisyonu (sonraki aşama)</li>
+        <li><b>R</b>istek başına</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Dürüst sınırlar</h3>
+      <ul class="dot" style="margin-top:18px">
+        <li>Yalnızca işlemci enerjisi ölçülür; bellek, ağ ve soğutma dahil değil. Gösterilen kazanç alt sınırdır.</li>
+        <li>Her sonuç 5 tekrarın ortalamasıdır; önbellekler her istekten önce temizlenir.</li>
+        <li>Tahmini modda oranlar mutlak değerlerden daha güvenilirdir.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Software Carbon Intensity: Green Software Foundation, ISO/IEC 21031:2024 · Şebeke: Low-Carbon Power, Ağu 2025–Tem 2026</span><span class="n">07</span></div>
+</div>
+
+<div class="page light">
+  <div class="k">SONRAKİ ADIMLAR</div>
+  <h2>Prototipten yaygın kullanıma.</h2>
+  <div class="road">
+    <ul>
+      <li><b>Daha fazla dil:</b> JavaScript/TypeScript ve Java.</li>
+      <li><b>Tam SCI:</b> gömülü emisyon ve bellek enerjisi.</li>
+      <li><b>Karbon-farkında zamanlama:</b> EPİAŞ saatlik verisiyle ağır işleri temiz saatlere kaydırmak.</li>
+      <li><b>Geliştirici araçları:</b> editör eklentisi, hazır CI adımı.</li>
+      <li><b>Pilot:</b> üniversitedeki öğrenci yazılım projelerinde israf taraması.</li>
+    </ul>
+    <div class="sdg">
+      <div><b>7</b>Erişilebilir ve temiz enerji</div>
+      <div><b>9</b>Sanayi, yenilikçilik ve altyapı</div>
+      <div><b>12</b>Sorumlu üretim ve tüketim</div>
+      <div><b>13</b>İklim eylemi</div>
+    </div>
+  </div>
+  <div class="foot"><div class="word">yeşil<span>kod</span></div><span class="n">08</span></div>
+</div>
+
+<div class="page dark">
+  <div class="k">TELEFONUNLA TARA <span>· SCAN ME</span></div>
+  <div class="end">
+    <div>
+      <h2>Kendi kodunu telefonunda dene.</h2>
+      <p class="sub">Python kodunu yapıştır ya da bir örnek seç. Motor israfı bulur ve kodu yeniden yazar; kodun telefonundan çıkmaz.</p>
+      <div class="url"><i>→</i>{{site_kisa}}</div>
+    </div>
+    <div class="qr"><img src="/stant/qr/qr-kodunu-dene.svg" alt="QR"></div>
+  </div>
+  <div class="foot"><div class="word">yeşil<span>kod</span></div><span>{{kurum}} · {{ekip}} · Açık kaynak: {{repo_kisa}}</span></div>
+</div>
+
+</body>
+</html>

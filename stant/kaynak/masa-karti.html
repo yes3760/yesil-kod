@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Yeşil Kod · Masa kartı</title>
+<link rel="stylesheet" href="/stant/kaynak/ortak.css">
+<style>
+/* A4 dikey, ortadan (148,5 mm) katlanır: masada çatı gibi durur.
+   Üst yarı ters basılır; katlanınca iki yüz de düz okunur. Bir yüz Türkçe, öbürü İngilizce. */
+@page{size:210mm 297mm;margin:0}
+.page{width:210mm;height:297mm;background:#fff}
+.half{position:absolute;left:0;width:210mm;height:148.5mm;padding:9mm}
+.half.top{top:0;transform:rotate(180deg)}
+.half.bot{top:148.5mm}
+.panel{height:100%;border-radius:5mm;padding:11mm 12mm 10mm;display:grid;grid-template-columns:1fr 74mm;grid-template-rows:1fr auto;column-gap:10mm}
+.scan{font:600 8.5pt/1 var(--mono);letter-spacing:.09em;color:var(--leaf)}
+h1{font:700 27pt/1.06 var(--sans);letter-spacing:-.015em;margin-top:4.5mm}
+p{font:400 10.5pt/1.45 var(--sans);color:var(--mist2);margin-top:4mm;max-width:88mm}
+.url{display:inline-flex;align-items:center;gap:2.5mm;font:500 10pt/1 var(--mono);font-stretch:87.5%;margin-top:6mm;padding:2.6mm 4mm;border:.3mm solid var(--line);border-radius:99mm}
+.url i{font-style:normal;color:var(--leaf)}
+.qr{grid-row:1/3;grid-column:2;align-self:center;padding:5mm;border-radius:3mm}
+.foot{display:flex;align-items:baseline;gap:4mm;border-top:.3mm solid var(--line);padding-top:4mm;margin-top:6mm}
+.foot .word{font-size:17pt}
+.foot > span{font:400 8pt/1.3 var(--sans);color:var(--mist)}
+.fold{position:absolute;left:0;right:0;top:148.5mm;border-top:.25mm dashed #9AA59D}
+.fold span{position:absolute;right:10mm;top:-2mm;background:#fff;padding:0 2mm;font:400 6.5pt/1 var(--sans);color:#8A958D}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="half top">
+    <div class="panel dark">
+      <div>
+        <div class="scan">SCAN ME</div>
+        <h1>Try your own code on your phone.</h1>
+        <p>Paste Python code or pick an example. The engine finds the energy waste and rewrites it. Your code never leaves your phone.</p>
+        <div class="url"><i>→</i>{{site_kisa}}</div>
+      </div>
+      <div class="qr"><img src="/stant/qr/qr-try-en.svg" alt="QR"></div>
+      <div class="foot"><div class="word">yeşil<span>kod</span></div><span>COP31 Green Zone · {{kurum_en}}</span></div>
+    </div>
+  </div>
+  <div class="fold"><span>katlama çizgisi</span></div>
+  <div class="half bot">
+    <div class="panel dark">
+      <div>
+        <div class="scan">TELEFONUNLA TARA</div>
+        <h1>Kendi kodunu telefonunda dene.</h1>
+        <p>Python kodunu yapıştır ya da bir örnek seç. Motor enerji israfını bulur ve kodu yeniden yazar. Kodun telefonundan çıkmaz.</p>
+        <div class="url"><i>→</i>{{site_kisa}}</div>
+      </div>
+      <div class="qr"><img src="/stant/qr/qr-kodunu-dene.svg" alt="QR"></div>
+      <div class="foot"><div class="word">yeşil<span>kod</span></div><span>COP31 Yeşil Bölge · {{kurum}}</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
