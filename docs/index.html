@@ -51,7 +51,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* giriş */
 .dark{background:var(--ink);color:var(--paper)}
-.hero{padding:56px 0 64px}
+.hero{padding-top:56px;padding-bottom:64px}
 .kicker{font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:#A9B8AE;text-transform:uppercase}
 .hero h1{font-family:var(--mono);font-weight:700;font-stretch:100%;font-size:clamp(30px,6.4vw,56px);line-height:1.08;letter-spacing:-.035em;margin:18px 0 18px;max-width:17ch}
 .hero h1 em{font-style:normal;color:var(--leaf)}
@@ -71,6 +71,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .line-story .res{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:baseline;padding:16px;border-top:1px solid #3A4740}
 .line-story .big{font-family:var(--mono);font-weight:700;font-stretch:112.5%;font-size:clamp(44px,10vw,72px);line-height:1;color:var(--leaf);letter-spacing:-.04em}
 .line-story .res p{color:#C9D3CC;max-width:40ch}
+@media (max-width:520px){.hero{padding-top:36px}.line-story pre{font-size:10.5px}.line-story pre div{padding:0 12px}}
 
 /* bölümler */
 section{padding:64px 0}
