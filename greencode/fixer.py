@@ -9,6 +9,8 @@ yine de sonucun aynı olduğu her zaman çalıştırılarak doğrulanmalıdır
   YK002  Döngüde listede arama            ->  döngüden önce set()
   YK003  Döngüde değişmeyen iş            ->  döngüden önce bir kez
   YK004  Önbelleksiz çift özyineleme      ->  @functools.lru_cache
+  YK011  sorted(x)[0]                     ->  min(x)  (reverse=True ise max(x))
+  YK029  for ... in list(range(...))      ->  for ... in range(...)
 
 Düzeltmeler özgün kaynağa satır düzeyinde yerleştirilir: yalnızca değişen
 ifadeler yeniden yazılır; yorumlar, boş satırlar ve biçim olduğu gibi kalır.
@@ -56,12 +58,13 @@ def _mutated(node):
     out = set()
     for n in ast.walk(node):
         if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and isinstance(n.func.value, ast.Name):
-            if n.func.attr in {"append", "extend", "insert", "remove", "pop", "clear", "sort", "reverse"}:
+            if n.func.attr in {"append", "extend", "insert", "remove", "pop", "clear", "sort", "reverse",
+                               "update", "setdefault", "popitem", "add", "discard"}:
                 out.add(n.func.value.id)
-        if isinstance(n, (ast.Assign, ast.AugAssign)):
-            targets = n.targets if isinstance(n, ast.Assign) else [n.target]
+        if isinstance(n, (ast.Assign, ast.AugAssign, ast.Delete)):
+            targets = n.targets if isinstance(n, (ast.Assign, ast.Delete)) else [n.target]
             for t in targets:
-                if isinstance(t, ast.Subscript) and isinstance(t.value, ast.Name):
+                if isinstance(t, (ast.Subscript, ast.Attribute)) and isinstance(t.value, ast.Name):
                     out.add(t.value.id)
     return out
 
@@ -98,6 +101,49 @@ class _Names:
         return name
 
 
+class _Rewrite(ast.NodeTransformer):
+    """İfade düzeyindeki küçük dönüşümler (YK011, YK029)."""
+
+    def __init__(self, fixes):
+        self.fixes = fixes
+
+    def visit_Subscript(self, node):
+        self.generic_visit(node)
+        v, s = node.value, node.slice
+        if isinstance(v, ast.Call) and isinstance(v.func, ast.Name) and v.func.id == "sorted" \
+                and len(v.args) == 1 and isinstance(s, ast.Constant) and s.value == 0 and not isinstance(s.value, bool) \
+                and all(k.arg in ("key", "reverse") for k in v.keywords):
+            rev = [k for k in v.keywords if k.arg == "reverse"]
+            if rev and not (isinstance(rev[0].value, ast.Constant) and isinstance(rev[0].value.value, bool)):
+                return node
+            # sorted kararlıdır: ilk eleman, min'in (reverse=True ise max'ın) bulduğu ilk eleman
+            fn = "max" if rev and rev[0].value.value else "min"
+            self.fixes.append(Fix("YK011", node.lineno, f"Sıralayıp ilk elemanı almak yerine {fn}() kullanıldı; tek geçiş."))
+            return ast.copy_location(ast.Call(func=ast.Name(id=fn, ctx=ast.Load()), args=v.args,
+                                              keywords=[k for k in v.keywords if k.arg == "key"]), node)
+        return node
+
+    def _unlist(self, it):
+        if isinstance(it, ast.Call) and isinstance(it.func, ast.Name) and it.func.id == "list" and len(it.args) == 1 \
+                and not it.keywords and isinstance(it.args[0], ast.Call) and isinstance(it.args[0].func, ast.Name) \
+                and it.args[0].func.id == "range":
+            self.fixes.append(Fix("YK029", it.lineno, "list(range(...)) yerine doğrudan range(...) gezildi; kopya oluşturulmaz."))
+            return it.args[0]
+        return it
+
+    def visit_For(self, node):
+        self.generic_visit(node)
+        node.iter = self._unlist(node.iter)
+        return node
+
+    visit_AsyncFor = visit_For
+
+    def visit_comprehension(self, node):
+        self.generic_visit(node)
+        node.iter = self._unlist(node.iter)
+        return node
+
+
 # ------------------------------------------------------------ motor
 class Fixer:
     def __init__(self, code: str):
@@ -115,6 +161,7 @@ class Fixer:
         for node in list(ast.walk(self.tree)):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 node.body = self._body(node.body, set(self.module_lists))
+        self.tree = _Rewrite(self.fixes).visit(self.tree)
         if self.need_functools:
             self._import_functools()
         ast.fix_missing_locations(self.tree)
@@ -220,7 +267,8 @@ class Fixer:
                 if isinstance(b, ast.Assign) and len(b.targets) == 1 and isinstance(b.targets[0], ast.Name) \
                         and isinstance(b.value, ast.Call) and _call_key(b.value) in INVARIANT_CALLS \
                         and not (_loads(b.value) & loop_vars) and assigned_count.get(b.targets[0].id) == 1 \
-                        and not (b.targets[0].id in _loads(stmt.iter)):
+                        and not (b.targets[0].id in _loads(stmt.iter)) \
+                        and b.targets[0].id not in _mutated(stmt):           # sonuç döngüde değiştiriliyorsa taşınmaz
                     pre.append(b)
                     self.fixes.append(Fix("YK003", b.lineno,
                                           f"{ast.unparse(b.value.func)}(...) döngü dışına taşındı; bir kez çalışır."))

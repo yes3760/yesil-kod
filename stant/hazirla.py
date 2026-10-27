@@ -145,7 +145,7 @@ def site():
         ornek = (ROOT / "ornekler" / "kurallar" / f"{kod}.py").read_text("utf-8")
         duzeltmeler = fixer.fix(ornek)[2]
         kurallar.append({"kural": kod, "baslik": baslik, "onem": onem, "oneri": oneri, "ornek": ornek,
-                         "otomatik": any(f.kural == kod for f in duzeltmeler)})
+                         "kategori": analyzer.CATEGORY_OF[kod], "otomatik": any(f.kural == kod for f in duzeltmeler)})
     (DOCS / "py" / "kurallar.json").write_text(json.dumps(kurallar, ensure_ascii=False, indent=1), "utf-8")
     (DOCS / ".nojekyll").write_text("")            # GitHub Pages __init__.py dosyasını gizlemesin
     print("site    docs/ güncellendi")

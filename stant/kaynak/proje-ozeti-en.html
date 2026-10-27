@@ -33,7 +33,7 @@ p.t b{color:var(--ink);font-weight:600}
 table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
 th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
 td{padding:1.25mm 2mm 1.25mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
-td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+td:first-child{color:var(--ink);font-weight:600}
 td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
 td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
 .ok{color:var(--moss);font-weight:600} .no{color:var(--ink3)}
@@ -73,24 +73,19 @@ ul.l b{color:var(--ink);font-weight:600}
 
   <h2><i>02</i>Solution: four steps</h2>
   <div class="steps">
-    <div class="step"><b><i>1</i>Find</b><span>Without running the code, its syntax tree (AST) is scanned and nine waste patterns are flagged line by line.</span></div>
-    <div class="step"><b><i>2</i>Fix</b><span>The engine rewrites four patterns and touches only the changed lines; comments and formatting are kept.</span></div>
+    <div class="step"><b><i>1</i>Find</b><span>Without running the code, its syntax tree (AST) is scanned and thirty waste patterns are flagged line by line.</span></div>
+    <div class="step"><b><i>2</i>Fix</b><span>The engine rewrites six patterns and touches only the changed lines; comments and formatting are kept.</span></div>
     <div class="step"><b><i>3</i>Verify</b><span>Original and fixed code run on the same data; if the output is not identical, the fix is rejected.</span></div>
     <div class="step"><b><i>4</i>Measure</b><span>Both versions handle the same number of requests; CPU energy is measured and converted to carbon.</span></div>
   </div>
 
   <table>
-    <thead><tr><th>RULE</th><th>WASTE PATTERN</th><th>SEVERITY</th><th>ENGINE’S FIX</th></tr></thead>
+    <thead><tr><th>CATEGORY</th><th>WASTE PATTERNS DETECTED</th><th>FIXED BY THE ENGINE</th></tr></thead>
     <tbody>
-      <tr><td>YK001</td><td>Database query inside a loop (N+1)</td><td>high</td><td class="ok">One batched IN query before the loop</td></tr>
-      <tr><td>YK002</td><td>List lookup inside a loop</td><td>high</td><td class="ok">set() built before the loop</td></tr>
-      <tr><td>YK003</td><td>Repeating loop-invariant work</td><td>medium</td><td class="ok">Call moved out of the loop</td></tr>
-      <tr><td>YK004</td><td>Uncached double recursion</td><td>high</td><td class="ok">functools.lru_cache added</td></tr>
-      <tr><td>YK005</td><td>Busy polling</td><td>medium</td><td class="no">Advice: event-driven design</td></tr>
-      <tr><td>YK006</td><td>Nested loop, O(n²)</td><td>info</td><td class="no">Advice: single pass with a dict</td></tr>
-      <tr><td>YK007</td><td>Iterating a pandas table row by row (iterrows, apply axis=1)</td><td>high</td><td class="no">Advice: vectorised pandas/numpy</td></tr>
-      <tr><td>YK008</td><td>HTTP request without a session in a loop</td><td>medium</td><td class="no">Advice: reuse the connection with requests.Session</td></tr>
-      <tr><td>YK009</td><td>Adding or removing at the front of a list</td><td>medium</td><td class="no">Advice: collections.deque</td></tr>
+      <tr><td>Database · 4</td><td>Query in a loop (N+1), SELECT *, fetching every row to count, filtering in Python</td><td class="ok">N+1 → one batched IN query</td></tr>
+      <tr><td>Loops &amp; algorithms · 14</td><td>List lookup, invariant work, uncached recursion, nested loop, removing from the front of a list, string concatenation, sorting for min/max, index/count, list inside any/all, rebuilding a list, joining with sum, searching dict values, re-processing unchanging text, needless list copy</td><td class="ok">set(), loop hoisting, lru_cache, min()/max(), copy removal</td></tr>
+      <tr><td>Data science · 3</td><td>Row-by-row pandas, growing arrays/tables in a loop, element-wise NumPy loop</td><td class="no">Advice: vectorised operations</td></tr>
+      <tr><td>Network, files &amp; resources · 9</td><td>Polling, HTTP without a session, reloading files/models, creating connections/pools, busy waiting, log formatting, readlines, copying through JSON, starting processes</td><td class="no">Advice: reuse, batch the work</td></tr>
     </tbody>
   </table>
 
@@ -109,7 +104,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l">
         <li>Python standard library only; no installation or internet needed.</li>
         <li>Intel/AMD <b>RAPL</b> counters on Linux, Apple’s CPU power data (<b>powermetrics</b>) on Mac; CPU time × per-core power without permission.</li>
-        <li>20 unit tests, run automatically on Python 3.9 and 3.13 with GitHub Actions on every change.</li>
+        <li>32 unit tests, run automatically on Python 3.9 and 3.13 with GitHub Actions on every change.</li>
       </ul>
     </div>
   </div>
@@ -147,7 +142,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l a">
         <li>Only CPU energy is measured; memory, network, disk and cooling are excluded. The gain shown is a lower bound.</li>
         <li>In estimated mode, ratios are more reliable than absolute values; ratios vary between machines.</li>
-        <li>The engine currently supports Python; it fixes four of the nine patterns automatically and advises on the rest.</li>
+        <li>The engine currently supports Python; it fixes six of the thirty patterns automatically and advises on the rest.</li>
         <li>Grid carbon intensity is an annual average; the grid changes hour by hour.</li>
       </ul>
     </div>

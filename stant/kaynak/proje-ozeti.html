@@ -33,7 +33,7 @@ p.t b{color:var(--ink);font-weight:600}
 table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
 th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
 td{padding:1.25mm 2mm 1.25mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
-td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+td:first-child{color:var(--ink);font-weight:600}
 td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
 td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
 .ok{color:var(--moss);font-weight:600} .no{color:var(--ink3)}
@@ -73,24 +73,19 @@ ul.l b{color:var(--ink);font-weight:600}
 
   <h2><i>02</i>Çözüm: dört adım</h2>
   <div class="steps">
-    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; dokuz israf kalıbı satır satır işaretlenir.</span></div>
-    <div class="step"><b><i>2</i>Düzelt</b><span>Motor dört kalıbı yeniden yazar; yalnızca değişen satırlara dokunur, yorumlar ve biçim korunur.</span></div>
+    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; otuz israf kalıbı satır satır işaretlenir.</span></div>
+    <div class="step"><b><i>2</i>Düzelt</b><span>Motor altı kalıbı yeniden yazar; yalnızca değişen satırlara dokunur, yorumlar ve biçim korunur.</span></div>
     <div class="step"><b><i>3</i>Doğrula</b><span>Özgün ve düzeltilmiş kod aynı veriyle çalıştırılır; çıktı birebir aynı değilse düzeltme reddedilir.</span></div>
     <div class="step"><b><i>4</i>Ölç</b><span>İki sürüm aynı sayıda isteği işler; işlemci enerjisi ölçülür ve karbona çevrilir.</span></div>
   </div>
 
   <table>
-    <thead><tr><th>KURAL</th><th>İSRAF KALIBI</th><th>ÖNEM</th><th>MOTORUN DÜZELTMESİ</th></tr></thead>
+    <thead><tr><th>KATEGORİ</th><th>ARANAN İSRAF KALIPLARI</th><th>MOTORUN KENDİ DÜZELTTİKLERİ</th></tr></thead>
     <tbody>
-      <tr><td>YK001</td><td>Döngü içinde veritabanı sorgusu (N+1)</td><td>yüksek</td><td class="ok">Döngüden önce tek toplu IN sorgusu</td></tr>
-      <tr><td>YK002</td><td>Döngü içinde listede arama</td><td>yüksek</td><td class="ok">Döngüden önce set() ile küme</td></tr>
-      <tr><td>YK003</td><td>Döngüde değişmeyen işi tekrar yapma</td><td>orta</td><td class="ok">Çağrıyı döngü dışına taşıma</td></tr>
-      <tr><td>YK004</td><td>Önbelleksiz çift özyineleme</td><td>yüksek</td><td class="ok">functools.lru_cache ekleme</td></tr>
-      <tr><td>YK005</td><td>Sürekli sorgulama (polling)</td><td>orta</td><td class="no">Öneri: olay tabanlı yapı</td></tr>
-      <tr><td>YK006</td><td>İç içe döngü, O(n²)</td><td>bilgi</td><td class="no">Öneri: sözlükle tek geçiş</td></tr>
-      <tr><td>YK007</td><td>Pandas tablosunu satır satır gezme (iterrows, apply axis=1)</td><td>yüksek</td><td class="no">Öneri: vektörel pandas/numpy işlemleri</td></tr>
-      <tr><td>YK008</td><td>Döngüde oturumsuz HTTP isteği</td><td>orta</td><td class="no">Öneri: requests.Session ile bağlantıyı yeniden kullanma</td></tr>
-      <tr><td>YK009</td><td>Listenin başından ekleme ya da çıkarma</td><td>orta</td><td class="no">Öneri: collections.deque</td></tr>
+      <tr><td>Veritabanı · 4</td><td>Döngüde sorgu (N+1), SELECT *, saymak için bütün satırları çekme, Python’da filtreleme</td><td class="ok">N+1 → tek toplu IN sorgusu</td></tr>
+      <tr><td>Döngü ve algoritma · 14</td><td>Listede arama, değişmeyen iş, önbelleksiz özyineleme, iç içe döngü, listenin başından çıkarma, metin birleştirme, min/max için sıralama, index/count, any/all içinde liste, listeyi yeniden oluşturma, sum ile birleştirme, sözlük değerlerinde arama, değişmeyen metni işleme, gereksiz liste kopyası</td><td class="ok">set(), döngü dışına taşıma, lru_cache, min()/max(), kopya kaldırma</td></tr>
+      <tr><td>Veri bilimi · 3</td><td>Pandas’ta satır satır gezme, döngüde dizi/tablo büyütme, NumPy’da eleman eleman döngü</td><td class="no">Öneri: vektörel işlemler</td></tr>
+      <tr><td>Ağ, dosya ve kaynaklar · 9</td><td>Polling, oturumsuz HTTP, dosya/model yeniden yükleme, bağlantı/havuz oluşturma, boş döngüyle bekleme, log biçimlendirme, readlines, JSON ile kopyalama, süreç başlatma</td><td class="no">Öneri: yeniden kullanma, toplu iş</td></tr>
     </tbody>
   </table>
 
@@ -109,7 +104,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l">
         <li>Yalnızca Python standart kütüphanesi; kurulum ve internet gerektirmez.</li>
         <li>Linux’ta Intel/AMD <b>RAPL</b> sayaçları, Mac’te Apple’ın işlemci güç verisi (<b>powermetrics</b>); izin yoksa işlemci süresi × çekirdek gücü.</li>
-        <li>20 birim testi; her değişiklikte GitHub Actions ile Python 3.9 ve 3.13’te otomatik çalışır.</li>
+        <li>32 birim testi; her değişiklikte GitHub Actions ile Python 3.9 ve 3.13’te otomatik çalışır.</li>
       </ul>
     </div>
   </div>
@@ -147,7 +142,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l a">
         <li>Yalnızca işlemci enerjisi ölçülür; bellek, ağ, disk ve soğutma dahil değildir. Gösterilen kazanç alt sınırdır.</li>
         <li>Tahmini modda mutlak değerlerden çok oranlar güvenilirdir; oranlar makineden makineye değişir.</li>
-        <li>Düzeltme motoru şimdilik Python içindir; dokuz kalıptan dördünü otomatik düzeltir, diğerleri için öneri verir.</li>
+        <li>Düzeltme motoru şimdilik Python içindir; otuz kalıptan altısını otomatik düzeltir, diğerleri için öneri verir.</li>
         <li>Karbon yoğunluğu yıllık ortalamadır; şebeke saatten saate değişir.</li>
       </ul>
     </div>

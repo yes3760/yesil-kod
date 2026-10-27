@@ -96,8 +96,8 @@
     <p class="sub" lang="tr">Ölçülmeyen şey optimize edilemez. Yeşil Kod dört adımda çalışır.</p>
     <p class="sub" lang="en">You cannot optimise what you do not measure. Yeşil Kod works in four steps.</p>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3><span lang="tr">Bul</span><span lang="en">Find</span></h3><p lang="tr">Statik analiz kodun sözdizimi ağacını tarar, enerji israf eden dokuz kalıbı satır satır işaretler.</p><p lang="en">Static analysis walks the syntax tree and flags nine energy-wasting patterns, line by line.</p></div>
-      <div class="step"><div class="n">2</div><h3><span lang="tr">Düzelt</span><span lang="en">Fix</span></h3><p lang="tr">Motor dört kalıbı kendisi yeniden yazar: toplu sorgu, kümeyle arama, döngü dışına taşıma, önbellek. Yorumlara ve biçime dokunmaz.</p><p lang="en">The engine rewrites four of them itself: batched query, set lookup, loop hoisting, caching. Comments and formatting stay untouched.</p></div>
+      <div class="step"><div class="n">1</div><h3><span lang="tr">Bul</span><span lang="en">Find</span></h3><p lang="tr">Statik analiz kodun sözdizimi ağacını tarar, enerji israf eden otuz kalıbı satır satır işaretler.</p><p lang="en">Static analysis walks the syntax tree and flags thirty energy-wasting patterns, line by line.</p></div>
+      <div class="step"><div class="n">2</div><h3><span lang="tr">Düzelt</span><span lang="en">Fix</span></h3><p lang="tr">Motor altı kalıbı kendisi yeniden yazar: toplu sorgu, kümeyle arama, döngü dışına taşıma, önbellek, sıralama yerine min/max, gereksiz kopyayı kaldırma. Yorumlara ve biçime dokunmaz.</p><p lang="en">The engine rewrites six of them itself: batched query, set lookup, loop hoisting, caching, min/max instead of sorting, removing needless copies. Comments and formatting stay untouched.</p></div>
       <div class="step"><div class="n">3</div><h3><span lang="tr">Doğrula</span><span lang="en">Verify</span></h3><p lang="tr">İki sürüm de çalıştırılır. Çıktılar birebir aynı değilse düzeltme reddedilir.</p><p lang="en">Both versions are run. If the outputs are not identical, the fix is rejected.</p></div>
       <div class="step"><div class="n">4</div><h3><span lang="tr">Ölç</span><span lang="en">Measure</span></h3><p lang="tr">İşlemcinin enerji sayaçları okunur; aynı iş için harcanan enerji karşılaştırılır ve karbona çevrilir.</p><p lang="en">CPU energy counters are read; the energy for the same work is compared and converted to carbon.</p></div>
     </div>
@@ -248,10 +248,11 @@
     <div class="ahead">
       <div>
         <h1><span lang="tr">Kurallar</span><span lang="en">Rules</span></h1>
-        <p lang="tr">Yeşil Kod’un aradığı dokuz enerji israfı kalıbı. Dördünü motor kendisi düzeltir, diğerleri için ne yapılacağını söyler. Her örneği Dashboard’da deneyebilirsin.</p>
-        <p lang="en">The nine energy-waste patterns Yeşil Kod looks for. The engine fixes four of them itself and advises on the rest. Try every example in the Dashboard.</p>
+        <p lang="tr">Yeşil Kod’un aradığı otuz enerji israfı kalıbı, dört grupta. Altısını motor kendisi düzeltir, diğerleri için ne yapılacağını söyler. Her örneği Dashboard’da deneyebilirsin.</p>
+        <p lang="en">The thirty energy-waste patterns Yeşil Kod looks for, in four groups. The engine fixes six of them itself and advises on the rest. Try every example in the Dashboard.</p>
       </div>
     </div>
+    <div class="chips" id="ruleCats" style="margin-bottom:14px"></div>
     <div class="rules" id="rules"></div>
   </div>
 </div>

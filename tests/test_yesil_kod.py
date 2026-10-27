@@ -20,7 +20,7 @@ def rules(code):
 
 class AnalyzerTests(unittest.TestCase):
     def test_ornek_dosyadaki_tum_kurallar(self):
-        self.assertEqual(sorted(set(rules(ORNEK))), [f"YK00{i}" for i in range(1, 10)])
+        self.assertTrue({f"YK00{i}" for i in range(1, 10)} <= set(rules(ORNEK)))
 
     def test_dongu_ifadesi_bir_kez_calisir_isaretlenmez(self):
         code = "def f(db):\n    for r in db.execute('SELECT 1'):\n        print(r)\n"
@@ -52,6 +52,29 @@ class AnalyzerTests(unittest.TestCase):
         for kod in analyzer.RULES:
             with self.subTest(kod):
                 self.assertIn(kod, rules((klasor / f"{kod}.py").read_text("utf-8")))
+
+    def test_yanlis_alarm_vermez(self):
+        temiz = {
+            "YK028": "def f(satirlar):\n    for s in satirlar:\n        s.split()\n",
+            "YK012": "def f(yollar):\n    for y in yollar:\n        open(y).read()\n",
+            "YK010": "def f(xs):\n    toplam = 0\n    for x in xs:\n        toplam += x\n    return toplam\n",
+            "YK013": "def f(xs, metin):\n    for x in xs:\n        metin.index(x)\n",
+            "YK015": "def f(x):\n    while x:\n        x = adim(x)\n",
+            "YK027": "def f(a):\n    for i in range(len(a)):\n        a[i] = a[i] * 2\n",
+            "YK029": "def f(d):\n    for k in list(d):\n        del d[k]\n",
+            "YK017": "def f(xs):\n    s = []\n    for x in xs:\n        s += [x]\n    return s\n",
+            "YK011": "def f(xs):\n    return sorted(xs)[1]\n",
+        }
+        for kural, kod in temiz.items():
+            with self.subTest(kural):
+                self.assertNotIn(kural, rules(kod))
+
+    def test_kurgu_kaynagi_bir_kez_calisir(self):
+        # Liste kurgusunun ilk kaynağı döngü değildir: dosyayı bir kez açar
+        self.assertNotIn("YK012", rules("def f(p):\n    return [s for s in open(p)]\n"))
+
+    def test_her_kuralin_bir_kategorisi_var(self):
+        self.assertEqual(sorted(analyzer.CATEGORY_OF), sorted(analyzer.RULES))
 
     def test_sozdizimi_hatasi(self):
         self.assertIsNotNone(analyzer.analyze("def (:")["hata"])
@@ -115,6 +138,30 @@ class FixerTests(unittest.TestCase):
         self.assertTrue(fixer.fix.bicim_korundu)
         self.assertIn("    elif k == 2:", new)
         self.assertIn("kayitlar_kume = set(kayitlar)", new)
+
+    def test_siralama_yerine_min_max_ayni_sonucu_verir(self):
+        code = ("def f(xs):\n    return (sorted(xs)[0], sorted(xs, key=lambda x: -x)[0],\n"
+                "            sorted(xs, reverse=True)[0], sorted(xs)[-1])\n")
+        new, _, fixes = fixer.fix(code)
+        self.assertEqual(sum(1 for f in fixes if f.kural == "YK011"), 3)    # [-1] bilerek düzeltilmez
+        ns_a, ns_b = {}, {}
+        exec(code, ns_a); exec(new, ns_b)
+        for xs in ([3, 1, 2], [5, 5, 1, 9, 9], [2.0, 2, 1, 2]):     # eşit ama farklı nesneler: kararlılık
+            self.assertEqual([repr(v) for v in ns_a["f"](xs)], [repr(v) for v in ns_b["f"](xs)])
+
+    def test_list_range_kopyasi_kaldirilir(self):
+        new, _, fixes = fixer.fix("def f(n):\n    return [i * i for i in list(range(n))]\n")
+        self.assertIn("for i in range(n)", new)
+        self.assertEqual([f.kural for f in fixes], ["YK029"])
+
+    def test_dongude_degistirilen_sonuc_disari_tasinmaz(self):
+        code = ("import json\ndef f(t, xs):\n    out = []\n    for x in xs:\n        ayar = json.loads(t)\n"
+                "        ayar['n'] = ayar.get('n', 0) + x\n        out.append(ayar['n'])\n    return out\n")
+        new, _, fixes = fixer.fix(code)
+        self.assertFalse([f for f in fixes if f.kural == "YK003"])
+        ns = {}
+        exec(new, ns)
+        self.assertEqual(ns["f"]('{"n": 1}', [1, 2]), [2, 3])
 
     def test_ayni_satirda_iki_ifade_guvenli_yola_doner(self):
         code = "def f(xs, k):\n    ks = list(k); return [x for x in xs if x in ks]\n"

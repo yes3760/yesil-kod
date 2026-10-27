@@ -7,8 +7,8 @@ Sakarya Üniversitesi · COP31 Yeşil Bölge projesi
 
 ## Ne yapar
 
-1. **Bulur.** Statik analiz, Python kodunun sözdizimi ağacını (AST) tarar ve enerji israf eden dokuz kalıbı satır satır işaretler.
-2. **Düzeltir.** Düzeltme motoru dört kalıbı kendisi yeniden yazar ve yalnızca değişen satırlara dokunur; yorumlar ve biçim korunur: döngüdeki tek kayıt sorgularını toplu `IN` sorgusuna, listede aramayı kümeye, döngüde değişmeyen işi döngü dışına taşır ve çift özyinelemeye önbellek ekler.
+1. **Bulur.** Statik analiz, Python kodunun sözdizimi ağacını (AST) tarar ve enerji israf eden otuz kalıbı satır satır işaretler.
+2. **Düzeltir.** Düzeltme motoru altı kalıbı kendisi yeniden yazar ve yalnızca değişen satırlara dokunur; yorumlar ve biçim korunur: döngüdeki tek kayıt sorgularını toplu `IN` sorgusuna, listede aramayı kümeye çevirir, döngüde değişmeyen işi döngü dışına taşır, çift özyinelemeye önbellek ekler, en küçüğü bulmak için sıralamayı `min()`/`max()` ile değiştirir ve gereksiz `list(range(...))` kopyasını kaldırır.
 3. **Doğrular.** Özgün ve düzeltilmiş kod çalıştırılır; çıktılar birebir aynı değilse düzeltme reddedilir.
 4. **Ölçer.** İşlemcinin enerji sayaçları okunur, aynı sayıda istek için harcanan enerji karşılaştırılır ve Türkiye şebekesinin karbon yoğunluğuyla gCO₂e'ye çevrilir.
 
@@ -67,7 +67,7 @@ python -m greencode rapor src/ --esik 0        # yüksek bulgu varsa çıkış k
 python -m unittest discover -s tests -v
 ```
 
-20 test: analiz kuralları, her senaryonun düzeltilip aynı sonucu vermesi, N+1 düzeltmesinin sorgu sayısını düşürmesi, düzeltmenin yorumları ve biçimi koruması, ölçer ve rapor. Her push'ta GitHub Actions ile Python 3.9 ve 3.13'te çalışır; Yeşil Kod kendi kodunu da denetler.
+32 test: analiz kuralları (her kuralın kendi örneği ve yanlış alarm denetimleri), her senaryonun düzeltilip aynı sonucu vermesi, N+1 düzeltmesinin sorgu sayısını düşürmesi, düzeltmenin yorumları ve biçimi koruması, ölçer ve rapor. Her push'ta GitHub Actions ile Python 3.9 ve 3.13'te çalışır; Yeşil Kod kendi kodunu da denetler.
 
 ## Ölçüm modları
 
@@ -97,8 +97,8 @@ Adalet kuralları: kısa süren kod sayaçların ölçebileceği süreye kadar t
 
 ```
 greencode/
-  analyzer.py   AST tabanlı statik analiz, 9 kural
-  fixer.py      AST tabanlı otomatik düzeltme, 4 dönüşüm; değişikliği özgün koda satır düzeyinde yerleştirir
+  analyzer.py   AST tabanlı statik analiz, 30 kural, 4 kategori
+  fixer.py      AST tabanlı otomatik düzeltme, 6 dönüşüm; değişikliği özgün koda satır düzeyinde yerleştirir
   proof.py      eşdeğerlik testi, sorgu sayacı, ölçüm, canlı yarış
   meter.py      enerji ölçer (RAPL, Mac powermetrics, tahmini mod), karbon ve yıllık projeksiyon
   scenarios.py  4 gerçekçi israflı kod senaryosu ve ortak verileri
@@ -112,7 +112,7 @@ ornekler/       örnek israflı kod, GitHub Action
 
 ## Proje sayfası ve stant malzemeleri
 
-`docs/` klasörü GitHub Pages ile yayınlanır. Site dört bölümden oluşur: **Proje** (tanıtım ve film), **Dashboard** (kodu yapıştır ya da dosya aç; bulgular editörde satır satır işaretlenir, düzeltme kopyalanır ya da indirilir), **Analizler** (bu cihazda yapılan bütün analizlerin geçmişi, grafikler, JSON/CSV dışa aktarma; yalnızca tarayıcıda saklanır) ve **Kurallar** (dokuz kuralın açıklaması ve denenebilir örnekleri, `ornekler/kurallar/`). Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder; standdaki motor Pyodide ile tarayıcıda (ayrı bir Web Worker'da) çalışır ve kod hiçbir yere gönderilmez. Hazır senaryolarda **Telefonunda ölç** düğmesi iki sürümü telefonda çalıştırır, çıktıların aynı olduğunu doğrular ve işlemci sürelerini karşılaştırır.
+`docs/` klasörü GitHub Pages ile yayınlanır. Site dört bölümden oluşur: **Proje** (tanıtım ve film), **Dashboard** (kodu yapıştır ya da dosya aç; bulgular editörde satır satır işaretlenir, düzeltme kopyalanır ya da indirilir), **Analizler** (bu cihazda yapılan bütün analizlerin geçmişi, grafikler, JSON/CSV dışa aktarma; yalnızca tarayıcıda saklanır) ve **Kurallar** (otuz kuralın dört gruptaki açıklaması ve denenebilir örnekleri, `ornekler/kurallar/`). Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder; standdaki motor Pyodide ile tarayıcıda (ayrı bir Web Worker'da) çalışır ve kod hiçbir yere gönderilmez. Hazır senaryolarda **Telefonunda ölç** düğmesi iki sürümü telefonda çalıştırır, çıktıların aynı olduğunu doğrular ve işlemci sürelerini karşılaştırır.
 
 `stant/` klasöründe COP31 için her şey var:
 
