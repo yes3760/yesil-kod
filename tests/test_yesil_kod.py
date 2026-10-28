@@ -64,10 +64,26 @@ class AnalyzerTests(unittest.TestCase):
             "YK029": "def f(d):\n    for k in list(d):\n        del d[k]\n",
             "YK017": "def f(xs):\n    s = []\n    for x in xs:\n        s += [x]\n    return s\n",
             "YK011": "def f(xs):\n    return sorted(xs)[1]\n",
+            "YK004": "def gez(d):\n    if d:\n        gez(d.sol)\n        gez(d.sag)\n",
+            "YK036": "def f(db, i):\n    return db.execute('SELECT ad FROM m WHERE id = ?', (i,)).fetchone()\n",
+            "YK082": "def f(m, i, j, v):\n    m[i][j] = v\n",
+            "YK034": "def f(resimler):\n    for r in resimler:\n        r.save('a.png')\n",
+            "YK062": "def f(x):\n    return list(set(x))\n",
+            "YK047": "def f(xs):\n    out = []\n    for x in xs:\n        p = []\n        p.append(x)\n        out.append(','.join(p))\n    return out\n",
+            "YK090": "def f(xs, birim):\n    for x in xs:\n        x.to(birim)\n",
+            "YK100": "def f(x):\n    print(x)\n",
+            "YK015": "def f(dosya):\n    while dosya.read(8192):\n        pass\n",
+            "YK012": "def f(yol):\n    while True:\n        try:\n            return open(yol)\n        except OSError:\n            pass\n",
+            "YK004 ": "def hanoi(n, a, b, c):\n    if n:\n        hanoi(n - 1, a, c, b)\n        print(a, c)\n        hanoi(n - 1, b, a, c)\n",
+            "YK056": "def f(xs):\n    for i in range(len(xs)):\n        print(i)\n",
         }
         for kural, kod in temiz.items():
             with self.subTest(kural):
-                self.assertNotIn(kural, rules(kod))
+                self.assertNotIn(kural.strip(), rules(kod))
+
+    def test_bekleme_ve_ozyineleme_yakalanir(self):
+        self.assertIn("YK015", rules("def f(t):\n    while not t.is_set():\n        pass\n"))
+        self.assertIn("YK004", rules("def f(n):\n    return n if n < 2 else f(n - 1) + f(n - 2)\n"))
 
     def test_kurgu_kaynagi_bir_kez_calisir(self):
         # Liste kurgusunun ilk kaynağı döngü değildir: dosyayı bir kez açar

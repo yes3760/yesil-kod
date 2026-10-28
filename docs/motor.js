@@ -4,7 +4,7 @@
 //   {tip: "olc", senaryo}    hazır senaryonun iki sürümünü çalıştırır, karşılaştırır, süreleri ölçer
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js");
 
-const DOSYALAR = ["__init__.py", "config.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"];
+const DOSYALAR = ["__init__.py", "config.py", "kurallar.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"];
 let hazir = null, sqlite = null;
 
 function baslat() {

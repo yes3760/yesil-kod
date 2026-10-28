@@ -127,7 +127,7 @@ def site():
         shutil.copy2(f, DOCS / "fonts" / f.name)
     pkg = DOCS / "py" / "greencode"
     pkg.mkdir(parents=True, exist_ok=True)
-    for f in ("__init__.py", "config.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"):
+    for f in ("__init__.py", "config.py", "kurallar.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"):
         shutil.copy2(ROOT / "greencode" / f, pkg / f)
     sys.path.insert(0, str(ROOT))
     from greencode import scenarios
@@ -139,14 +139,16 @@ def site():
                      "kod": (ROOT / "ornekler" / "israfli_ornek.py").read_text("utf-8")})
     (DOCS / "py" / "ornekler.json").write_text(json.dumps(ornekler, ensure_ascii=False, indent=1), "utf-8")
     # Kurallar sayfası: her kuralın açıklaması, örneği ve motorun onu kendisi düzeltip düzeltmediği
-    from greencode import analyzer, fixer
+    from greencode import fixer, kurallar as kk
     kurallar = []
-    for kod, (baslik, onem, oneri) in analyzer.RULES.items():
+    for kod, kategori, onem, baslik, oneri, title, advice, kaynak in kk.KURALLAR:
         ornek = (ROOT / "ornekler" / "kurallar" / f"{kod}.py").read_text("utf-8")
         duzeltmeler = fixer.fix(ornek)[2]
-        kurallar.append({"kural": kod, "baslik": baslik, "onem": onem, "oneri": oneri, "ornek": ornek,
-                         "kategori": analyzer.CATEGORY_OF[kod], "otomatik": any(f.kural == kod for f in duzeltmeler)})
-    (DOCS / "py" / "kurallar.json").write_text(json.dumps(kurallar, ensure_ascii=False, indent=1), "utf-8")
+        kurallar.append({"kural": kod, "kategori": kategori, "onem": onem, "baslik": baslik, "oneri": oneri,
+                         "baslik_en": title, "oneri_en": advice, "kaynak": kaynak, "ornek": ornek,
+                         "otomatik": any(f.kural == kod for f in duzeltmeler)})
+    veri = {"kategoriler": {k: {"tr": tr, "en": en} for k, (tr, en) in kk.KATEGORILER.items()}, "kurallar": kurallar}
+    (DOCS / "py" / "kurallar.json").write_text(json.dumps(veri, ensure_ascii=False, indent=1), "utf-8")
     (DOCS / ".nojekyll").write_text("")            # GitHub Pages __init__.py dosyasını gizlemesin
     print("site    docs/ güncellendi")
 

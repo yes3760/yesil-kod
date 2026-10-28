@@ -84,8 +84,8 @@ p.t b{color:var(--ink);font-weight:600}
     <h2>Code has an invisible carbon cost. Yeşil Kod makes it visible.</h2>
     <p class="t">Data-centre electricity use is expected to grow from <b>415 TWh</b> in 2024 to <b>~945 TWh</b> in 2030 (IEA). Part of that energy feeds waste nobody notices: loops that repeat the same work thousands of times, needless database queries, results computed over and over.</p>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Find</h3><p>Walks the syntax tree and flags thirty energy-wasting patterns, line by line.</p></div>
-      <div class="step"><div class="n">2</div><h3>Fix</h3><p>Rewrites six of them itself: batched query, set lookup, loop hoisting, caching, min/max, copy removal.</p></div>
+      <div class="step"><div class="n">1</div><h3>Find</h3><p>Walks the syntax tree and flags 113 energy-wasting patterns, line by line.</p></div>
+      <div class="step"><div class="n">2</div><h3>Fix</h3><p>Rewrites eleven of them itself: batched query, set lookup, loop hoisting, caching, min/max, needless conversions.</p></div>
       <div class="step"><div class="n">3</div><h3>Verify</h3><p>Runs both versions and rejects the fix unless the outputs are identical.</p></div>
       <div class="step"><div class="n">4</div><h3>Measure</h3><p>Reads CPU energy counters and converts the gain to carbon on the Türkiye grid.</p></div>
     </div>

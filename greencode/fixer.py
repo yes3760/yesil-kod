@@ -11,6 +11,11 @@ yine de sonucun aynı olduğu her zaman çalıştırılarak doğrulanmalıdır
   YK004  Önbelleksiz çift özyineleme      ->  @functools.lru_cache
   YK011  sorted(x)[0]                     ->  min(x)  (reverse=True ise max(x))
   YK029  for ... in list(range(...))      ->  for ... in range(...)
+  YK062  list(sorted(x)), set(list(x))…   ->  sorted(x), set(x)…
+  YK064  [x for x in y]                   ->  list(y)
+  YK065  sum([... for ...])               ->  sum(... for ...)
+  YK066  list([1, 2]), set([1, 2])…       ->  [1, 2], {1, 2}…
+  YK113  list(x for x in y)               ->  [x for x in y]
 
 Düzeltmeler özgün kaynağa satır düzeyinde yerleştirilir: yalnızca değişen
 ifadeler yeniden yazılır; yorumlar, boş satırlar ve biçim olduğu gibi kalır.
@@ -25,7 +30,7 @@ import difflib
 import re
 from dataclasses import dataclass, asdict
 
-from .analyzer import INVARIANT_CALLS
+from .analyzer import INVARIANT_CALLS, overlapping_recursion, simplify
 
 SQL_ONE = re.compile(
     r"^\s*SELECT\s+(?P<cols>.+?)\s+FROM\s+(?P<table>\w+)\s+WHERE\s+(?P<key>\w+)\s*=\s*\?\s*;?\s*$",
@@ -101,14 +106,48 @@ class _Names:
         return name
 
 
-class _Rewrite(ast.NodeTransformer):
-    """İfade düzeyindeki küçük dönüşümler (YK011, YK029)."""
+BUILTINS = {"list", "set", "tuple", "dict", "sorted", "sum", "min", "max", "range", "reversed"}
+SIMPLIFY_MSG = {
+    "YK062": "Gereksiz çift dönüşüm kaldırıldı; veri bir kez daha kopyalanmıyor.",
+    "YK064": "Yalnızca kopyalayan kurgu doğrudan list()/set()/dict() çağrısına çevrildi.",
+    "YK065": "Liste yerine üreteç kullanıldı; elemanlar bellekte birikmiyor.",
+    "YK066": "Değişmez değer etrafındaki gereksiz çağrı kaldırıldı.",
+    "YK113": "Üreteç doğrudan liste, küme ya da sözlük kurgusuna çevrildi.",
+}
 
-    def __init__(self, fixes):
+
+def _rebound(tree):
+    """Kodda yeniden tanımlanan yerleşik adlar (ör. list = ...): bunlara dokunulmaz."""
+    names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and not isinstance(n.ctx, ast.Load)}
+    names |= {n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
+    names |= {(a.asname or a.name).split(".")[0] for n in ast.walk(tree)
+              if isinstance(n, (ast.Import, ast.ImportFrom)) for a in n.names}
+    names |= {a.arg for n in ast.walk(tree) if isinstance(n, ast.arguments)
+              for a in n.args + n.kwonlyargs + n.posonlyargs}
+    return names & BUILTINS
+
+
+class _Rewrite(ast.NodeTransformer):
+    """İfade düzeyindeki küçük dönüşümler (YK011, YK029, YK062, YK064, YK065, YK066, YK113)."""
+
+    def __init__(self, fixes, rebound=frozenset()):
         self.fixes = fixes
+        self.off = bool(rebound)        # yerleşik bir ad yeniden tanımlanmışsa dönüşüm yapılmaz
+
+    def _simplify(self, node):
+        self.generic_visit(node)
+        s = None if self.off else simplify(node)
+        if not s:
+            return node
+        self.fixes.append(Fix(s[0], node.lineno, SIMPLIFY_MSG[s[0]]))
+        return ast.copy_location(s[1], node)
+
+    visit_Call = visit_ListComp = visit_SetComp = visit_DictComp = _simplify
 
     def visit_Subscript(self, node):
         self.generic_visit(node)
+        if self.off:
+            return node
         v, s = node.value, node.slice
         if isinstance(v, ast.Call) and isinstance(v.func, ast.Name) and v.func.id == "sorted" \
                 and len(v.args) == 1 and isinstance(s, ast.Constant) and s.value == 0 and not isinstance(s.value, bool) \
@@ -124,7 +163,7 @@ class _Rewrite(ast.NodeTransformer):
         return node
 
     def _unlist(self, it):
-        if isinstance(it, ast.Call) and isinstance(it.func, ast.Name) and it.func.id == "list" and len(it.args) == 1 \
+        if not self.off and isinstance(it, ast.Call) and isinstance(it.func, ast.Name) and it.func.id == "list" and len(it.args) == 1 \
                 and not it.keywords and isinstance(it.args[0], ast.Call) and isinstance(it.args[0].func, ast.Name) \
                 and it.args[0].func.id == "range":
             self.fixes.append(Fix("YK029", it.lineno, "list(range(...)) yerine doğrudan range(...) gezildi; kopya oluşturulmaz."))
@@ -161,7 +200,7 @@ class Fixer:
         for node in list(ast.walk(self.tree)):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 node.body = self._body(node.body, set(self.module_lists))
-        self.tree = _Rewrite(self.fixes).visit(self.tree)
+        self.tree = _Rewrite(self.fixes, _rebound(self.tree)).visit(self.tree)
         if self.need_functools:
             self._import_functools()
         ast.fix_missing_locations(self.tree)
@@ -169,12 +208,10 @@ class Fixer:
 
     # ---------------------------------------------------- YK004
     def _memoize(self, fn):
-        calls = sum(1 for n in ast.walk(fn) if isinstance(n, ast.Call)
-                    and isinstance(n.func, ast.Name) and n.func.id == fn.name)
         cached = any("cache" in ast.unparse(d) for d in fn.decorator_list)
         args = fn.args
         hashable_sig = not (args.vararg or args.kwarg or args.kwonlyargs)
-        if calls >= 2 and not cached and hashable_sig:
+        if overlapping_recursion(fn) and not cached and hashable_sig:
             fn.decorator_list.insert(0, ast.parse("functools.lru_cache(maxsize=None)", mode="eval").body)
             self.need_functools = True
             self.fixes.append(Fix("YK004", fn.lineno,

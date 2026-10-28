@@ -62,54 +62,23 @@ const T = {
     sev: {'yüksek': 'high', 'orta': 'medium', 'bilgi': 'info'}, fileErr: 'Could not read the file.',
   },
 };
-const RULE_EN = {
-  YK001: ['Database query inside a loop (N+1)', 'Every iteration sends its own request to the database. Fetch everything with one JOIN or a WHERE id IN (...) query.'],
-  YK002: ['List lookup inside a loop', 'An “in” test on a list scans it from start to end every time. Convert it to a set() before the loop; lookups become constant-time.'],
-  YK003: ['Repeating loop-invariant work', 'This call returns the same value on every iteration. Do it once before the loop and keep the result.'],
-  YK004: ['Uncached double recursion', 'The function calls itself more than once, recomputing the same sub-results exponentially. Add @functools.lru_cache or rewrite it as a loop.'],
-  YK005: ['Busy polling', 'Spinning in a loop to re-check wastes CPU and network. Use events (webhooks, queues, notifications) or wait longer.'],
-  YK006: ['Nested loop (O(n²))', 'Nested loops slow down quadratically as data grows. If the inner loop is matching, index the data in a dict and do one pass.'],
-  YK007: ['Iterating a pandas table row by row', 'iterrows, itertuples and apply(axis=1) process every row in a slow Python loop. Use vectorised pandas/numpy operations (column maths, merge, groupby).'],
-  YK008: ['HTTP request without a session in a loop', 'Every requests call opens a new connection and TLS handshake. Open requests.Session() before the loop and reuse the connection.'],
-  YK009: ['Adding or removing at the front of a list', 'pop(0) and insert(0, ...) shift every element of the list. Use collections.deque: popleft and appendleft run in constant time.'],
-  YK010: ['String concatenation in a loop', 'Appending to a string with += in a loop can build a new string every step; with long text the work grows quadratically. Collect the pieces in a list and use \'\'.join() at the end.'],
-  YK011: ['Sorting to find the smallest or largest', 'Sorting the whole list to take its first or last element is O(n log n). min() and max() find the same result in one pass (O(n)).'],
-  YK012: ['Reloading the same file or model in a loop', 'The same file or model is read from disk on every iteration. Load it once before the loop and reuse it; disk and CPU load drop together.'],
-  YK013: ['index() or count() on a list in a loop', 'index() and count() scan the list from start to end, so the work grows quadratically in a loop. Use a dict for positions and collections.Counter for counts.'],
-  YK014: ['Creating a connection, client or pool in a loop', 'Opening a database connection, HTTP session, cloud client or thread pool is expensive (network handshakes, authentication). Create it once before the loop and reuse it.'],
-  YK015: ['Waiting with an empty loop (busy wait)', 'A loop with an empty body keeps one CPU core at 100% until the condition changes. Wait with threading.Event, a queue or time.sleep.'],
-  YK016: ['A list inside any() or all()', 'The square-bracket list computes every element first, so any() and all() cannot stop at the first answer. Drop the brackets and use a generator.'],
-  YK017: ['Rebuilding a list in a loop', 'L = L + [x] copies the whole list every step; the work grows quadratically. Use L.append(x) or L.extend(...).'],
-  YK018: ['Growing an array or table in a loop', 'pd.concat and np.append/concatenate/vstack copy all the data again on every call. Collect the parts in a list and combine them once after the loop.'],
-  YK019: ['Pre-formatted log message in a loop', 'A log message built with an f-string or format() is formatted on every iteration even when that level is off. Use logger.debug(\'%s\', x).'],
-  YK020: ['Reading a whole file with readlines()', 'readlines() reads the entire file into memory first. Iterate over the file object directly: for line in file.'],
-  YK021: ['Fetching needless columns with SELECT *', 'SELECT * also reads unused columns from disk and carries them over the network. List only the columns you need.'],
-  YK022: ['Fetching every row just to count', 'len(...fetchall()) carries every row out of the database. Let the database count with SELECT COUNT(*).'],
-  YK023: ['Filtering in Python instead of the database', 'Fetching every row and discarding most in Python moves needless data. Put the condition in the query’s WHERE clause so the database can use its indexes.'],
-  YK024: ['Copying through JSON', 'json.loads(json.dumps(x)) turns data into text and parses it back. copy.deepcopy does less work and keeps the data types.'],
-  YK025: ['Joining lists with sum()', 'sum(lists, []) builds a new list at every step; the work grows quadratically. Use itertools.chain.from_iterable.'],
-  YK026: ['Searching dict values in a loop', 'x in d.values() scans every value one by one. Build a set of the values or keep a reverse dict.'],
-  YK027: ['Element-by-element Python loop over a NumPy array', 'Looping over a NumPy array in Python is tens of times slower than vectorised operations. Work on the array directly: a * 2, np.where, np.sum.'],
-  YK028: ['Re-processing unchanging text in a loop', 'A string that never changes during the loop is split or converted again on every step. Do it once before the loop.'],
-  YK029: ['Needless list copy', 'Copying with list() before looping costs memory and time. Objects such as range, map and zip can be iterated directly.'],
-  YK030: ['Starting a process in a loop', 'Every subprocess or os.system call starts a new operating-system process. Batch the work or use a Python library that does the same job.'],
-};
-const CATS = {
-  veritabani: {tr: 'Veritabanı', en: 'Database'},
-  dongu: {tr: 'Döngü ve algoritma', en: 'Loops and algorithms'},
-  veri_bilimi: {tr: 'Veri bilimi', en: 'Data science'},
-  kaynak: {tr: 'Ağ, dosya ve kaynaklar', en: 'Network, files and resources'},
-};
+let CATS = {};                     // kurallar.json: kategori adları (tr/en)
 const FIX_EN = {YK001: 'Single-row query in the loop replaced by one batched IN query.', YK002: 'List converted to a set before the loop.',
                 YK003: 'Invariant call moved out of the loop; it now runs once.', YK004: 'Cache added; each sub-result is computed once.',
                 YK011: 'min()/max() used instead of sorting and taking the first element; one pass.',
-                YK029: 'range(...) iterated directly instead of list(range(...)); no copy is made.'};
+                YK029: 'range(...) iterated directly instead of list(range(...)); no copy is made.',
+                YK062: 'Needless double conversion removed; the data is not copied again.',
+                YK064: 'A comprehension that only copied was replaced by a direct list()/set()/dict() call.',
+                YK065: 'A generator is used instead of a list; elements do not pile up in memory.',
+                YK066: 'Needless call around a literal removed.',
+                YK113: 'Generator rewritten as a direct list, set or dict comprehension.'};
 const t = () => T[LANG];
 const nf = (v, d = 0) => Number(v).toLocaleString(LANG === 'en' ? 'en-GB' : 'tr-TR', {maximumFractionDigits: d, minimumFractionDigits: d});
 const fmtS = s => s >= 1 ? nf(s, 2) + ' s' : s >= 1e-3 ? nf(s * 1e3, 1) + ' ms' : nf(s * 1e6, 0) + ' µs';
 const big = v => (v >= 100 ? nf(v, 0) : v >= 10 ? nf(v, 1) : nf(v, 2)) + '×';
-const ruleTitle = (k, fallback) => LANG === 'en' && RULE_EN[k] ? RULE_EN[k][0] : (RULES.find(r => r.kural === k) || {}).baslik || fallback || k;
-const ruleAdvice = (k, fallback) => LANG === 'en' && RULE_EN[k] ? RULE_EN[k][1] : fallback || (RULES.find(r => r.kural === k) || {}).oneri || '';
+const ruleOf = k => RULES.find(r => r.kural === k);
+const ruleTitle = (k, fallback) => { const r = ruleOf(k); return r ? (LANG === 'en' ? r.baslik_en : r.baslik) : fallback || k; };
+const ruleAdvice = (k, fallback) => { const r = ruleOf(k); return r ? (LANG === 'en' ? r.oneri_en : r.oneri) : fallback || ''; };
 const isAuto = k => (RULES.find(r => r.kural === k) || {}).otomatik;
 
 // ------------------------------------------------------------------ motor (Web Worker)
@@ -474,7 +443,7 @@ function exportCsv() {
 }
 
 // ------------------------------------------------------------------ Kurallar
-let ruleCat = '';
+let ruleCat = '', ruleQ = '';
 function renderRules() {
   const n = RULES.length, auto = RULES.filter(r => r.otomatik).length;
   const chips = [['', LANG === 'en' ? `All ${n}` : `Tümü (${n})`]].concat(Object.entries(CATS).map(([k, v]) =>
@@ -482,12 +451,16 @@ function renderRules() {
   $('#ruleCats').innerHTML = chips.map(([k, l]) => `<button class="chip" data-c="${k}" aria-pressed="${k === ruleCat}">${esc(l)}</button>`).join('') +
     `<span class="tag auto" style="align-self:center">${LANG === 'en' ? `${auto} fixed automatically` : `${auto} tanesini motor düzeltir`}</span>`;
   $$('#ruleCats .chip').forEach(c => c.onclick = () => { ruleCat = c.dataset.c; renderRules(); });
-  const shown = RULES.filter(r => !ruleCat || r.kategori === ruleCat);
+  const q = ruleQ.toLocaleLowerCase('tr');
+  const shown = RULES.filter(r => (!ruleCat || r.kategori === ruleCat) && (!q ||
+    [r.kural, r.baslik, r.baslik_en, r.oneri, r.oneri_en, r.kaynak].join(' ').toLocaleLowerCase('tr').includes(q)));
+  $('#ruleCount').textContent = LANG === 'en' ? `${shown.length} shown` : `${shown.length} kural gösteriliyor`;
   $('#rules').innerHTML = shown.map(r => `<div class="card rule">
       <div class="cat">${esc((CATS[r.kategori] || {})[LANG] || '')}</div>
       <div class="rh"><b>${r.kural}</b><span class="sev ${r.onem}">${t().sev[r.onem]}</span>${r.otomatik ? `<span class="tag auto">${t().autoFix}</span>` : `<span class="tag">${t().advice}</span>`}</div>
       <h3>${esc(ruleTitle(r.kural))}</h3><p>${esc(ruleAdvice(r.kural, r.oneri))}</p>
       <pre>${esc(r.ornek.trim())}</pre>
+      <div class="src">${LANG === 'en' ? 'Source' : 'Kaynak'}: ${esc(r.kaynak)}</div>
       <button class="tbtn" data-k="${r.kural}">${t().tryIt} →</button></div>`).join('');
   $$('#rules .tbtn').forEach(b => b.onclick = () => {
     setCode(RULES.find(r => r.kural === b.dataset.k).ornek, null);
@@ -505,6 +478,7 @@ function setLang(l) {
   $('#anKey').textContent = IS_MAC ? '⌘↵' : 'Ctrl+↵';
   setEngine(engine); renderChips(); paintEditor(); renderResult();
   if (!$('#v-analizler').hidden) renderHistory();
+  $('#ruleQ').placeholder = l === 'en' ? 'Search code, title or source' : 'Kodda, başlıkta ya da kaynakta ara';
   if (!$('#v-kurallar').hidden) renderRules();
   try { localStorage.setItem('yk-lang', l); } catch (e) {}
 }
@@ -529,7 +503,10 @@ function route() {
   if (/[?&]lang=en/.test(location.search)) l = 'en';
   if (/[?&]lang=tr/.test(location.search)) l = 'tr';
   loadHist(); updateNavCount();
-  try { [SAMPLES, RULES] = await Promise.all(['py/ornekler.json', 'py/kurallar.json'].map(u => fetch(u).then(r => r.json()))); } catch (e) {}
+  try {
+    const [o, k] = await Promise.all(['py/ornekler.json', 'py/kurallar.json'].map(u => fetch(u).then(r => r.json())));
+    SAMPLES = o; RULES = k.kurallar; CATS = k.kategoriler;
+  } catch (e) {}
   ta().value = SAMPLES.length ? SAMPLES[0].kod : '';
   cur.sample = SAMPLES.length ? 0 : null;
   cur.autoRun = location.hash === '#dene';                 // QR'dan gelen ziyaretçi: motor hazır olunca örnek kendiliğinden analiz edilsin
@@ -545,6 +522,7 @@ function route() {
   };
   $$('.rtabs button').forEach(b => b.onclick = () => switchTab(b.dataset.t));
   $('#q').oninput = renderTable;
+  $('#ruleQ').oninput = e => { ruleQ = e.target.value; renderRules(); };
   $('#fRule').onchange = renderTable;
   $('#expJson').onclick = () => download('yesil-kod-analizler.json', JSON.stringify(HIST, null, 1), 'application/json');
   $('#expCsv').onclick = exportCsv;

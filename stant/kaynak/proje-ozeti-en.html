@@ -13,16 +13,16 @@
 h1{font:700 19pt/1.15 var(--sans);letter-spacing:-.01em;margin-top:6mm;max-width:160mm}
 .meta{font:400 8.6pt/1.45 var(--sans);color:var(--ink3);margin-top:2.5mm}
 .meta b{color:var(--ink);font-weight:600}
-.abs{margin-top:5mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:6mm 7mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
+.abs{margin-top:4mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:5mm 6.5mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
 .abs p{font:400 9.4pt/1.5 var(--sans);color:var(--mist2)}
 .abs p b{color:var(--paper);font-weight:600}
 .abs .k{font:600 6.4pt/1 var(--mono);letter-spacing:.08em;color:var(--leaf);margin-bottom:2.5mm}
 .abs .x{font:700 34pt/.95 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf);text-align:right}
 .abs .x small{display:block;font:400 7.6pt/1.35 var(--sans);letter-spacing:0;color:var(--mist2);margin-top:2mm}
 
-h2{font:700 11.5pt/1.2 var(--sans);margin-top:5.6mm;display:flex;gap:2.5mm;align-items:baseline}
+h2{font:700 11.5pt/1.2 var(--sans);margin-top:4.6mm;display:flex;gap:2.5mm;align-items:baseline}
 h2 i{font:700 9pt/1 var(--mono);font-style:normal;color:var(--moss)}
-p.t{font:400 9.1pt/1.52 var(--sans);color:var(--ink2);margin-top:2mm}
+p.t{font:400 8.9pt/1.48 var(--sans);color:var(--ink2);margin-top:2mm}
 p.t b{color:var(--ink);font-weight:600}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:3mm}
@@ -30,9 +30,9 @@ p.t b{color:var(--ink);font-weight:600}
 .step b{display:block;font:700 9.6pt/1.25 var(--sans)}
 .step b i{font:700 8.4pt/1 var(--mono);font-style:normal;color:var(--moss);margin-right:1.5mm}
 .step span{display:block;font:400 7.9pt/1.42 var(--sans);color:var(--ink2);margin-top:1mm}
-table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
+table{width:100%;border-collapse:collapse;margin-top:4mm;font:400 7.5pt/1.3 var(--sans)}
 th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
-td{padding:1.25mm 2mm 1.25mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
+td{padding:.9mm 2mm .9mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
 td:first-child{color:var(--ink);font-weight:600}
 td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
 td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
@@ -63,29 +63,34 @@ ul.l b{color:var(--ink);font-weight:600}
   <div class="abs">
     <div>
       <div class="k">SUMMARY</div>
-      <p>Yeşil Kod (“Green Code”) <b>finds</b> energy-wasting patterns in Python code, <b>rewrites</b> the code itself, <b>verifies</b> that both versions return exactly the same result, and <b>measures</b> the energy used for the same work, converting it to gCO₂e with the carbon intensity of the Türkiye grid. In all four realistic scenarios the fix was produced by the engine; CPU energy fell by 2.4 to 4,049 times and the outputs did not change.</p>
+      <p>Yeşil Kod (“Green Code”) <b>finds</b> energy-wasting patterns in Python code, <b>rewrites</b> the code itself, <b>verifies</b> that both versions return exactly the same result, and <b>measures</b> the energy, converting it to carbon on the Türkiye grid. In all four realistic scenarios the fix was produced by the engine; CPU energy fell by 2.4 to 4,049 times and the outputs did not change.</p>
     </div>
     <div class="x">465×<small>from fixing a single line, same result</small></div>
   </div>
 
   <h2><i>01</i>Problem</h2>
-  <p class="t">Data-centre electricity use is expected to grow from <b>415 TWh</b> in 2024 to <b>~945 TWh</b> in 2030 (IEA, 2025). Debates about efficiency usually focus on hardware, while the software itself goes unnoticed: a one-line waste inside a loop becomes a real electricity and carbon load when it runs millions of times a day. Developers cannot see this load, because the energy of a line of code is measured and shown nowhere.</p>
+  <p class="t">Data-centre electricity use is expected to grow from <b>415 TWh</b> in 2024 to <b>~945 TWh</b> in 2030 (IEA, 2025). A one-line waste inside a loop becomes a real electricity and carbon load when it runs millions of times a day, yet the energy of a line of code is measured and shown nowhere.</p>
 
   <h2><i>02</i>Solution: four steps</h2>
   <div class="steps">
-    <div class="step"><b><i>1</i>Find</b><span>Without running the code, its syntax tree (AST) is scanned and thirty waste patterns are flagged line by line.</span></div>
-    <div class="step"><b><i>2</i>Fix</b><span>The engine rewrites six patterns and touches only the changed lines; comments and formatting are kept.</span></div>
+    <div class="step"><b><i>1</i>Find</b><span>Without running the code, its syntax tree (AST) is scanned and 113 waste patterns are flagged line by line.</span></div>
+    <div class="step"><b><i>2</i>Fix</b><span>The engine rewrites eleven patterns and touches only the changed lines; comments and formatting are kept.</span></div>
     <div class="step"><b><i>3</i>Verify</b><span>Original and fixed code run on the same data; if the output is not identical, the fix is rejected.</span></div>
     <div class="step"><b><i>4</i>Measure</b><span>Both versions handle the same number of requests; CPU energy is measured and converted to carbon.</span></div>
   </div>
 
   <table>
-    <thead><tr><th>CATEGORY</th><th>WASTE PATTERNS DETECTED</th><th>FIXED BY THE ENGINE</th></tr></thead>
+    <thead><tr><th>CATEGORY</th><th>EXAMPLE PATTERNS</th><th>FIXED BY THE ENGINE</th></tr></thead>
     <tbody>
-      <tr><td>Database · 4</td><td>Query in a loop (N+1), SELECT *, fetching every row to count, filtering in Python</td><td class="ok">N+1 → one batched IN query</td></tr>
-      <tr><td>Loops &amp; algorithms · 14</td><td>List lookup, invariant work, uncached recursion, nested loop, removing from the front of a list, string concatenation, sorting for min/max, index/count, list inside any/all, rebuilding a list, joining with sum, searching dict values, re-processing unchanging text, needless list copy</td><td class="ok">set(), loop hoisting, lru_cache, min()/max(), copy removal</td></tr>
-      <tr><td>Data science · 3</td><td>Row-by-row pandas, growing arrays/tables in a loop, element-wise NumPy loop</td><td class="no">Advice: vectorised operations</td></tr>
-      <tr><td>Network, files &amp; resources · 9</td><td>Polling, HTTP without a session, reloading files/models, creating connections/pools, busy waiting, log formatting, readlines, copying through JSON, starting processes</td><td class="no">Advice: reuse, batch the work</td></tr>
+      <tr><td>Database · 14</td><td>N+1 queries, commit in a loop, row-by-row INSERT, SELECT *, ORDER BY RANDOM(), filtering and aggregating in Python</td><td class="ok">N+1 → one batched IN query</td></tr>
+      <tr><td>Loops and algorithms · 18</td><td>List lookup, invariant work, uncached recursion, sorting for min/max, full list for the first match, copying in a loop</td><td class="ok">set(), loop hoisting, lru_cache, min()/max()</td></tr>
+      <tr><td>Data structures and Python idioms · 31</td><td>List instead of deque, manual comprehensions, double conversions, list inside any/sum, hand-written Counter/defaultdict</td><td class="ok">Removing needless copies and conversions (5 patterns)</td></tr>
+      <tr><td>Text and regular expressions · 7</td><td>+= concatenation in a loop, regex for plain text, chained replace, find() for containment</td><td class="no">Advice</td></tr>
+      <tr><td>Data science (pandas, NumPy) · 17</td><td>iterrows, concat/append in a loop, apply for vectorisable work, np.vectorize, CSV instead of Parquet</td><td class="no">Advice: vectorised operations</td></tr>
+      <tr><td>Machine learning · 4</td><td>One-at-a-time prediction, .item() in a loop, missing no_grad during inference</td><td class="no">Advice: batching, no_grad</td></tr>
+      <tr><td>Network and cloud · 7</td><td>HTTP without a session, connections/clients in a loop, per-key Redis and S3 requests, requests without timeout</td><td class="no">Advice: reuse connections</td></tr>
+      <tr><td>Files and I/O · 8</td><td>Reloading files/models in a loop, flush/fsync, print, readlines, rescanning directories</td><td class="no">Advice: load once, write in bulk</td></tr>
+      <tr><td>Concurrency and waiting · 7</td><td>Polling, busy waiting, very frequent wake-ups, time.sleep in async code, processes in a loop</td><td class="no">Advice: event-based waiting</td></tr>
     </tbody>
   </table>
 
@@ -96,7 +101,7 @@ ul.l b{color:var(--ink);font-weight:600}
         <li><b>Live panel:</b> fix, equivalence test and energy race on the stand screen.</li>
         <li><b>Command line:</b> analysis, fixing, measurement and reports.</li>
         <li><b>Continuous integration:</b> a report on every pull request; the check stops on high-severity findings.</li>
-        <li><b>Web:</b> visitors analyse their own code and measure the scenarios on their phone; the code never leaves the device.</li>
+        <li><b>Web:</b> visitors analyse code and measure scenarios on their phone; code never leaves the device.</li>
       </ul>
     </div>
     <div>
@@ -104,7 +109,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l">
         <li>Python standard library only; no installation or internet needed.</li>
         <li>Intel/AMD <b>RAPL</b> counters on Linux, Apple’s CPU power data (<b>powermetrics</b>) on Mac; CPU time × per-core power without permission.</li>
-        <li>32 unit tests, run automatically on Python 3.9 and 3.13 with GitHub Actions on every change.</li>
+        <li>33 unit tests, run automatically on Python 3.9 and 3.13 with GitHub Actions on every change.</li>
       </ul>
     </div>
   </div>
@@ -142,7 +147,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l a">
         <li>Only CPU energy is measured; memory, network, disk and cooling are excluded. The gain shown is a lower bound.</li>
         <li>In estimated mode, ratios are more reliable than absolute values; ratios vary between machines.</li>
-        <li>The engine currently supports Python; it fixes six of the thirty patterns automatically and advises on the rest.</li>
+        <li>The engine currently supports Python; it fixes eleven of the 113 patterns automatically and advises on the rest.</li>
         <li>Grid carbon intensity is an annual average; the grid changes hour by hour.</li>
       </ul>
     </div>

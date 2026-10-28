@@ -13,16 +13,16 @@
 h1{font:700 19pt/1.15 var(--sans);letter-spacing:-.01em;margin-top:6mm;max-width:160mm}
 .meta{font:400 8.6pt/1.45 var(--sans);color:var(--ink3);margin-top:2.5mm}
 .meta b{color:var(--ink);font-weight:600}
-.abs{margin-top:5mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:6mm 7mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
+.abs{margin-top:4mm;background:var(--ink);color:var(--paper);border-radius:3mm;padding:5mm 6.5mm;display:grid;grid-template-columns:1fr 40mm;gap:7mm;align-items:center}
 .abs p{font:400 9.4pt/1.5 var(--sans);color:var(--mist2)}
 .abs p b{color:var(--paper);font-weight:600}
 .abs .k{font:600 6.4pt/1 var(--mono);letter-spacing:.08em;color:var(--leaf);margin-bottom:2.5mm}
 .abs .x{font:700 34pt/.95 var(--mono);font-stretch:112.5%;letter-spacing:-.05em;color:var(--leaf);text-align:right}
 .abs .x small{display:block;font:400 7.6pt/1.35 var(--sans);letter-spacing:0;color:var(--mist2);margin-top:2mm}
 
-h2{font:700 11.5pt/1.2 var(--sans);margin-top:5.6mm;display:flex;gap:2.5mm;align-items:baseline}
+h2{font:700 11.5pt/1.2 var(--sans);margin-top:4.6mm;display:flex;gap:2.5mm;align-items:baseline}
 h2 i{font:700 9pt/1 var(--mono);font-style:normal;color:var(--moss)}
-p.t{font:400 9.1pt/1.52 var(--sans);color:var(--ink2);margin-top:2mm}
+p.t{font:400 8.9pt/1.48 var(--sans);color:var(--ink2);margin-top:2mm}
 p.t b{color:var(--ink);font-weight:600}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:3mm}
@@ -30,9 +30,9 @@ p.t b{color:var(--ink);font-weight:600}
 .step b{display:block;font:700 9.6pt/1.25 var(--sans)}
 .step b i{font:700 8.4pt/1 var(--mono);font-style:normal;color:var(--moss);margin-right:1.5mm}
 .step span{display:block;font:400 7.9pt/1.42 var(--sans);color:var(--ink2);margin-top:1mm}
-table{width:100%;border-collapse:collapse;margin-top:5mm;font:400 8.2pt/1.35 var(--sans)}
+table{width:100%;border-collapse:collapse;margin-top:4mm;font:400 7.5pt/1.3 var(--sans)}
 th{text-align:left;font:600 6.6pt/1.2 var(--mono);letter-spacing:.05em;color:var(--ink3);padding:0 2mm 1.6mm 0;border-bottom:.35mm solid var(--ink)}
-td{padding:1.25mm 2mm 1.25mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
+td{padding:.9mm 2mm .9mm 0;border-bottom:.2mm solid var(--rule);vertical-align:top;color:var(--ink2)}
 td:first-child{color:var(--ink);font-weight:600}
 td.mono{font-family:var(--mono);font-size:7.6pt;color:var(--ink)}
 td.big{font:700 10.5pt/1.2 var(--mono);color:var(--moss);white-space:nowrap}
@@ -69,23 +69,28 @@ ul.l b{color:var(--ink);font-weight:600}
   </div>
 
   <h2><i>01</i>Problem</h2>
-  <p class="t">Veri merkezlerinin elektrik tüketiminin 2024’teki <b>415 TWh</b> düzeyinden 2030’da <b>~945 TWh</b>’a çıkması bekleniyor (IEA, 2025). Donanım verimliliği tartışılırken yazılımın kendisi çoğu zaman gözden kaçıyor: bir döngüdeki tek satırlık israf, günde milyonlarca kez çalıştığında gerçek bir elektrik ve karbon yüküne dönüşüyor. Geliştiriciler bu yükü göremiyor, çünkü kod satırının enerjisi hiçbir yerde ölçülmüyor ve gösterilmiyor.</p>
+  <p class="t">Veri merkezlerinin elektrik tüketiminin 2024’teki <b>415 TWh</b> düzeyinden 2030’da <b>~945 TWh</b>’a çıkması bekleniyor (IEA, 2025). Bir döngüdeki tek satırlık israf, günde milyonlarca kez çalıştığında gerçek bir elektrik ve karbon yüküne dönüşüyor; ama kod satırının enerjisi hiçbir yerde ölçülmüyor ve gösterilmiyor.</p>
 
   <h2><i>02</i>Çözüm: dört adım</h2>
   <div class="steps">
-    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; otuz israf kalıbı satır satır işaretlenir.</span></div>
-    <div class="step"><b><i>2</i>Düzelt</b><span>Motor altı kalıbı yeniden yazar; yalnızca değişen satırlara dokunur, yorumlar ve biçim korunur.</span></div>
+    <div class="step"><b><i>1</i>Bul</b><span>Kod çalıştırılmadan sözdizimi ağacı (AST) taranır; 113 israf kalıbı satır satır işaretlenir.</span></div>
+    <div class="step"><b><i>2</i>Düzelt</b><span>Motor on bir kalıbı yeniden yazar; yalnızca değişen satırlara dokunur, yorumlar ve biçim korunur.</span></div>
     <div class="step"><b><i>3</i>Doğrula</b><span>Özgün ve düzeltilmiş kod aynı veriyle çalıştırılır; çıktı birebir aynı değilse düzeltme reddedilir.</span></div>
     <div class="step"><b><i>4</i>Ölç</b><span>İki sürüm aynı sayıda isteği işler; işlemci enerjisi ölçülür ve karbona çevrilir.</span></div>
   </div>
 
   <table>
-    <thead><tr><th>KATEGORİ</th><th>ARANAN İSRAF KALIPLARI</th><th>MOTORUN KENDİ DÜZELTTİKLERİ</th></tr></thead>
+    <thead><tr><th>KATEGORİ</th><th>ÖRNEK KALIPLAR</th><th>MOTORUN KENDİ DÜZELTTİKLERİ</th></tr></thead>
     <tbody>
-      <tr><td>Veritabanı · 4</td><td>Döngüde sorgu (N+1), SELECT *, saymak için bütün satırları çekme, Python’da filtreleme</td><td class="ok">N+1 → tek toplu IN sorgusu</td></tr>
-      <tr><td>Döngü ve algoritma · 14</td><td>Listede arama, değişmeyen iş, önbelleksiz özyineleme, iç içe döngü, listenin başından çıkarma, metin birleştirme, min/max için sıralama, index/count, any/all içinde liste, listeyi yeniden oluşturma, sum ile birleştirme, sözlük değerlerinde arama, değişmeyen metni işleme, gereksiz liste kopyası</td><td class="ok">set(), döngü dışına taşıma, lru_cache, min()/max(), kopya kaldırma</td></tr>
-      <tr><td>Veri bilimi · 3</td><td>Pandas’ta satır satır gezme, döngüde dizi/tablo büyütme, NumPy’da eleman eleman döngü</td><td class="no">Öneri: vektörel işlemler</td></tr>
-      <tr><td>Ağ, dosya ve kaynaklar · 9</td><td>Polling, oturumsuz HTTP, dosya/model yeniden yükleme, bağlantı/havuz oluşturma, boş döngüyle bekleme, log biçimlendirme, readlines, JSON ile kopyalama, süreç başlatma</td><td class="no">Öneri: yeniden kullanma, toplu iş</td></tr>
+      <tr><td>Veritabanı · 14</td><td>N+1 sorgu, döngüde commit, tek tek INSERT, SELECT *, ORDER BY RANDOM(), Python’da filtreleme ve toplama</td><td class="ok">N+1 → toplu IN sorgusu</td></tr>
+      <tr><td>Döngü ve algoritma · 18</td><td>Listede arama, değişmeyen iş, önbelleksiz özyineleme, min/max için sıralama, ilk eşleşme için tam liste, döngüde kopya</td><td class="ok">set(), döngü dışına taşıma, lru_cache, min()/max()</td></tr>
+      <tr><td>Veri yapıları ve Python dili · 31</td><td>deque yerine liste, elle kurgu, gereksiz çift dönüşüm, any/sum içinde liste, Counter/defaultdict yerine elle sözlük</td><td class="ok">Gereksiz kopya ve dönüşümleri kaldırma (5 kalıp)</td></tr>
+      <tr><td>Metin ve düzenli ifadeler · 7</td><td>Döngüde += ile birleştirme, düz metin için regex, zincirleme replace, find() ile içerme</td><td class="no">Öneri</td></tr>
+      <tr><td>Veri bilimi (pandas, NumPy) · 17</td><td>iterrows, döngüde concat/append, apply ile vektörleştirilebilir iş, np.vectorize, CSV yerine Parquet</td><td class="no">Öneri: vektörel işlemler</td></tr>
+      <tr><td>Makine öğrenmesi · 4</td><td>Tek tek tahmin, döngüde .item(), çıkarımda no_grad eksikliği</td><td class="no">Öneri: toplu tahmin, no_grad</td></tr>
+      <tr><td>Ağ ve bulut · 7</td><td>Oturumsuz HTTP, döngüde bağlantı/istemci, Redis ve S3’e tek tek istek, zaman aşımsız istek</td><td class="no">Öneri: bağlantıyı yeniden kullanma</td></tr>
+      <tr><td>Dosya ve G/Ç · 8</td><td>Döngüde dosya/model yükleme, flush/fsync, print, readlines, dizini yeniden tarama</td><td class="no">Öneri: bir kez yükle, toplu yaz</td></tr>
+      <tr><td>Eşzamanlılık ve bekleme · 7</td><td>Polling, boş döngüyle bekleme, çok sık uyanma, async içinde time.sleep, döngüde süreç</td><td class="no">Öneri: olay tabanlı bekleme</td></tr>
     </tbody>
   </table>
 
@@ -104,7 +109,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l">
         <li>Yalnızca Python standart kütüphanesi; kurulum ve internet gerektirmez.</li>
         <li>Linux’ta Intel/AMD <b>RAPL</b> sayaçları, Mac’te Apple’ın işlemci güç verisi (<b>powermetrics</b>); izin yoksa işlemci süresi × çekirdek gücü.</li>
-        <li>32 birim testi; her değişiklikte GitHub Actions ile Python 3.9 ve 3.13’te otomatik çalışır.</li>
+        <li>33 birim testi; her değişiklikte GitHub Actions ile Python 3.9 ve 3.13’te otomatik çalışır.</li>
       </ul>
     </div>
   </div>
@@ -142,7 +147,7 @@ ul.l b{color:var(--ink);font-weight:600}
       <ul class="l a">
         <li>Yalnızca işlemci enerjisi ölçülür; bellek, ağ, disk ve soğutma dahil değildir. Gösterilen kazanç alt sınırdır.</li>
         <li>Tahmini modda mutlak değerlerden çok oranlar güvenilirdir; oranlar makineden makineye değişir.</li>
-        <li>Düzeltme motoru şimdilik Python içindir; otuz kalıptan altısını otomatik düzeltir, diğerleri için öneri verir.</li>
+        <li>Düzeltme motoru şimdilik Python içindir; 113 kalıptan on birini otomatik düzeltir, diğerleri için öneri verir.</li>
         <li>Karbon yoğunluğu yıllık ortalamadır; şebeke saatten saate değişir.</li>
       </ul>
     </div>
