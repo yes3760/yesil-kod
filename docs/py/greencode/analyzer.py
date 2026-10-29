@@ -619,10 +619,6 @@ class _Visitor(ast.NodeVisitor):
             elif self.loop_stack:
                 self.add("YK070", node, f"re.{name}(...)")
         f = node.func
-        if name == "replace" and isinstance(f, ast.Attribute) and isinstance(f.value, ast.Call) \
-                and _call_name(f.value)[1] == "replace" and isinstance(f.value.func, ast.Attribute) \
-                and isinstance(f.value.func.value, ast.Call) and _call_name(f.value.func.value)[1] == "replace":
-            self.add("YK071", node, ".replace().replace().replace()")
         if name in ("split", "splitlines") and isinstance(f, ast.Attribute) and isinstance(f.value, ast.Call) \
                 and _call_name(f.value)[1] == "read" and not f.value.args:
             self.add("YK073", node, f"read().{name}(...)")
@@ -768,6 +764,19 @@ class _Visitor(ast.NodeVisitor):
         if (base, name) in (("time", "sleep"), (None, "sleep")) and isinstance(first, ast.Constant) \
                 and isinstance(first.value, (int, float)) and 0 < first.value < 0.05:
             self.add("YK102", node, f"sleep({first.value})")
+
+    def visit_BoolOp(self, node):
+        if isinstance(node.op, ast.Or):
+            gorulen = set()
+            for v in node.values:
+                if isinstance(v, ast.Call) and isinstance(v.func, ast.Attribute) and len(v.args) == 1 \
+                        and not v.keywords and v.func.attr in ("startswith", "endswith"):
+                    anahtar = (v.func.attr, ast.dump(v.func.value))
+                    if anahtar in gorulen:
+                        self.add("YK071", node, f"{v.func.attr}(...) or {v.func.attr}(...)")
+                        break
+                    gorulen.add(anahtar)
+        self.generic_visit(node)
 
     def visit_Compare(self, node):
         left = node.left

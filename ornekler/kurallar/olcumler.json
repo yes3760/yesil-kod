@@ -1,0 +1,3411 @@
+{
+ "sonuclar": {
+  "YK001": {
+   "kod": "YK001",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Bellekteki SQLite'ta ölçüldü. Ağ üzerindeki bir veritabanında her sorgu ayrıca bir gidiş-dönüş (çoğunlukla 0,2–1 ms) ekler; fark çok daha büyür.",
+   "not_en": "Measured on in-memory SQLite. On a database across the network every query also adds a round trip (usually 0.2–1 ms), so the gap grows much larger.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002113220832931499,
+    "islemci_s": 0.002094133333333333,
+    "enerji_j": 0.02094133333333333,
+    "bellek_b": 124317
+   },
+   "iyi": {
+    "sure_s": 0.0011380840907804668,
+    "islemci_s": 0.0011359818181818214,
+    "enerji_j": 0.011359818181818214,
+    "bellek_b": 287181
+   },
+   "olcut": "sure",
+   "cagri": [
+    30,
+    55
+   ],
+   "kat": 1.856823103011931,
+   "sure_kat": 1.856823103011931,
+   "islemci_kat": 1.8434567347962192,
+   "bellek_kat": 0.4328872731831145,
+   "motor": {
+    "esdeger": true,
+    "kat": 1.4228515654143892,
+    "sure_kat": 1.4228515654143892,
+    "islemci_kat": 1.420871371379746,
+    "hata": null
+   }
+  },
+  "YK002": {
+   "kod": "YK002",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.02322391699999571,
+    "islemci_s": 0.02322550000000012,
+    "enerji_j": 0.2322550000000012,
+    "bellek_b": 32904
+   },
+   "iyi": {
+    "sure_s": 6.186301548744446e-05,
+    "islemci_s": 6.186391752577348e-05,
+    "enerji_j": 0.0006186391752577348,
+    "bellek_b": 164104
+   },
+   "olcut": "sure",
+   "cagri": [
+    2,
+    970
+   ],
+   "kat": 375.40874490201935,
+   "sure_kat": 375.40874490201935,
+   "islemci_kat": 375.42885948540214,
+   "bellek_kat": 0.20050699556378881,
+   "motor": {
+    "esdeger": true,
+    "kat": 320.8176487316957,
+    "sure_kat": 320.8176487316957,
+    "islemci_kat": 320.83187933841907,
+    "hata": null
+   }
+  },
+  "YK003": {
+   "kod": "YK003",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.018080555329409737,
+    "islemci_s": 0.018080999999999865,
+    "enerji_j": 0.18080999999999864,
+    "bellek_b": 104262
+   },
+   "iyi": {
+    "sure_s": 0.0001659824082808983,
+    "islemci_s": 0.0001659861111111111,
+    "enerji_j": 0.001659861111111111,
+    "bellek_b": 95800
+   },
+   "olcut": "sure",
+   "cagri": [
+    3,
+    360
+   ],
+   "kat": 108.93055183782687,
+   "sure_kat": 108.93055183782687,
+   "islemci_kat": 108.93080076980924,
+   "bellek_kat": 1.088329853862213,
+   "motor": {
+    "esdeger": true,
+    "kat": 83.9084447283285,
+    "sure_kat": 83.9084447283285,
+    "islemci_kat": 83.91159046027805,
+    "hata": null
+   }
+  },
+  "YK004": {
+   "kod": "YK004",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Önbellek her çağrıdan önce temizlendi; iyi sürüm de her seferinde sıfırdan hesapladı.",
+   "not_en": "The cache was cleared before every call; the good version also computed from scratch each time.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.005487491597887128,
+    "islemci_s": 0.005487600000000014,
+    "enerji_j": 0.05487600000000015,
+    "bellek_b": 224
+   },
+   "iyi": {
+    "sure_s": 3.26517784331796e-06,
+    "islemci_s": 3.265707303828414e-06,
+    "enerji_j": 3.265707303828414e-05,
+    "bellek_b": 1928
+   },
+   "olcut": "sure",
+   "cagri": [
+    10,
+    18415
+   ],
+   "kat": 1680.610325442773,
+   "sure_kat": 1680.610325442773,
+   "islemci_kat": 1680.3710465928339,
+   "bellek_kat": 0.11618257261410789,
+   "motor": {
+    "esdeger": true,
+    "kat": 1683.4240413561786,
+    "sure_kat": 1683.4240413561786,
+    "islemci_kat": 1683.3897624623764,
+    "hata": null
+   }
+  },
+  "YK005": {
+   "kod": "YK005",
+   "olculmedi": "Dış bir servisi (API) bekler. Kazanç istek sayısındadır: 0,1 saniyede bir sorgulayan döngü bir dakikada 600 istek gönderir, olay tabanlı yapı yalnızca bir.",
+   "olculmedi_en": "Waits on an external service (API). The gain is in request count: a loop polling every 0.1 s sends 600 requests a minute, an event-driven design sends one."
+  },
+  "YK006": {
+   "kod": "YK006",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.04087762499693781,
+    "islemci_s": 0.040878999999999444,
+    "enerji_j": 0.40878999999999444,
+    "bellek_b": 14400
+   },
+   "iyi": {
+    "sure_s": 0.0002587202382556191,
+    "islemci_s": 0.00025872727272727554,
+    "enerji_j": 0.0025872727272727553,
+    "bellek_b": 88952
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    231
+   ],
+   "kat": 157.99933268672302,
+   "sure_kat": 157.99933268672302,
+   "islemci_kat": 158.00035137034047,
+   "bellek_kat": 0.16188506160625957
+  },
+  "YK007": {
+   "kod": "YK007",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.03435412497492507,
+    "islemci_s": 0.03435499999999969,
+    "enerji_j": 0.3435499999999969,
+    "bellek_b": 52117
+   },
+   "iyi": {
+    "sure_s": 3.7597691723995174e-05,
+    "islemci_s": 3.759899749373423e-05,
+    "enerji_j": 0.0003759899749373423,
+    "bellek_b": 51252
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    1596
+   ],
+   "kat": 913.7296307209192,
+   "sure_kat": 913.7296307209192,
+   "islemci_kat": 913.7211705105929,
+   "bellek_kat": 1.0168773901506283
+  },
+  "YK008": {
+   "kod": "YK008",
+   "olculmedi": "Gerçek bir sunucuya HTTPS isteği gerektirir. Oturum, istek başına TCP ve TLS el sıkışmasını (çoğunlukla 1–2 gidiş-dönüş) ortadan kaldırır.",
+   "olculmedi_en": "Needs HTTPS requests to a real server. A session removes the per-request TCP and TLS handshake (usually 1–2 round trips)."
+  },
+  "YK009": {
+   "kod": "YK009",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.09117904200684279,
+    "islemci_s": 0.0911799999999996,
+    "enerji_j": 0.911799999999996,
+    "bellek_b": 307968
+   },
+   "iyi": {
+    "sure_s": 0.0012699652757469772,
+    "islemci_s": 0.0012711944444445183,
+    "enerji_j": 0.012711944444445183,
+    "bellek_b": 277288
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    36
+   ],
+   "kat": 71.79648431978777,
+   "sure_kat": 71.79648431978777,
+   "islemci_kat": 71.72781504708595,
+   "bellek_kat": 1.1106430858890395
+  },
+  "YK010": {
+   "kod": "YK010",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "CPython, başka referansı olmayan metne += eklerken çoğu zaman yerinde büyütür; bu yüzden fark burada küçük çıkabilir. Bu bir garanti değildir; PyPy ve başka uygulamalarda yoktur.",
+   "not_en": "CPython often grows a string in place on += when nothing else references it, so the gap can be small here. This is not guaranteed and does not exist in PyPy or other implementations.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0007833424106371613,
+    "islemci_s": 0.0007780897435897471,
+    "enerji_j": 0.007780897435897471,
+    "bellek_b": 95392
+   },
+   "iyi": {
+    "sure_s": 0.000651066130756036,
+    "islemci_s": 0.0006511086956521656,
+    "enerji_j": 0.006511086956521656,
+    "bellek_b": 517465
+   },
+   "olcut": "sure",
+   "cagri": [
+    78,
+    92
+   ],
+   "kat": 1.203168731458235,
+   "sure_kat": 1.203168731458235,
+   "islemci_kat": 1.195022810761872,
+   "bellek_kat": 0.18434483491637116
+  },
+  "YK011": {
+   "kod": "YK011",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0035244531245552935,
+    "islemci_s": 0.003524624999999948,
+    "enerji_j": 0.03524624999999948,
+    "bellek_b": 480184
+   },
+   "iyi": {
+    "sure_s": 0.0008274221763713285,
+    "islemci_s": 0.0008274705882352841,
+    "enerji_j": 0.00827470588235284,
+    "bellek_b": 208
+   },
+   "olcut": "sure",
+   "cagri": [
+    16,
+    68
+   ],
+   "kat": 4.259558451783142,
+   "sure_kat": 4.259558451783142,
+   "islemci_kat": 4.259516954574525,
+   "bellek_kat": 2308.576923076923,
+   "motor": {
+    "esdeger": true,
+    "kat": 4.383947613529957,
+    "sure_kat": 4.383947613529957,
+    "islemci_kat": 4.384329546977205,
+    "hata": null
+   }
+  },
+  "YK012": {
+   "kod": "YK012",
+   "olculmedi": "Eğitilmiş bir model dosyası gerektirir. Kazanç, model boyutu × döngü uzunluğu kadar disk okuma ve ayrıştırmadır.",
+   "olculmedi_en": "Needs a trained model file. The gain is model size × loop length of disk reads and parsing."
+  },
+  "YK013": {
+   "kod": "YK013",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.01411530225595925,
+    "islemci_s": 0.014116500000000087,
+    "enerji_j": 0.14116500000000087,
+    "bellek_b": 58356
+   },
+   "iyi": {
+    "sure_s": 0.0002196548264765789,
+    "islemci_s": 0.00021966789667896873,
+    "enerji_j": 0.0021966789667896875,
+    "bellek_b": 225088
+   },
+   "olcut": "sure",
+   "cagri": [
+    4,
+    271
+   ],
+   "kat": 64.26128887026447,
+   "sure_kat": 64.26128887026447,
+   "islemci_kat": 64.26291785654276,
+   "bellek_kat": 0.25925860108046633
+  },
+  "YK014": {
+   "kod": "YK014",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Diskteki bir SQLite dosyasıyla ölçüldü. Her bağlantı kendi işlemini kapatmak zorunda olduğundan fark, commit sayısındaki azalmayı da içerir.",
+   "not_en": "Measured with an SQLite file on disk. Since every connection has to close its own transaction, the gap includes the drop in commits as well.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.11351787496823817,
+    "islemci_s": 0.08386600000000044,
+    "enerji_j": 0.8386600000000044,
+    "bellek_b": 3862
+   },
+   "iyi": {
+    "sure_s": 0.0006090549030909087,
+    "islemci_s": 0.0005234634146340945,
+    "enerji_j": 0.005234634146340945,
+    "bellek_b": 4986
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    41
+   ],
+   "kat": 186.38364848906613,
+   "sure_kat": 186.38364848906613,
+   "islemci_kat": 160.21367999256168,
+   "bellek_kat": 0.7745687926193341
+  },
+  "YK015": {
+   "kod": "YK015",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İki sürüm de işin bitmesini 20 ms bekler; süre aynıdır. Fark işlemcinin bu sürede yaptığı boş iştedir, bu yüzden oran işlemci süresinden hesaplandı.",
+   "not_en": "Both versions wait 20 ms for the work to finish, so the duration is the same. The difference is the idle work the CPU does meanwhile, so the ratio comes from CPU time.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.03126941598020494,
+    "islemci_s": 0.03128500000000045,
+    "enerji_j": 0.3128500000000045,
+    "bellek_b": 144
+   },
+   "iyi": {
+    "sure_s": 0.025029437500052154,
+    "islemci_s": 5.749999999959954e-05,
+    "enerji_j": 0.0005749999999959954,
+    "bellek_b": 144
+   },
+   "olcut": "islemci",
+   "cagri": [
+    1,
+    2
+   ],
+   "kat": 544.0869565255363,
+   "sure_kat": 1.2493055818829242,
+   "islemci_kat": 544.0869565255363,
+   "bellek_kat": 1.0
+  },
+  "YK016": {
+   "kod": "YK016",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Geçersiz kayıt listenin başlarında (1.000. sırada). Sonda olsaydı iki sürüm aynı işi yapardı.",
+   "not_en": "The invalid record is near the start of the list (position 1,000). Had it been at the end, both versions would do the same work.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0006236101489985127,
+    "islemci_s": 0.0006236551724137819,
+    "enerji_j": 0.006236551724137819,
+    "bellek_b": 173008
+   },
+   "iyi": {
+    "sure_s": 4.472838252213368e-05,
+    "islemci_s": 4.472966867469966e-05,
+    "enerji_j": 0.00044729668674699664,
+    "bellek_b": 416
+   },
+   "olcut": "sure",
+   "cagri": [
+    87,
+    1328
+   ],
+   "kat": 13.94215739167231,
+   "sure_kat": 13.94215739167231,
+   "islemci_kat": 13.94276306738079,
+   "bellek_kat": 415.88461538461536
+  },
+  "YK017": {
+   "kod": "YK017",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.03765175002627075,
+    "islemci_s": 0.03755699999999962,
+    "enerji_j": 0.3755699999999962,
+    "bellek_b": 80048
+   },
+   "iyi": {
+    "sure_s": 0.000319826474878937,
+    "islemci_s": 0.00031983544303796816,
+    "enerji_j": 0.0031983544303796816,
+    "bellek_b": 41872
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    158
+   ],
+   "kat": 117.725557399596,
+   "sure_kat": 117.725557399596,
+   "islemci_kat": 117.42601021094829,
+   "bellek_kat": 1.911730989682843
+  },
+  "YK018": {
+   "kod": "YK018",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.027730417001293972,
+    "islemci_s": 0.02770500000000098,
+    "enerji_j": 0.2770500000000098,
+    "bellek_b": 959173
+   },
+   "iyi": {
+    "sure_s": 0.022032687498722225,
+    "islemci_s": 0.022033999999999665,
+    "enerji_j": 0.22033999999999665,
+    "bellek_b": 1111328
+   },
+   "olcut": "sure",
+   "cagri": [
+    2,
+    2
+   ],
+   "kat": 1.258603472812937,
+   "sure_kat": 1.258603472812937,
+   "islemci_kat": 1.257374965961759,
+   "bellek_kat": 0.863087225373607
+  },
+  "YK019": {
+   "kod": "YK019",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Günlük seviyesi WARNING; debug mesajları yazılmıyor ama kötü sürüm yine de her birini biçimlendiriyor.",
+   "not_en": "The log level is WARNING; debug messages are not written, yet the bad version still formats every one of them.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.003601106753194472,
+    "islemci_s": 0.0036013749999999067,
+    "enerji_j": 0.03601374999999907,
+    "bellek_b": 442
+   },
+   "iyi": {
+    "sure_s": 0.0005985037499340252,
+    "islemci_s": 0.0005985199999999934,
+    "enerji_j": 0.0059851999999999345,
+    "bellek_b": 48
+   },
+   "olcut": "sure",
+   "cagri": [
+    16,
+    100
+   ],
+   "kat": 6.016849106779085,
+   "sure_kat": 6.016849106779085,
+   "islemci_kat": 6.017133930361468,
+   "bellek_kat": 9.208333333333334
+  },
+  "YK020": {
+   "kod": "YK020",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Süre benzer; asıl kazanç bellektedir: iyi sürüm dosyayı satır satır okur.",
+   "not_en": "Similar time; the real gain is memory: the good version reads the file line by line.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.006119620449478841,
+    "islemci_s": 0.00610577777777779,
+    "enerji_j": 0.0610577777777779,
+    "bellek_b": 6145651
+   },
+   "iyi": {
+    "sure_s": 0.005620941601227969,
+    "islemci_s": 0.0055932000000002095,
+    "enerji_j": 0.05593200000000209,
+    "bellek_b": 46733
+   },
+   "olcut": "sure",
+   "cagri": [
+    9,
+    10
+   ],
+   "kat": 1.088718026912418,
+   "sure_kat": 1.088718026912418,
+   "islemci_kat": 1.0916430268500252,
+   "bellek_kat": 131.50559561765775
+  },
+  "YK021": {
+   "kod": "YK021",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0027965317602225,
+    "islemci_s": 0.0027967619047618627,
+    "enerji_j": 0.027967619047618627,
+    "bellek_b": 154241
+   },
+   "iyi": {
+    "sure_s": 0.0007354867809293111,
+    "islemci_s": 0.0007355609756097592,
+    "enerji_j": 0.0073556097560975925,
+    "bellek_b": 152162
+   },
+   "olcut": "sure",
+   "cagri": [
+    21,
+    82
+   ],
+   "kat": 3.8022869108388226,
+   "sure_kat": 3.8022869108388226,
+   "islemci_kat": 3.8022162641831647,
+   "bellek_kat": 1.0136630696231648
+  },
+  "YK022": {
+   "kod": "YK022",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.005122155273883519,
+    "islemci_s": 0.005122909090909128,
+    "enerji_j": 0.05122909090909128,
+    "bellek_b": 1669595
+   },
+   "iyi": {
+    "sure_s": 4.264334955190557e-06,
+    "islemci_s": 4.264644875187716e-06,
+    "enerji_j": 4.264644875187716e-05,
+    "bellek_b": 673
+   },
+   "olcut": "sure",
+   "cagri": [
+    11,
+    13981
+   ],
+   "kat": 1201.1615709616858,
+   "sure_kat": 1201.1615709616858,
+   "islemci_kat": 1201.2510398497445,
+   "bellek_kat": 2480.824665676077
+  },
+  "YK023": {
+   "kod": "YK023",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.008119464286469988,
+    "islemci_s": 0.008119857142857154,
+    "enerji_j": 0.08119857142857154,
+    "bellek_b": 2381544
+   },
+   "iyi": {
+    "sure_s": 0.004246196426850345,
+    "islemci_s": 0.0042464999999999465,
+    "enerji_j": 0.04246499999999946,
+    "bellek_b": 1185281
+   },
+   "olcut": "sure",
+   "cagri": [
+    7,
+    14
+   ],
+   "kat": 1.9121735007658784,
+   "sure_kat": 1.9121735007658784,
+   "islemci_kat": 1.9121293165800675,
+   "bellek_kat": 2.0092653134573153
+  },
+  "YK024": {
+   "kod": "YK024",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İyi sürüm yalnızca değişen alanı kopyalar; iç içe yapılar varsayılan ayarla paylaşılır. Karşılaştırmada varsayılan ayarın değişmediği de denetlendi.",
+   "not_en": "The good version copies only the changed field; nested structures are shared with the defaults. The comparison also checked that the defaults stayed unchanged.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 1.6314885237952064e-05,
+    "islemci_s": 1.6315518176885378e-05,
+    "enerji_j": 0.00016315518176885377,
+    "bellek_b": 4807
+   },
+   "iyi": {
+    "sure_s": 1.466607162995615e-07,
+    "islemci_s": 1.4666532344261723e-07,
+    "enerji_j": 1.4666532344261722e-06,
+    "bellek_b": 120
+   },
+   "olcut": "sure",
+   "cagri": [
+    3686,
+    406981
+   ],
+   "kat": 111.24236707413957,
+   "sure_kat": 111.24236707413957,
+   "islemci_kat": 111.24318819143927,
+   "bellek_kat": 40.05833333333333
+  },
+  "YK025": {
+   "kod": "YK025",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.013932125002611428,
+    "islemci_s": 0.013932250000000757,
+    "enerji_j": 0.13932250000000757,
+    "bellek_b": 159968
+   },
+   "iyi": {
+    "sure_s": 7.839872381718176e-05,
+    "islemci_s": 7.840052356021002e-05,
+    "enerji_j": 0.0007840052356021002,
+    "bellek_b": 85320
+   },
+   "olcut": "sure",
+   "cagri": [
+    4,
+    764
+   ],
+   "kat": 177.70856876573396,
+   "sure_kat": 177.70856876573396,
+   "islemci_kat": 177.70608367559012,
+   "bellek_kat": 1.8749179559306142
+  },
+  "YK026": {
+   "kod": "YK026",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.016408319662635524,
+    "islemci_s": 0.016408666666665777,
+    "enerji_j": 0.16408666666665778,
+    "bellek_b": 4320
+   },
+   "iyi": {
+    "sure_s": 5.622306354704582e-05,
+    "islemci_s": 5.6228401191659224e-05,
+    "enerji_j": 0.0005622840119165922,
+    "bellek_b": 164168
+   },
+   "olcut": "sure",
+   "cagri": [
+    3,
+    1007
+   ],
+   "kat": 291.8432157099643,
+   "sure_kat": 291.8432157099643,
+   "islemci_kat": 291.8216829736179,
+   "bellek_kat": 0.026314507090297742
+  },
+  "YK027": {
+   "kod": "YK027",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.03987641696585342,
+    "islemci_s": 0.03987899999999911,
+    "enerji_j": 0.3987899999999911,
+    "bellek_b": 49360
+   },
+   "iyi": {
+    "sure_s": 1.627775155347507e-05,
+    "islemci_s": 1.6278392230914654e-05,
+    "enerji_j": 0.00016278392230914654,
+    "bellek_b": 49264
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    3707
+   ],
+   "kat": 2449.7496988360394,
+   "sure_kat": 2449.7496988360394,
+   "islemci_kat": 2449.811961421105,
+   "bellek_kat": 1.0019486846378693
+  },
+  "YK028": {
+   "kod": "YK028",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00487364933360368,
+    "islemci_s": 0.004873666666666665,
+    "enerji_j": 0.04873666666666665,
+    "bellek_b": 30946
+   },
+   "iyi": {
+    "sure_s": 0.0010374604818684146,
+    "islemci_s": 0.0010374827586206888,
+    "enerji_j": 0.010374827586206888,
+    "bellek_b": 28790
+   },
+   "olcut": "sure",
+   "cagri": [
+    12,
+    58
+   ],
+   "kat": 4.697672266828401,
+   "sure_kat": 4.697672266828401,
+   "islemci_kat": 4.69758810560486,
+   "bellek_kat": 1.0748871135811044
+  },
+  "YK029": {
+   "kod": "YK029",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Süre benzer; asıl kazanç bellektedir: range sayıları tek tek üretir, list() hepsini birden tutar.",
+   "not_en": "Similar time; the real gain is memory: range produces numbers one at a time, list() holds them all.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.009838574996683747,
+    "islemci_s": 0.009839199999999692,
+    "enerji_j": 0.09839199999999693,
+    "bellek_b": 7991984
+   },
+   "iyi": {
+    "sure_s": 0.008209339284803718,
+    "islemci_s": 0.008209428571428796,
+    "enerji_j": 0.08209428571428797,
+    "bellek_b": 176
+   },
+   "olcut": "sure",
+   "cagri": [
+    5,
+    7
+   ],
+   "kat": 1.1984612470452891,
+   "sure_kat": 1.1984612470452891,
+   "islemci_kat": 1.198524344829916,
+   "bellek_kat": 45409.0,
+   "motor": {
+    "esdeger": true,
+    "kat": 1.2435684659630333,
+    "sure_kat": 1.2435684659630333,
+    "islemci_kat": 1.243529558760528,
+    "hata": null
+   }
+  },
+  "YK030": {
+   "kod": "YK030",
+   "olculmedi": "Dış bir program (ImageMagick) gerektirir. Her süreç başlatma milisaniyeler sürer; tek süreç bunu bir kez öder.",
+   "olculmedi_en": "Needs an external program (ImageMagick). Each process start takes milliseconds; a single process pays that once."
+  },
+  "YK031": {
+   "kod": "YK031",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Diskteki bir SQLite dosyasıyla ölçüldü.",
+   "not_en": "Measured with an SQLite file on disk.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.060766167007386684,
+    "islemci_s": 0.05193399999999926,
+    "enerji_j": 0.5193399999999926,
+    "bellek_b": 20239
+   },
+   "iyi": {
+    "sure_s": 0.0004249072429407739,
+    "islemci_s": 0.0003780754716979708,
+    "enerji_j": 0.003780754716979708,
+    "bellek_b": 4114
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    53
+   ],
+   "kat": 143.01042878635192,
+   "sure_kat": 143.01042878635192,
+   "islemci_kat": 137.36410819448037,
+   "bellek_kat": 4.919543023821099
+  },
+  "YK032": {
+   "kod": "YK032",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002788073427620388,
+    "islemci_s": 0.0027882380952380884,
+    "enerji_j": 0.027882380952380884,
+    "bellek_b": 18528
+   },
+   "iyi": {
+    "sure_s": 0.001771262235706672,
+    "islemci_s": 0.0017714705882353138,
+    "enerji_j": 0.01771470588235314,
+    "bellek_b": 82600
+   },
+   "olcut": "sure",
+   "cagri": [
+    21,
+    34
+   ],
+   "kat": 1.574060221810151,
+   "sure_kat": 1.574060221810151,
+   "islemci_kat": 1.5739680431362104,
+   "bellek_kat": 0.22430992736077482
+  },
+  "YK033": {
+   "kod": "YK033",
+   "olculmedi": "Django projesi ve veritabanı sunucusu gerektirir. Kazanç sorgu sayısındadır: n INSERT → 1.",
+   "olculmedi_en": "Needs a Django project and a database server. The gain is in query count: n INSERTs → 1."
+  },
+  "YK034": {
+   "kod": "YK034",
+   "olculmedi": "Django projesi ve veritabanı sunucusu gerektirir. Kazanç sorgu sayısındadır: n UPDATE → 1.",
+   "olculmedi_en": "Needs a Django project and a database server. The gain is in query count: n UPDATEs → 1."
+  },
+  "YK035": {
+   "kod": "YK035",
+   "olculmedi": "Django projesi ve veritabanı sunucusu gerektirir. Kazanç taşınan veridedir: n nesne → 1 sayı.",
+   "olculmedi_en": "Needs a Django project and a database server. The gain is in data moved: n objects → 1 number."
+  },
+  "YK036": {
+   "kod": "YK036",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "SQLite imleci zaten ilk satırda durur; bu yüzden fark yok denecek kadar azdır. Fark, sonucu önceden hazırlayıp ağdan gönderen sunucu veritabanlarında görülür.",
+   "not_en": "An SQLite cursor already stops at the first row, so the difference is negligible. It shows on server databases that prepare the result and send it over the network.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 1.376395318116324e-06,
+    "islemci_s": 1.376735841952631e-06,
+    "enerji_j": 1.376735841952631e-05,
+    "bellek_b": 718
+   },
+   "iyi": {
+    "sure_s": 1.3328939161745254e-06,
+    "islemci_s": 1.3300260422271173e-06,
+    "enerji_j": 1.3300260422271172e-05,
+    "bellek_b": 718
+   },
+   "olcut": "sure",
+   "cagri": [
+    45151,
+    46463
+   ],
+   "kat": 1.032636807336213,
+   "sure_kat": 1.032636807336213,
+   "islemci_kat": 1.0351194625086428,
+   "bellek_kat": 1.0
+  },
+  "YK037": {
+   "kod": "YK037",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Sonuç rastgele olduğu için çıktılar karşılaştırılmadı; yalnızca süre ölçüldü.",
+   "not_en": "The result is random, so outputs were not compared; only time was measured.",
+   "esdeger": null,
+   "kotu": {
+    "sure_s": 0.0011337099065301271,
+    "islemci_s": 0.0011338490566037628,
+    "enerji_j": 0.011338490566037628,
+    "bellek_b": 838
+   },
+   "iyi": {
+    "sure_s": 0.0007210215904289879,
+    "islemci_s": 0.0007211204819276726,
+    "enerji_j": 0.007211204819276726,
+    "bellek_b": 1086
+   },
+   "olcut": "sure",
+   "cagri": [
+    53,
+    83
+   ],
+   "kat": 1.572366100515244,
+   "sure_kat": 1.572366100515244,
+   "islemci_kat": 1.5723434363877717,
+   "bellek_kat": 0.7716390423572744
+  },
+  "YK038": {
+   "kod": "YK038",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İyi sürüm FTS5 trigram dizinini kullanır; aynı alt metin aramasını yapar ve aynı satırları döndürür. Dizinin kurulumu ölçüme dahil değildir.",
+   "not_en": "The good version uses an FTS5 trigram index; it does the same substring search and returns the same rows. Building the index is not part of the measurement.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0030157817610805587,
+    "islemci_s": 0.0030042857142854964,
+    "enerji_j": 0.030042857142854963,
+    "bellek_b": 117782
+   },
+   "iyi": {
+    "sure_s": 0.0010520646555333174,
+    "islemci_s": 0.0010481206896552036,
+    "enerji_j": 0.010481206896552037,
+    "bellek_b": 117832
+   },
+   "olcut": "sure",
+   "cagri": [
+    21,
+    58
+   ],
+   "kat": 2.8665365243657814,
+   "sure_kat": 2.8665365243657814,
+   "islemci_kat": 2.8663547470604795,
+   "bellek_kat": 0.9995756670513952
+  },
+  "YK039": {
+   "kod": "YK039",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.005482945899711922,
+    "islemci_s": 0.0054786,
+    "enerji_j": 0.054786,
+    "bellek_b": 1014
+   },
+   "iyi": {
+    "sure_s": 0.0006166000828895834,
+    "islemci_s": 0.0006163298969072217,
+    "enerji_j": 0.006163298969072217,
+    "bellek_b": 675
+   },
+   "olcut": "sure",
+   "cagri": [
+    10,
+    97
+   ],
+   "kat": 8.89222374738761,
+   "sure_kat": 8.89222374738761,
+   "islemci_kat": 8.889070654355606,
+   "bellek_kat": 1.5022222222222221
+  },
+  "YK040": {
+   "kod": "YK040",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "300 farklı değerle ölçüldü. Python'un sqlite3 modülü son 128 sorgu metnini önbellekte tutar; her değer ayrı metin olunca önbellek yetmez ve sorgu her seferinde yeniden derlenir.",
+   "not_en": "Measured with 300 different values. Python's sqlite3 module caches the last 128 query texts; when each value is a separate text the cache runs out and the query is recompiled every time.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.003067410051651103,
+    "islemci_s": 0.0030679473684208937,
+    "enerji_j": 0.03067947368420894,
+    "bellek_b": 281429
+   },
+   "iyi": {
+    "sure_s": 0.001626049541251583,
+    "islemci_s": 0.0016262432432431586,
+    "enerji_j": 0.016262432432431584,
+    "bellek_b": 236627
+   },
+   "olcut": "sure",
+   "cagri": [
+    19,
+    37
+   ],
+   "kat": 1.8864185707958774,
+   "sure_kat": 1.8864185707958774,
+   "islemci_kat": 1.8865242829864715,
+   "bellek_kat": 1.1893359591255437
+  },
+  "YK041": {
+   "kod": "YK041",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00039850827846182695,
+    "islemci_s": 0.0003979205298013133,
+    "enerji_j": 0.003979205298013133,
+    "bellek_b": 80
+   },
+   "iyi": {
+    "sure_s": 1.9795775700593442e-05,
+    "islemci_s": 1.97653883338705e-05,
+    "enerji_j": 0.000197653883338705,
+    "bellek_b": 408
+   },
+   "olcut": "sure",
+   "cagri": [
+    151,
+    3103
+   ],
+   "kat": 20.13097564294388,
+   "sure_kat": 20.13097564294388,
+   "islemci_kat": 20.132188808019823,
+   "bellek_kat": 0.19607843137254902
+  },
+  "YK042": {
+   "kod": "YK042",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00022957358478550922,
+    "islemci_s": 0.0002295735849056848,
+    "enerji_j": 0.002295735849056848,
+    "bellek_b": 400096
+   },
+   "iyi": {
+    "sure_s": 9.415388429566964e-08,
+    "islemci_s": 9.412360936412889e-08,
+    "enerji_j": 9.412360936412889e-07,
+    "bellek_b": 72
+   },
+   "olcut": "sure",
+   "cagri": [
+    265,
+    655096
+   ],
+   "kat": 2438.2805500045406,
+   "sure_kat": 2438.2805500045406,
+   "islemci_kat": 2439.0648261006527,
+   "bellek_kat": 5556.888888888889
+  },
+  "YK043": {
+   "kod": "YK043",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.007439255855777966,
+    "islemci_s": 0.007439571428571006,
+    "enerji_j": 0.07439571428571005,
+    "bellek_b": 599984
+   },
+   "iyi": {
+    "sure_s": 0.000541577981827661,
+    "islemci_s": 0.0005415963302752663,
+    "enerji_j": 0.005415963302752663,
+    "bellek_b": 316
+   },
+   "olcut": "sure",
+   "cagri": [
+    7,
+    109
+   ],
+   "kat": 13.736259791568225,
+   "sure_kat": 13.736259791568225,
+   "islemci_kat": 13.736377099877771,
+   "bellek_kat": 1898.6835443037974
+  },
+  "YK044": {
+   "kod": "YK044",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.01601572200888768,
+    "islemci_s": 0.016004333333332472,
+    "enerji_j": 0.1600433333333247,
+    "bellek_b": 168312
+   },
+   "iyi": {
+    "sure_s": 3.648852581996188e-05,
+    "islemci_s": 3.648936170212955e-05,
+    "enerji_j": 0.00036489361702129547,
+    "bellek_b": 164104
+   },
+   "olcut": "sure",
+   "cagri": [
+    3,
+    1645
+   ],
+   "kat": 438.92488526148986,
+   "sure_kat": 438.92488526148986,
+   "islemci_kat": 438.6027210883891,
+   "bellek_kat": 1.0256422756300883
+  },
+  "YK045": {
+   "kod": "YK045",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Kayıtlar benzersiz; yinelenen kayıtlarda remove yalnızca ilkini siler, iyi sürüm hepsini.",
+   "not_en": "The records are unique; with duplicates remove deletes only the first, the good version all of them.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.17021520901471376,
+    "islemci_s": 0.17021600000000348,
+    "enerji_j": 1.7021600000000348,
+    "bellek_b": 160104
+   },
+   "iyi": {
+    "sure_s": 0.0003681135270465723,
+    "islemci_s": 0.0003676766467065932,
+    "enerji_j": 0.003676766467065932,
+    "bellek_b": 285032
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    167
+   ],
+   "kat": 462.39868004953485,
+   "sure_kat": 462.39868004953485,
+   "islemci_kat": 462.95026220644417,
+   "bellek_kat": 0.561705352381487
+  },
+  "YK046": {
+   "kod": "YK046",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.22018504096195102,
+    "islemci_s": 0.21983099999999922,
+    "enerji_j": 2.198309999999992,
+    "bellek_b": 1202304
+   },
+   "iyi": {
+    "sure_s": 0.0015831928510494806,
+    "islemci_s": 0.0015794074074077739,
+    "enerji_j": 0.01579407407407774,
+    "bellek_b": 1211512
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    27
+   ],
+   "kat": 139.07657605704375,
+   "sure_kat": 139.07657605704375,
+   "islemci_kat": 139.1857471156224,
+   "bellek_kat": 0.9923995800289226
+  },
+  "YK047": {
+   "kod": "YK047",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.003947480535134673,
+    "islemci_s": 0.003947599999999814,
+    "enerji_j": 0.039475999999998145,
+    "bellek_b": 6938128
+   },
+   "iyi": {
+    "sure_s": 0.00048167304542788244,
+    "islemci_s": 0.00048168468468466407,
+    "enerji_j": 0.004816846846846641,
+    "bellek_b": 6948952
+   },
+   "olcut": "sure",
+   "cagri": [
+    15,
+    111
+   ],
+   "kat": 8.195352786718688,
+   "sure_kat": 8.195352786718688,
+   "islemci_kat": 8.195402771803133,
+   "bellek_kat": 0.9984423550486462
+  },
+  "YK048": {
+   "kod": "YK048",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İyi sürüm sığ kopya yapar: iç içe 'dersler' listesi raporlar arasında paylaşılır. Raporlar sonradan tek tek değiştirilecekse yalnızca değişen kısmı kopyalayın.",
+   "not_en": "The good version makes a shallow copy: the nested 'dersler' list is shared between reports. If reports will be changed one by one later, copy only the part that changes.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.012430489747202955,
+    "islemci_s": 0.012430750000000046,
+    "enerji_j": 0.12430750000000046,
+    "bellek_b": 1767680
+   },
+   "iyi": {
+    "sure_s": 0.00010859082736034724,
+    "islemci_s": 0.00010859172661870965,
+    "enerji_j": 0.0010859172661870965,
+    "bellek_b": 188368
+   },
+   "olcut": "sure",
+   "cagri": [
+    4,
+    556
+   ],
+   "kat": 114.47090006924509,
+   "sure_kat": 114.47090006924509,
+   "islemci_kat": 114.47234874206622,
+   "bellek_kat": 9.384184150174127
+  },
+  "YK049": {
+   "kod": "YK049",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Python 3.11'den beri try bloğuna girmenin maliyeti yok; bu ölçümün yapıldığı sürümde fark beklenmez.",
+   "not_en": "Entering a try block has cost nothing since Python 3.11; no difference is expected on the version used here.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002262283653880541,
+    "islemci_s": 0.002262461538461589,
+    "enerji_j": 0.02262461538461589,
+    "bellek_b": 670789
+   },
+   "iyi": {
+    "sure_s": 0.002597307955906929,
+    "islemci_s": 0.0025974782608695637,
+    "enerji_j": 0.025974782608695637,
+    "bellek_b": 670710
+   },
+   "olcut": "sure",
+   "cagri": [
+    26,
+    23
+   ],
+   "kat": 0.8710109437487155,
+   "sure_kat": 0.8710109437487155,
+   "islemci_kat": 0.8710223190488531,
+   "bellek_kat": 1.000117785630153
+  },
+  "YK050": {
+   "kod": "YK050",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0005205281491375022,
+    "islemci_s": 0.0005196842105263125,
+    "enerji_j": 0.005196842105263125,
+    "bellek_b": 812464
+   },
+   "iyi": {
+    "sure_s": 0.00045225833802340693,
+    "islemci_s": 0.0004505615384615042,
+    "enerji_j": 0.004505615384615042,
+    "bellek_b": 812464
+   },
+   "olcut": "sure",
+   "cagri": [
+    114,
+    130
+   ],
+   "kat": 1.1509531287194574,
+   "sure_kat": 1.1509531287194574,
+   "islemci_kat": 1.1534144976085527,
+   "bellek_kat": 1.0
+  },
+  "YK051": {
+   "kod": "YK051",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00026169715909583663,
+    "islemci_s": 0.00026009545454544735,
+    "enerji_j": 0.0026009545454544736,
+    "bellek_b": 173008
+   },
+   "iyi": {
+    "sure_s": 6.107997448582735e-05,
+    "islemci_s": 6.0373469387752665e-05,
+    "enerji_j": 0.0006037346938775267,
+    "bellek_b": 160056
+   },
+   "olcut": "sure",
+   "cagri": [
+    220,
+    980
+   ],
+   "kat": 4.284500137709772,
+   "sure_kat": 4.284500137709772,
+   "islemci_kat": 4.308108465242685,
+   "bellek_kat": 1.0809216774129056
+  },
+  "YK052": {
+   "kod": "YK052",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0007974024077779369,
+    "islemci_s": 0.0007917236842104851,
+    "enerji_j": 0.00791723684210485,
+    "bellek_b": 884824
+   },
+   "iyi": {
+    "sure_s": 0.0007870993154340309,
+    "islemci_s": 0.0007843561643835256,
+    "enerji_j": 0.007843561643835257,
+    "bellek_b": 884824
+   },
+   "olcut": "sure",
+   "cagri": [
+    76,
+    73
+   ],
+   "kat": 1.0130899521088066,
+   "sure_kat": 1.0130899521088066,
+   "islemci_kat": 1.009393079523701,
+   "bellek_kat": 1.0
+  },
+  "YK053": {
+   "kod": "YK053",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0005096431620594146,
+    "islemci_s": 0.0005085982905983423,
+    "enerji_j": 0.005085982905983423,
+    "bellek_b": 41224
+   },
+   "iyi": {
+    "sure_s": 0.0002895437414984946,
+    "islemci_s": 0.0002893781094527486,
+    "enerji_j": 0.002893781094527486,
+    "bellek_b": 41224
+   },
+   "olcut": "sure",
+   "cagri": [
+    117,
+    201
+   ],
+   "kat": 1.7601594820244604,
+   "sure_kat": 1.7601594820244604,
+   "islemci_kat": 1.757556200640634,
+   "bellek_kat": 1.0
+  },
+  "YK054": {
+   "kod": "YK054",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00048769123923893157,
+    "islemci_s": 0.00048656410256409576,
+    "enerji_j": 0.004865641025640958,
+    "bellek_b": 136
+   },
+   "iyi": {
+    "sure_s": 9.9524270655532e-05,
+    "islemci_s": 9.947029702970512e-05,
+    "enerji_j": 0.0009947029702970511,
+    "bellek_b": 112
+   },
+   "olcut": "sure",
+   "cagri": [
+    117,
+    606
+   ],
+   "kat": 4.900224196838398,
+   "sure_kat": 4.900224196838398,
+   "islemci_kat": 4.891551720397413,
+   "bellek_kat": 1.2142857142857142
+  },
+  "YK055": {
+   "kod": "YK055",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002655896737807147,
+    "islemci_s": 0.002649260869565155,
+    "enerji_j": 0.02649260869565155,
+    "bellek_b": 1610858
+   },
+   "iyi": {
+    "sure_s": 0.002003761929310193,
+    "islemci_s": 0.002003821428571584,
+    "enerji_j": 0.02003821428571584,
+    "bellek_b": 1610858
+   },
+   "olcut": "sure",
+   "cagri": [
+    23,
+    28
+   ],
+   "kat": 1.3254552344556496,
+   "sure_kat": 1.3254552344556496,
+   "islemci_kat": 1.3221042712641666,
+   "bellek_kat": 1.0
+  },
+  "YK056": {
+   "kod": "YK056",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0017792152667728564,
+    "islemci_s": 0.001777066666666845,
+    "enerji_j": 0.01777066666666845,
+    "bellek_b": 1812998
+   },
+   "iyi": {
+    "sure_s": 0.0014867682929900362,
+    "islemci_s": 0.0014802682926828902,
+    "enerji_j": 0.014802682926828901,
+    "bellek_b": 1734024
+   },
+   "olcut": "sure",
+   "cagri": [
+    30,
+    41
+   ],
+   "kat": 1.1966997649611433,
+   "sure_kat": 1.1966997649611433,
+   "islemci_kat": 1.2005030949126305,
+   "bellek_kat": 1.0455437756340167
+  },
+  "YK057": {
+   "kod": "YK057",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0024512416799552738,
+    "islemci_s": 0.0024471199999999273,
+    "enerji_j": 0.024471199999999273,
+    "bellek_b": 39008
+   },
+   "iyi": {
+    "sure_s": 0.001237065469542024,
+    "islemci_s": 0.0012333673469387396,
+    "enerji_j": 0.012333673469387397,
+    "bellek_b": 39152
+   },
+   "olcut": "sure",
+   "cagri": [
+    25,
+    49
+   ],
+   "kat": 1.9814971319688939,
+   "sure_kat": 1.9814971319688939,
+   "islemci_kat": 1.9840966327459242,
+   "bellek_kat": 0.9963220269718022
+  },
+  "YK058": {
+   "kod": "YK058",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0011556474424791164,
+    "islemci_s": 0.0011546538461539003,
+    "enerji_j": 0.011546538461539003,
+    "bellek_b": 179584
+   },
+   "iyi": {
+    "sure_s": 0.0008198171247689364,
+    "islemci_s": 0.0008186666666667205,
+    "enerji_j": 0.008186666666667206,
+    "bellek_b": 181080
+   },
+   "olcut": "sure",
+   "cagri": [
+    52,
+    72
+   ],
+   "kat": 1.4096405253852595,
+   "sure_kat": 1.4096405253852595,
+   "islemci_kat": 1.410407792533173,
+   "bellek_kat": 0.9917384581400486
+  },
+  "YK059": {
+   "kod": "YK059",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.007061289063130971,
+    "islemci_s": 0.005539812499999908,
+    "enerji_j": 0.05539812499999908,
+    "bellek_b": 973080
+   },
+   "iyi": {
+    "sure_s": 0.0026019648430519737,
+    "islemci_s": 0.002432843749999858,
+    "enerji_j": 0.02432843749999858,
+    "bellek_b": 973080
+   },
+   "olcut": "sure",
+   "cagri": [
+    16,
+    32
+   ],
+   "kat": 2.713829543849038,
+   "sure_kat": 2.713829543849038,
+   "islemci_kat": 2.277093422049908,
+   "bellek_kat": 1.0
+  },
+  "YK060": {
+   "kod": "YK060",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.001374479651256183,
+    "islemci_s": 0.0013380930232558368,
+    "enerji_j": 0.013380930232558368,
+    "bellek_b": 1453032
+   },
+   "iyi": {
+    "sure_s": 0.0009190981124242347,
+    "islemci_s": 0.0009015322580645095,
+    "enerji_j": 0.009015322580645094,
+    "bellek_b": 1447912
+   },
+   "olcut": "sure",
+   "cagri": [
+    43,
+    62
+   ],
+   "kat": 1.495465644718629,
+   "sure_kat": 1.495465644718629,
+   "islemci_kat": 1.4842430886816798,
+   "bellek_kat": 1.0035361265049256
+  },
+  "YK061": {
+   "kod": "YK061",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0010387941967399622,
+    "islemci_s": 0.0009922727272726809,
+    "enerji_j": 0.009922727272726809,
+    "bellek_b": 653224
+   },
+   "iyi": {
+    "sure_s": 0.0004901991743474465,
+    "islemci_s": 0.00047850757575754443,
+    "enerji_j": 0.004785075757575444,
+    "bellek_b": 652960
+   },
+   "olcut": "sure",
+   "cagri": [
+    66,
+    132
+   ],
+   "kat": 2.1191267776466693,
+   "sure_kat": 2.1191267776466693,
+   "islemci_kat": 2.073682377341204,
+   "bellek_kat": 1.0004043126684636
+  },
+  "YK062": {
+   "kod": "YK062",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Fark ölçülemeyecek kadar küçük: fazladan kopya C ile yapılır ve sıralamanın yanında önemsizdir. Kazanç sadeliktedir.",
+   "not_en": "Too small to measure: the extra copy runs in C and is negligible next to sorting. The gain is simplicity.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0008574757839842523,
+    "islemci_s": 0.0008301891891891681,
+    "enerji_j": 0.00830189189189168,
+    "bellek_b": 167296
+   },
+   "iyi": {
+    "sure_s": 0.0008052499994819025,
+    "islemci_s": 0.0007545303030303053,
+    "enerji_j": 0.007545303030303053,
+    "bellek_b": 167296
+   },
+   "olcut": "sure",
+   "cagri": [
+    74,
+    66
+   ],
+   "kat": 1.064856609172247,
+   "sure_kat": 1.064856609172247,
+   "islemci_kat": 1.1002728264921973,
+   "bellek_kat": 1.0,
+   "motor": {
+    "esdeger": true,
+    "kat": 1.2593148421369689,
+    "sure_kat": 1.2593148421369689,
+    "islemci_kat": 1.254206852607779,
+    "hata": null
+   }
+  },
+  "YK063": {
+   "kod": "YK063",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Fark ölçülemeyecek kadar küçük: reversed() kopyası sıralamanın yanında önemsizdir. reverse=True ayrıca eşit elemanların sırasını korur.",
+   "not_en": "Too small to measure: the reversed() copy is negligible next to sorting. reverse=True also keeps equal elements in order.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002903149104799683,
+    "islemci_s": 0.0028654736842103476,
+    "enerji_j": 0.028654736842103477,
+    "bellek_b": 320104
+   },
+   "iyi": {
+    "sure_s": 0.0028050749999238176,
+    "islemci_s": 0.002738199999999935,
+    "enerji_j": 0.02738199999999935,
+    "bellek_b": 240064
+   },
+   "olcut": "sure",
+   "cagri": [
+    19,
+    20
+   ],
+   "kat": 1.0349630954176017,
+   "sure_kat": 1.0349630954176017,
+   "islemci_kat": 1.046480784533787,
+   "bellek_kat": 1.3334110903758998
+  },
+  "YK064": {
+   "kod": "YK064",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00041131279554257403,
+    "islemci_s": 0.00041071830985913295,
+    "enerji_j": 0.00410718309859133,
+    "bellek_b": 444368
+   },
+   "iyi": {
+    "sure_s": 0.0001702425483193609,
+    "islemci_s": 0.00017015249266862502,
+    "enerji_j": 0.0017015249266862501,
+    "bellek_b": 400056
+   },
+   "olcut": "sure",
+   "cagri": [
+    142,
+    341
+   ],
+   "kat": 2.4160399359799607,
+   "sure_kat": 2.4160399359799607,
+   "islemci_kat": 2.413824819240316,
+   "bellek_kat": 1.1107644929709841,
+   "motor": {
+    "esdeger": true,
+    "kat": 2.390845327833182,
+    "sure_kat": 2.390845327833182,
+    "islemci_kat": 2.3729431752460615,
+    "hata": null
+   }
+  },
+  "YK065": {
+   "kod": "YK065",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Üreteç bellekte yer tutmaz ama CPython'da liste kurgusundan biraz yavaş çalışabilir; kazanç bellektedir.",
+   "not_en": "A generator takes no memory but can run a little slower than a list comprehension in CPython; the gain is memory.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0010257577027746097,
+    "islemci_s": 0.0010253888888887748,
+    "enerji_j": 0.010253888888887747,
+    "bellek_b": 444368
+   },
+   "iyi": {
+    "sure_s": 0.001573958342257691,
+    "islemci_s": 0.0015738421052630183,
+    "enerji_j": 0.015738421052630184,
+    "bellek_b": 408
+   },
+   "olcut": "sure",
+   "cagri": [
+    54,
+    38
+   ],
+   "kat": 0.6517057505494456,
+   "sure_kat": 0.6517057505494456,
+   "islemci_kat": 0.65151954281806,
+   "bellek_kat": 1089.137254901961,
+   "motor": {
+    "esdeger": true,
+    "kat": 0.659223342014664,
+    "sure_kat": 0.659223342014664,
+    "islemci_kat": 0.664942584821612,
+    "hata": null
+   }
+  },
+  "YK066": {
+   "kod": "YK066",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00013704284231233247,
+    "islemci_s": 0.000135098823529414,
+    "enerji_j": 0.0013509882352941399,
+    "bellek_b": 224952
+   },
+   "iyi": {
+    "sure_s": 7.613443712463343e-05,
+    "islemci_s": 7.461059602649024e-05,
+    "enerji_j": 0.0007461059602649024,
+    "bellek_b": 224872
+   },
+   "olcut": "sure",
+   "cagri": [
+    425,
+    755
+   ],
+   "kat": 1.8000112365445204,
+   "sure_kat": 1.8000112365445204,
+   "islemci_kat": 1.8107189960183083,
+   "bellek_kat": 1.0003557579422961,
+   "motor": {
+    "esdeger": true,
+    "kat": 1.8363812271918925,
+    "sure_kat": 1.8363812271918925,
+    "islemci_kat": 1.8302781442068043,
+    "hata": null
+   }
+  },
+  "YK067": {
+   "kod": "YK067",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Süre benzer; asıl kazanç bellektedir: satırlar sayılırken listede tutulmaz.",
+   "not_en": "Similar time; the real gain is memory: lines are not kept in a list while counting.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.007083270989824086,
+    "islemci_s": 0.006889499999999771,
+    "enerji_j": 0.06889499999999771,
+    "bellek_b": 8987329
+   },
+   "iyi": {
+    "sure_s": 0.007007942738709971,
+    "islemci_s": 0.007004249999999601,
+    "enerji_j": 0.07004249999999601,
+    "bellek_b": 41639
+   },
+   "olcut": "sure",
+   "cagri": [
+    8,
+    8
+   ],
+   "kat": 1.0107489821082616,
+   "sure_kat": 1.0107489821082616,
+   "islemci_kat": 0.98361708962418,
+   "bellek_kat": 215.83921323758975
+  },
+  "YK068": {
+   "kod": "YK068",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.00301408989502019,
+    "islemci_s": 0.0030139473684211056,
+    "enerji_j": 0.030139473684211056,
+    "bellek_b": 1644344
+   },
+   "iyi": {
+    "sure_s": 0.0010652984725311398,
+    "islemci_s": 0.0010640363636365568,
+    "enerji_j": 0.010640363636365568,
+    "bellek_b": 1644344
+   },
+   "olcut": "sure",
+   "cagri": [
+    19,
+    55
+   ],
+   "kat": 2.8293384180479855,
+   "sure_kat": 2.8293384180479855,
+   "islemci_kat": 2.8325604945683795,
+   "bellek_kat": 1.0
+  },
+  "YK069": {
+   "kod": "YK069",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0006970348799570828,
+    "islemci_s": 0.0006969130434782446,
+    "enerji_j": 0.006969130434782447,
+    "bellek_b": 1161850
+   },
+   "iyi": {
+    "sure_s": 0.0006564391720718865,
+    "islemci_s": 0.0006520000000000306,
+    "enerji_j": 0.006520000000000306,
+    "bellek_b": 1162170
+   },
+   "olcut": "sure",
+   "cagri": [
+    92,
+    87
+   ],
+   "kat": 1.061842299503648,
+   "sure_kat": 1.061842299503648,
+   "islemci_kat": 1.0688850360095274,
+   "bellek_kat": 0.999724653019782
+  },
+  "YK070": {
+   "kod": "YK070",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.014246843755245209,
+    "islemci_s": 0.01419224999999713,
+    "enerji_j": 0.1419224999999713,
+    "bellek_b": 2574102
+   },
+   "iyi": {
+    "sure_s": 0.01322461799524414,
+    "islemci_s": 0.013207333333333793,
+    "enerji_j": 0.13207333333333793,
+    "bellek_b": 2574102
+   },
+   "olcut": "sure",
+   "cagri": [
+    4,
+    6
+   ],
+   "kat": 1.0772971862301568,
+   "sure_kat": 1.0772971862301568,
+   "islemci_kat": 1.0745734692844862,
+   "bellek_kat": 1.0
+  },
+  "YK071": {
+   "kod": "YK071",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.003460953412714469,
+    "islemci_s": 0.0034609411764705555,
+    "enerji_j": 0.034609411764705555,
+    "bellek_b": 444368
+   },
+   "iyi": {
+    "sure_s": 0.0021621681413047816,
+    "islemci_s": 0.002162214285714218,
+    "enerji_j": 0.02162214285714218,
+    "bellek_b": 444368
+   },
+   "olcut": "sure",
+   "cagri": [
+    17,
+    28
+   ],
+   "kat": 1.6006865269164139,
+   "sure_kat": 1.6006865269164139,
+   "islemci_kat": 1.6006467070988504,
+   "bellek_kat": 1.0
+  },
+  "YK072": {
+   "kod": "YK072",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Hız aynı: ikisi de aynı C aramasını yapar. Kazanç okunabilirliktedir; Python belgeleri de içerme için 'in' önerir.",
+   "not_en": "Same speed: both run the same C search. The gain is readability; the Python docs also recommend 'in' for containment.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0007379048397580599,
+    "islemci_s": 0.0007233827160493749,
+    "enerji_j": 0.007233827160493749,
+    "bellek_b": 28
+   },
+   "iyi": {
+    "sure_s": 0.0007270919116255006,
+    "islemci_s": 0.0007245588235293062,
+    "enerji_j": 0.007245588235293062,
+    "bellek_b": 10
+   },
+   "olcut": "sure",
+   "cagri": [
+    81,
+    68
+   ],
+   "kat": 1.0148714735505526,
+   "sure_kat": 1.0148714735505526,
+   "islemci_kat": 0.9983767950348013,
+   "bellek_kat": 2.8
+  },
+  "YK073": {
+   "kod": "YK073",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Süre benzer; asıl kazanç bellektedir: iyi sürüm dosyayı satır satır okur.",
+   "not_en": "Similar time; the real gain is memory: the good version reads the file line by line.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.009947524999734014,
+    "islemci_s": 0.009765600000000063,
+    "enerji_j": 0.09765600000000063,
+    "bellek_b": 10034534
+   },
+   "iyi": {
+    "sure_s": 0.012068258202634751,
+    "islemci_s": 0.011264399999998887,
+    "enerji_j": 0.11264399999998886,
+    "bellek_b": 46633
+   },
+   "olcut": "sure",
+   "cagri": [
+    5,
+    5
+   ],
+   "kat": 0.8242718073070613,
+   "sure_kat": 0.8242718073070613,
+   "islemci_kat": 0.8669436454672267,
+   "bellek_kat": 215.1809662685223
+  },
+  "YK074": {
+   "kod": "YK074",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.003704575002969553,
+    "islemci_s": 0.003548666666666615,
+    "enerji_j": 0.03548666666666615,
+    "bellek_b": 444417
+   },
+   "iyi": {
+    "sure_s": 0.002189528225215092,
+    "islemci_s": 0.002058709677419118,
+    "enerji_j": 0.02058709677419118,
+    "bellek_b": 444368
+   },
+   "olcut": "sure",
+   "cagri": [
+    15,
+    31
+   ],
+   "kat": 1.6919512433349098,
+   "sure_kat": 1.6919512433349098,
+   "islemci_kat": 1.7237334169018759,
+   "bellek_kat": 1.0001102689662622
+  },
+  "YK075": {
+   "kod": "YK075",
+   "olculmedi": "DataFrame.append pandas 2.0'da kaldırıldı; kötü sürüm güncel pandas'ta çalışmaz. Aynı kalıbın çalışan hâli YK076'da ölçüldü.",
+   "olculmedi_en": "DataFrame.append was removed in pandas 2.0, so the bad version does not run on current pandas. The working form of the same pattern is measured under YK076."
+  },
+  "YK076": {
+   "kod": "YK076",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.09187274996656924,
+    "islemci_s": 0.09005500000000666,
+    "enerji_j": 0.9005500000000666,
+    "bellek_b": 73608
+   },
+   "iyi": {
+    "sure_s": 0.0001235278037851318,
+    "islemci_s": 0.00012160384615383508,
+    "enerji_j": 0.0012160384615383507,
+    "bellek_b": 22801
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    520
+   ],
+   "kat": 743.741466709597,
+   "sure_kat": 743.741466709597,
+   "islemci_kat": 740.5604579815879,
+   "bellek_kat": 3.2282794614271304
+  },
+  "YK077": {
+   "kod": "YK077",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.006343143552334772,
+    "islemci_s": 0.006341111111112241,
+    "enerji_j": 0.06341111111112241,
+    "bellek_b": 5301301
+   },
+   "iyi": {
+    "sure_s": 7.017525771066316e-05,
+    "islemci_s": 7.012886597939106e-05,
+    "enerji_j": 0.0007012886597939107,
+    "bellek_b": 807153
+   },
+   "olcut": "sure",
+   "cagri": [
+    9,
+    776
+   ],
+   "kat": 90.39002861219174,
+   "sure_kat": 90.39002861219174,
+   "islemci_kat": 90.42084201070239,
+   "bellek_kat": 6.567901005137812
+  },
+  "YK078": {
+   "kod": "YK078",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.005414113635197282,
+    "islemci_s": 0.005414545454545883,
+    "enerji_j": 0.05414545454545883,
+    "bellek_b": 5642823
+   },
+   "iyi": {
+    "sure_s": 0.003785434935707599,
+    "islemci_s": 0.003785687499999746,
+    "enerji_j": 0.03785687499999746,
+    "bellek_b": 5693529
+   },
+   "olcut": "sure",
+   "cagri": [
+    11,
+    16
+   ],
+   "kat": 1.4302487632600769,
+   "sure_kat": 1.4302487632600769,
+   "islemci_kat": 1.4302674096967187,
+   "bellek_kat": 0.9910940999861422
+  },
+  "YK079": {
+   "kod": "YK079",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.007755071431997099,
+    "islemci_s": 0.00774542857142941,
+    "enerji_j": 0.07745428571429411,
+    "bellek_b": 1202070
+   },
+   "iyi": {
+    "sure_s": 3.7778630781036395e-05,
+    "islemci_s": 3.777897403419715e-05,
+    "enerji_j": 0.00037778974034197144,
+    "bellek_b": 451776
+   },
+   "olcut": "sure",
+   "cagri": [
+    7,
+    1579
+   ],
+   "kat": 205.27666756757856,
+   "sure_kat": 205.27666756757856,
+   "islemci_kat": 205.01955835058746,
+   "bellek_kat": 2.660765512112197
+  },
+  "YK080": {
+   "kod": "YK080",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.011644208210054786,
+    "islemci_s": 0.01164500000000146,
+    "enerji_j": 0.1164500000000146,
+    "bellek_b": 1600361
+   },
+   "iyi": {
+    "sure_s": 0.0008469303570953863,
+    "islemci_s": 0.0008469571428571092,
+    "enerji_j": 0.008469571428571092,
+    "bellek_b": 1600896
+   },
+   "olcut": "sure",
+   "cagri": [
+    5,
+    70
+   ],
+   "kat": 13.748719847508484,
+   "sure_kat": 13.748719847508484,
+   "islemci_kat": 13.74921989643825,
+   "bellek_kat": 0.9996658121451987
+  },
+  "YK081": {
+   "kod": "YK081",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0075830772901619116,
+    "islemci_s": 0.007583428571428337,
+    "enerji_j": 0.07583428571428337,
+    "bellek_b": 682416
+   },
+   "iyi": {
+    "sure_s": 0.003785658332829674,
+    "islemci_s": 0.0037857333333334965,
+    "enerji_j": 0.037857333333334964,
+    "bellek_b": 682288
+   },
+   "olcut": "sure",
+   "cagri": [
+    7,
+    15
+   ],
+   "kat": 2.0031066259732353,
+   "sure_kat": 2.0031066259732353,
+   "islemci_kat": 2.0031597325294994,
+   "bellek_kat": 1.000187604061628
+  },
+  "YK082": {
+   "kod": "YK082",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Bu kuralın asıl amacı doğruluktur: zincirleme atama kopya üzerinde çalışırsa değişiklik kaybolur. pandas 3.0'da (copy-on-write) kötü sürüm tabloyu hiç değiştirmez.",
+   "not_en": "This rule is really about correctness: if the chained assignment hits a copy, the change is lost. In pandas 3.0 (copy-on-write) the bad version never changes the table.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 5.8184929621722744e-05,
+    "islemci_s": 5.9860824742399015e-05,
+    "enerji_j": 0.0005986082474239902,
+    "bellek_b": 3504
+   },
+   "iyi": {
+    "sure_s": 7.010008441284299e-05,
+    "islemci_s": 7.188499999969621e-05,
+    "enerji_j": 0.0007188499999969621,
+    "bellek_b": 10929
+   },
+   "olcut": "sure",
+   "cagri": [
+    194,
+    200
+   ],
+   "kat": 0.8300265272014811,
+   "sure_kat": 0.8300265272014811,
+   "islemci_kat": 0.8327303991465812,
+   "bellek_kat": 0.3206148778479275
+  },
+  "YK083": {
+   "kod": "YK083",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.003540270812663948,
+    "islemci_s": 0.0035393749999999002,
+    "enerji_j": 0.035393749999999,
+    "bellek_b": 2457852
+   },
+   "iyi": {
+    "sure_s": 0.001802443464319887,
+    "islemci_s": 0.001801999999999891,
+    "enerji_j": 0.01801999999999891,
+    "bellek_b": 1863063
+   },
+   "olcut": "sure",
+   "cagri": [
+    16,
+    28
+   ],
+   "kat": 1.9641508223392699,
+   "sure_kat": 1.9641508223392699,
+   "islemci_kat": 1.9641370699223721,
+   "bellek_kat": 1.3192532941720168
+  },
+  "YK084": {
+   "kod": "YK084",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.024326040991581976,
+    "islemci_s": 0.02433200000000113,
+    "enerji_j": 0.2433200000000113,
+    "bellek_b": 7322959
+   },
+   "iyi": {
+    "sure_s": 0.018581986349696916,
+    "islemci_s": 0.017625333333337306,
+    "enerji_j": 0.17625333333337306,
+    "bellek_b": 2145799
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    3
+   ],
+   "kat": 1.3091195168152059,
+   "sure_kat": 1.3091195168152059,
+   "islemci_kat": 1.3805128981009709,
+   "bellek_kat": 3.412695690509689
+  },
+  "YK085": {
+   "kod": "YK085",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Çıktılar dosyadan geri okunarak karşılaştırıldı. Parquet ayrıca diskte daha az yer tutar ve sonraki okumalar çok daha hızlıdır.",
+   "not_en": "Outputs were compared by reading the files back. Parquet also takes less disk space and later reads are much faster.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.05248000001301989,
+    "islemci_s": 0.052131000000002814,
+    "enerji_j": 0.5213100000000281,
+    "bellek_b": 7903097,
+    "boyut_b": 1090760
+   },
+   "iyi": {
+    "sure_s": 0.010426291744806804,
+    "islemci_s": 0.010171499999998446,
+    "enerji_j": 0.10171499999998446,
+    "bellek_b": 16763,
+    "boyut_b": 620112
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    4
+   ],
+   "kat": 5.033429075026552,
+   "sure_kat": 5.033429075026552,
+   "islemci_kat": 5.1252027724535,
+   "bellek_kat": 471.46077671061266
+  },
+  "YK086": {
+   "kod": "YK086",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0027132063821357277,
+    "islemci_s": 0.002713571428571305,
+    "enerji_j": 0.02713571428571305,
+    "bellek_b": 4000393
+   },
+   "iyi": {
+    "sure_s": 0.001609760135210849,
+    "islemci_s": 0.001609216216216104,
+    "enerji_j": 0.016092162162161038,
+    "bellek_b": 4791872
+   },
+   "olcut": "sure",
+   "cagri": [
+    21,
+    37
+   ],
+   "kat": 1.6854724643683312,
+   "sure_kat": 1.6854724643683312,
+   "islemci_kat": 1.686269005511249,
+   "bellek_kat": 0.8348288518558091
+  },
+  "YK087": {
+   "kod": "YK087",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.03446354198968038,
+    "islemci_s": 0.03446599999999478,
+    "enerji_j": 0.3446599999999478,
+    "bellek_b": 150405
+   },
+   "iyi": {
+    "sure_s": 0.0016794642849293137,
+    "islemci_s": 0.0016795142857144389,
+    "enerji_j": 0.01679514285714439,
+    "bellek_b": 1863159
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    35
+   ],
+   "kat": 20.520556643531663,
+   "sure_kat": 20.520556643531663,
+   "islemci_kat": 20.52140925096894,
+   "bellek_kat": 0.08072579956944094
+  },
+  "YK088": {
+   "kod": "YK088",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.01014704160625115,
+    "islemci_s": 0.09577460000000144,
+    "enerji_j": 0.9577460000000144,
+    "bellek_b": 11641
+   },
+   "iyi": {
+    "sure_s": 0.00013146063525780254,
+    "islemci_s": 0.0011935055248618568,
+    "enerji_j": 0.011935055248618567,
+    "bellek_b": 17892
+   },
+   "olcut": "sure",
+   "cagri": [
+    5,
+    362
+   ],
+   "kat": 77.18692052835563,
+   "sure_kat": 77.18692052835563,
+   "islemci_kat": 80.2464655629365,
+   "bellek_kat": 0.6506259780907668
+  },
+  "YK089": {
+   "kod": "YK089",
+   "olculmedi": "PyTorch ve bir GPU gerektirir. İşlemcide eşitleme beklemesi olmadığından fark yalnızca GPU'da görülür.",
+   "olculmedi_en": "Needs PyTorch and a GPU. There is no synchronisation wait on the CPU, so the gain only shows on a GPU."
+  },
+  "YK090": {
+   "kod": "YK090",
+   "olculmedi": "PyTorch ve bir GPU gerektirir. Kazanç, her adımda yapılan CPU→GPU kopyasının kalkmasıdır.",
+   "olculmedi_en": "Needs PyTorch and a GPU. The gain is removing the CPU→GPU copy on every step."
+  },
+  "YK091": {
+   "kod": "YK091",
+   "olculmedi": "PyTorch gerektirir. Kazanç modele bağlıdır; çıkarımda gradyan için tutulan ara sonuçların belleği tamamen kalkar.",
+   "olculmedi_en": "Needs PyTorch. The gain depends on the model; the memory kept for gradients during inference disappears entirely."
+  },
+  "YK092": {
+   "kod": "YK092",
+   "olculmedi": "Bulut depolama (S3) hesabı gerektirir. Kazanç, sıralı istek gecikmelerinin üst üste binmesidir.",
+   "olculmedi_en": "Needs a cloud storage (S3) account. The gain comes from overlapping sequential request latencies."
+  },
+  "YK093": {
+   "kod": "YK093",
+   "olculmedi": "Redis sunucusu gerektirir. Kazanç gidiş-dönüş sayısındadır: n → 1.",
+   "olculmedi_en": "Needs a Redis server. The gain is in round trips: n → 1."
+  },
+  "YK094": {
+   "kod": "YK094",
+   "olculmedi": "Gerçek bir sunucuya istek gerektirir. Kazanç, istek başına bağlantı kurulumunun kalkmasıdır.",
+   "olculmedi_en": "Needs requests to a real server. The gain is removing connection setup per request."
+  },
+  "YK095": {
+   "kod": "YK095",
+   "olculmedi": "Gerçek bir sunucuya istek gerektirir. Kazanç tek çağrının süresinde değil, aynı anda bekleyen öbür görevlerin ilerleyebilmesindedir.",
+   "olculmedi_en": "Needs requests to a real server. The gain is not in one call's duration but in other waiting tasks being able to progress."
+  },
+  "YK096": {
+   "kod": "YK096",
+   "olculmedi": "Kazanç tek çağrının süresinde değil, olay döngüsündeki öbür görevlerin bekleme sırasında ilerleyebilmesindedir.",
+   "olculmedi_en": "The gain is not in one call's duration but in other tasks on the event loop progressing during the wait."
+  },
+  "YK097": {
+   "kod": "YK097",
+   "olculmedi": "Yanıt vermeyen bir sunucu gerektirir. Zaman aşımı, sonsuz beklemeyi belirli bir süreyle sınırlar.",
+   "olculmedi_en": "Needs an unresponsive server. A timeout bounds an otherwise infinite wait."
+  },
+  "YK098": {
+   "kod": "YK098",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.012581343995407224,
+    "islemci_s": 0.012243749999996112,
+    "enerji_j": 0.12243749999996112,
+    "bellek_b": 360
+   },
+   "iyi": {
+    "sure_s": 0.00045665981370903965,
+    "islemci_s": 0.0004347777777790422,
+    "enerji_j": 0.004347777777790422,
+    "bellek_b": 47904
+   },
+   "olcut": "sure",
+   "cagri": [
+    4,
+    72
+   ],
+   "kat": 27.550801751571278,
+   "sure_kat": 27.550801751571278,
+   "islemci_kat": 28.160937899219153,
+   "bellek_kat": 0.00751503006012024
+  },
+  "YK099": {
+   "kod": "YK099",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0028142828898700444,
+    "islemci_s": 0.0014292631578950033,
+    "enerji_j": 0.014292631578950034,
+    "bellek_b": 360
+   },
+   "iyi": {
+    "sure_s": 6.796877511078492e-05,
+    "islemci_s": 3.7089999999651015e-05,
+    "enerji_j": 0.00037089999999651013,
+    "bellek_b": 6177
+   },
+   "olcut": "sure",
+   "cagri": [
+    19,
+    200
+   ],
+   "kat": 41.405526071095686,
+   "sure_kat": 41.405526071095686,
+   "islemci_kat": 38.535000213223285,
+   "bellek_kat": 0.05828071879553181
+  },
+  "YK100": {
+   "kod": "YK100",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Çıktı bellekteki bir tampona yönlendirildi. Terminale ya da dosyaya yazarken her çağrı daha pahalıdır.",
+   "not_en": "Output was redirected to an in-memory buffer. Writing to a terminal or a file makes every call more expensive.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0014229878050661304,
+    "islemci_s": 0.0014180243902438307,
+    "enerji_j": 0.014180243902438307,
+    "bellek_b": 258284
+   },
+   "iyi": {
+    "sure_s": 0.0003992595488347837,
+    "islemci_s": 0.0003904722222222527,
+    "enerji_j": 0.003904722222222527,
+    "bellek_b": 757824
+   },
+   "olcut": "sure",
+   "cagri": [
+    41,
+    144
+   ],
+   "kat": 3.5640670566778914,
+   "sure_kat": 3.5640670566778914,
+   "islemci_kat": 3.6315627835792785,
+   "bellek_kat": 0.34082319905413394
+  },
+  "YK101": {
+   "kod": "YK101",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.05680316698271781,
+    "islemci_s": 0.056809999999998695,
+    "enerji_j": 0.568099999999987,
+    "bellek_b": 19716
+   },
+   "iyi": {
+    "sure_s": 0.00020306962821785803,
+    "islemci_s": 0.00020283552631578398,
+    "enerji_j": 0.00202835526315784,
+    "bellek_b": 28758
+   },
+   "olcut": "sure",
+   "cagri": [
+    1,
+    304
+   ],
+   "kat": 279.7226127866743,
+   "sure_kat": 279.7226127866743,
+   "islemci_kat": 280.07914112419434,
+   "bellek_kat": 0.6855831420822032
+  },
+  "YK102": {
+   "kod": "YK102",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İki sürüm de 50 ms sonra gelen işi bekler; süre aynıdır. Kötü sürüm bu sürede yaklaşık 50 kez uyanır; oran işlemci süresinden hesaplandı.",
+   "not_en": "Both versions wait for work arriving after 50 ms, so the duration is the same. The bad version wakes about 50 times meanwhile; the ratio comes from CPU time.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.055216167005710304,
+    "islemci_s": 0.0008049999999997226,
+    "enerji_j": 0.008049999999997226,
+    "bellek_b": 144
+   },
+   "iyi": {
+    "sure_s": 0.05284604197368026,
+    "islemci_s": 0.00024700000000166256,
+    "enerji_j": 0.0024700000000166256,
+    "bellek_b": 264
+   },
+   "olcut": "islemci",
+   "cagri": [
+    1,
+    1
+   ],
+   "kat": 3.2591093117178307,
+   "sure_kat": 1.0448496224790207,
+   "islemci_kat": 3.2591093117178307,
+   "bellek_kat": 0.5454545454545454
+  },
+  "YK103": {
+   "kod": "YK103",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Süre farkı, fazladan başlatılan kabuk sürecinden gelir.",
+   "not_en": "The time difference comes from the extra shell process.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.014151249992816398,
+    "islemci_s": 0.005861999999998109,
+    "enerji_j": 0.05861999999998109,
+    "bellek_b": 84457
+   },
+   "iyi": {
+    "sure_s": 0.011514488141983747,
+    "islemci_s": 0.0070537142857136,
+    "enerji_j": 0.070537142857136,
+    "bellek_b": 86435
+   },
+   "olcut": "sure",
+   "cagri": [
+    3,
+    7
+   ],
+   "kat": 1.2289951423214878,
+   "sure_kat": 1.2289951423214878,
+   "islemci_kat": 0.8310515230069416,
+   "bellek_kat": 0.9771157517209463
+  },
+  "YK104": {
+   "kod": "YK104",
+   "olculmedi": "Sürekli çalışan bir sunucudur. Kazanç, ikinci süreç ve dosya izleme yükünün kalkmasıdır.",
+   "olculmedi_en": "A long-running server. The gain is removing the second process and the file-watching load."
+  },
+  "YK105": {
+   "kod": "YK105",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Tamponlu dosyada fark yok: write çağrıları zaten bellekteki tampona yazar. Kazanç sadeliktedir.",
+   "not_en": "No difference on a buffered file: write calls already go to an in-memory buffer. The gain is simplicity.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002033153286902234,
+    "islemci_s": 0.001964892857142583,
+    "enerji_j": 0.019648928571425826,
+    "bellek_b": 52396
+   },
+   "iyi": {
+    "sure_s": 0.0021646604808564815,
+    "islemci_s": 0.002055518518518953,
+    "enerji_j": 0.02055518518518953,
+    "bellek_b": 52396
+   },
+   "olcut": "sure",
+   "cagri": [
+    28,
+    27
+   ],
+   "kat": 0.9392481199166094,
+   "sure_kat": 0.9392481199166094,
+   "islemci_kat": 0.9559110460159376,
+   "bellek_kat": 1.0
+  },
+  "YK106": {
+   "kod": "YK106",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002754642561610256,
+    "islemci_s": 0.002705571428569848,
+    "enerji_j": 0.02705571428569848,
+    "bellek_b": 173008
+   },
+   "iyi": {
+    "sure_s": 0.002272333425935358,
+    "islemci_s": 0.002275285714282355,
+    "enerji_j": 0.022752857142823553,
+    "bellek_b": 173008
+   },
+   "olcut": "sure",
+   "cagri": [
+    7,
+    7
+   ],
+   "kat": 1.2122528015343372,
+   "sure_kat": 1.2122528015343372,
+   "islemci_kat": 1.1891128272755005,
+   "bellek_kat": 1.0
+  },
+  "YK107": {
+   "kod": "YK107",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İyi sürüm listeyi yerinde çevirir; çağıran taraftaki liste de değişir. Özgün sıra başka yerde gerekiyorsa kopya şarttır.",
+   "not_en": "The good version reverses the list in place, so the caller's list changes too. If the original order is needed elsewhere, a copy is required.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0009100443848799314,
+    "islemci_s": 0.0008386129032240961,
+    "enerji_j": 0.00838612903224096,
+    "bellek_b": 800000
+   },
+   "iyi": {
+    "sure_s": 8.26154161283436e-05,
+    "islemci_s": 8.254166666491851e-05,
+    "enerji_j": 0.0008254166666491851,
+    "bellek_b": 0
+   },
+   "olcut": "sure",
+   "cagri": [
+    31,
+    48
+   ],
+   "kat": 11.015430624547982,
+   "sure_kat": 11.015430624547982,
+   "islemci_kat": 10.15987363846773,
+   "bellek_kat": null
+  },
+  "YK108": {
+   "kod": "YK108",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.002129497900023125,
+    "islemci_s": 0.0020343500000002735,
+    "enerji_j": 0.020343500000002734,
+    "bellek_b": 444368
+   },
+   "iyi": {
+    "sure_s": 0.0017683730000585673,
+    "islemci_s": 0.0017167142857143095,
+    "enerji_j": 0.017167142857143096,
+    "bellek_b": 444368
+   },
+   "olcut": "sure",
+   "cagri": [
+    20,
+    21
+   ],
+   "kat": 1.2042130817155643,
+   "sure_kat": 1.2042130817155643,
+   "islemci_kat": 1.1850253807108029,
+   "bellek_kat": 1.0
+  },
+  "YK109": {
+   "kod": "YK109",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.015337666671257466,
+    "islemci_s": 0.014894333333330678,
+    "enerji_j": 0.14894333333330678,
+    "bellek_b": 444443
+   },
+   "iyi": {
+    "sure_s": 0.0020703117599999853,
+    "islemci_s": 0.0019935862068968134,
+    "enerji_j": 0.019935862068968135,
+    "bellek_b": 444368
+   },
+   "olcut": "sure",
+   "cagri": [
+    3,
+    29
+   ],
+   "kat": 7.408385040163021,
+   "sure_kat": 7.408385040163021,
+   "islemci_kat": 7.471125794211315,
+   "bellek_kat": 1.0001687790299931
+  },
+  "YK110": {
+   "kod": "YK110",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "İyi sürüm daha kesindir: math.log(1000, 10) gibi değerlerde son basamakta fark olabilir; karşılaştırma bu küçük farka izin verir.",
+   "not_en": "The good version is more precise: values like math.log(1000, 10) can differ in the last digit; the comparison allows for that tiny difference.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0038450416694912645,
+    "islemci_s": 0.003830444444444778,
+    "enerji_j": 0.03830444444444778,
+    "bellek_b": 1642064
+   },
+   "iyi": {
+    "sure_s": 0.00272694504449398,
+    "islemci_s": 0.0027156363636361325,
+    "enerji_j": 0.027156363636361324,
+    "bellek_b": 1641968
+   },
+   "olcut": "sure",
+   "cagri": [
+    9,
+    22
+   ],
+   "kat": 1.4100180263092768,
+   "sure_kat": 1.4100180263092768,
+   "islemci_kat": 1.4105144914601013,
+   "bellek_kat": 1.000058466425655
+  },
+  "YK111": {
+   "kod": "YK111",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": "Bütün değerler aynı olduğu için iki sürüm de seriyi sonuna kadar tarar ve süre aynıdır. Kazanç bellektedir: nunique bütün değerlerin karma tablosunu kurar.",
+   "not_en": "Every value is the same, so both versions scan the whole series and take the same time. The gain is memory: nunique builds a hash table of every value.",
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0028522708638444205,
+    "islemci_s": 0.0028286818181816834,
+    "enerji_j": 0.028286818181816834,
+    "bellek_b": 2916803
+   },
+   "iyi": {
+    "sure_s": 0.00282507294905372,
+    "islemci_s": 0.0028252000000001942,
+    "enerji_j": 0.028252000000001942,
+    "bellek_b": 103373
+   },
+   "olcut": "sure",
+   "cagri": [
+    22,
+    20
+   ],
+   "kat": 1.0096273318534343,
+   "sure_kat": 1.0096273318534343,
+   "islemci_kat": 1.001232414760544,
+   "bellek_kat": 28.21629439021795
+  },
+  "YK112": {
+   "kod": "YK112",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 8.492395735529926e-05,
+    "islemci_s": 8.465149359886637e-05,
+    "enerji_j": 0.0008465149359886637,
+    "bellek_b": 92448
+   },
+   "iyi": {
+    "sure_s": 6.763105255983478e-05,
+    "islemci_s": 6.759553072625196e-05,
+    "enerji_j": 0.0006759553072625196,
+    "bellek_b": 92448
+   },
+   "olcut": "sure",
+   "cagri": [
+    703,
+    895
+   ],
+   "kat": 1.2556947458442265,
+   "sure_kat": 1.2556947458442265,
+   "islemci_kat": 1.252323825101508,
+   "bellek_kat": 1.0
+  },
+  "YK113": {
+   "kod": "YK113",
+   "ortam": {
+    "python": "3.13.9",
+    "sistem": "Darwin",
+    "makine": "arm64",
+    "islemci": "Apple M4",
+    "tarayici": false
+   },
+   "not": null,
+   "not_en": null,
+   "esdeger": true,
+   "kotu": {
+    "sure_s": 0.0011826795484271965,
+    "islemci_s": 0.0011795476190477367,
+    "enerji_j": 0.011795476190477366,
+    "bellek_b": 1122314
+   },
+   "iyi": {
+    "sure_s": 0.0008645310542884875,
+    "islemci_s": 0.0008503090909091394,
+    "enerji_j": 0.008503090909091394,
+    "bellek_b": 1121898
+   },
+   "olcut": "sure",
+   "cagri": [
+    42,
+    55
+   ],
+   "kat": 1.3680012332241165,
+   "sure_kat": 1.3680012332241165,
+   "islemci_kat": 1.3871986453615117,
+   "bellek_kat": 1.0003708001975224,
+   "motor": {
+    "esdeger": true,
+    "kat": 1.5524679253331546,
+    "sure_kat": 1.5524679253331546,
+    "islemci_kat": 1.5524533988966176,
+    "hata": null
+   }
+  }
+ },
+ "ortam": {
+  "python": "3.13.9",
+  "sistem": "Darwin",
+  "makine": "arm64",
+  "islemci": "Apple M4",
+  "tarayici": false
+ },
+ "tarih": "2026-10-29"
+}

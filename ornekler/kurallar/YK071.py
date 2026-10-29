@@ -1,2 +1,2 @@
-def ascii_yap(metin):
-    return metin.replace("ş", "s").replace("ğ", "g").replace("ı", "i").replace("ç", "c")
+def resim_mi(dosya_adi):
+    return dosya_adi.endswith(".png") or dosya_adi.endswith(".jpg") or dosya_adi.endswith(".webp")

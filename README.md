@@ -14,6 +14,8 @@ Sakarya Üniversitesi · COP31 Yeşil Bölge projesi
 
 Demo senaryolarındaki optimize kod elle yazılmadı; motor üretti.
 
+**Her kural ölçüldü.** 113 kuralın her biri için bir israflı (`ornekler/kurallar/YKxxx.py`) ve bir verimli (`ornekler/kurallar/iyi/YKxxx.py`) örnek var. `python -m greencode kanit` ikisini aynı girdiyle çalıştırır, çıktılarının aynı olduğunu denetler, süre, işlemci süresi ve bellek tepe değerini ölçer. Apple M4'te 95 kural ölçüldü; çıktısı karşılaştırılabilen 94 kuralın hepsinde iki sürüm birebir aynı sonucu verdi (biri rastgele çıktı üretir). Ölçülen kazancın ortancası 2,8 kat, 22 kuralda 100 katın üstünde. Hızda kazanç göstermeyen 15 kural da gizlenmeden yazılır; değerleri bellekte, doğrulukta ya da okunabilirliktedir. 18 kural veritabanı sunucusu, GPU ya da ağ gerektirdiği için ölçülmedi; nedenleri `ornekler/kurallar/olcum.py` dosyasında. Ölçüm iki kuralın önerisini de düzeltti: zincirleme `replace()` yerine `str.translate` önermek CPython'da 25–50 kat yavaştı (kural Ruff PIE810 ile değiştirildi), JSON ile kopyalamaya `copy.deepcopy` önermek de iki kat yavaştı (öneri "yalnızca değişen alanı kopyala" oldu).
+
 | Senaryo | Kalıp | Motorun düzeltmesi | Sonuç (tahmini mod, 26 Ekim 2026) |
 |---|---|---|---|
 | Sipariş raporu | N+1 sorgu | toplu IN sorgusu | 2,9 kat az enerji, sorgu 4.001 → 2 |
@@ -53,6 +55,9 @@ python -m greencode duzelt dosya.py --kanitla rapor_uret
                                                # parametresiz fonksiyonu iki sürümde
                                                # çalıştır, karşılaştır, ölç
 python -m greencode olc betik.py               # betiğin enerjisini ölç
+python -m greencode kanit                      # 113 kuralın israflı ve verimli örneğini
+                                               # karşılaştır ve ölç (--yaz: olcumler.json)
+python -m greencode kanit YK002 YK027          # yalnızca seçilen kurallar
 python -m greencode rapor src/ --bicim md      # CI raporu (md, html, json)
 python -m greencode rapor src/ --esik 0        # yüksek bulgu varsa çıkış kodu 1
 ```
@@ -67,7 +72,7 @@ python -m greencode rapor src/ --esik 0        # yüksek bulgu varsa çıkış k
 python -m unittest discover -s tests -v
 ```
 
-33 test: analiz kuralları (her kuralın kendi örneği ve yanlış alarm denetimleri), her senaryonun düzeltilip aynı sonucu vermesi, N+1 düzeltmesinin sorgu sayısını düşürmesi, düzeltmenin yorumları ve biçimi koruması, ölçer ve rapor. Her push'ta GitHub Actions ile Python 3.9 ve 3.13'te çalışır; Yeşil Kod kendi kodunu da denetler.
+40 test: analiz kuralları (her kuralın kendi örneği ve yanlış alarm denetimleri), her kuralın verimli örneğinin temiz çıkması ve israflı örnekle aynı sonucu vermesi, motorun düzeltmesinin aynı sonucu vermesi, her senaryonun düzeltilip aynı sonucu vermesi, N+1 düzeltmesinin sorgu sayısını düşürmesi, düzeltmenin yorumları ve biçimi koruması, ölçer ve rapor. Her push'ta GitHub Actions ile Python 3.9 ve 3.13'te çalışır; Yeşil Kod kendi kodunu da denetler.
 
 ## Ölçüm modları
 
@@ -98,6 +103,8 @@ Adalet kuralları: kısa süren kod sayaçların ölçebileceği süreye kadar t
 ```
 greencode/
   kurallar.py   113 kural: kategori, önem, Türkçe/İngilizce metin ve dayandığı kaynak
+  kural_ayrinti.py  her kuralın nedeni, ne zaman sorun olmadığı, yapılan iş ve kaynak bağlantısı
+  kural_kanit.py    israflı ve verimli örneği aynı girdiyle çalıştırıp karşılaştırır ve ölçer
   analyzer.py   AST tabanlı statik analiz
   fixer.py      AST tabanlı otomatik düzeltme, 11 dönüşüm; değişikliği özgün koda satır düzeyinde yerleştirir
   proof.py      eşdeğerlik testi, sorgu sayacı, ölçüm, canlı yarış
@@ -109,11 +116,13 @@ greencode/
 web/            panel ve yazı tipleri (Martian Mono, Hanken Grotesk; SIL OFL)
 tests/          unittest paketi
 ornekler/       örnek israflı kod, GitHub Action
+  kurallar/     her kuralın israflı örneği, iyi/ altında verimli örneği,
+                olcum.py (ölçüm tanımları), olcumler.json (Mac ölçümleri)
 ```
 
 ## Proje sayfası ve stant malzemeleri
 
-`docs/` klasörü GitHub Pages ile yayınlanır. Site dört bölümden oluşur: **Proje** (tanıtım ve film), **Dashboard** (kodu yapıştır ya da dosya aç; bulgular editörde satır satır işaretlenir, düzeltme kopyalanır ya da indirilir), **Analizler** (bu cihazda yapılan bütün analizlerin geçmişi, grafikler, JSON/CSV dışa aktarma; yalnızca tarayıcıda saklanır) ve **Kurallar** (113 kuralın dokuz gruptaki açıklaması, dayandığı kaynak ve denenebilir örnekleri, `ornekler/kurallar/`). Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder; standdaki motor Pyodide ile tarayıcıda (ayrı bir Web Worker'da) çalışır ve kod hiçbir yere gönderilmez. Hazır senaryolarda **Telefonunda ölç** düğmesi iki sürümü telefonda çalıştırır, çıktıların aynı olduğunu doğrular ve işlemci sürelerini karşılaştırır.
+`docs/` klasörü GitHub Pages ile yayınlanır. Site dört bölümden oluşur: **Proje** (tanıtım ve film), **Dashboard** (kodu yapıştır ya da dosya aç; bulgular editörde satır satır işaretlenir, düzeltme kopyalanır ya da indirilir), **Analizler** (bu cihazda yapılan bütün analizlerin geçmişi, grafikler, JSON/CSV dışa aktarma; yalnızca tarayıcıda saklanır) ve **Kurallar** (113 kuralın dokuz grupta listesi; her kuralın kendi sayfasında neden enerji harcadığı, israflı ve verimli örnek yan yana, motorun düzeltmesi, Mac'teki ölçüm sonucu, ne zaman sorun olmadığı ve kaynağı; **Bu cihazda ölç** düğmesi 86 kuralı ziyaretçinin telefonunda aynı yöntemle ölçer). Ziyaretçi QR kodu okutup kendi Python kodunu telefonunda analiz eder; standdaki motor Pyodide ile tarayıcıda (ayrı bir Web Worker'da) çalışır ve kod hiçbir yere gönderilmez. Hazır senaryolarda **Telefonunda ölç** düğmesi iki sürümü telefonda çalıştırır, çıktıların aynı olduğunu doğrular ve işlemci sürelerini karşılaştırır.
 
 `stant/` klasöründe COP31 için her şey var:
 
@@ -126,7 +135,8 @@ ornekler/       örnek israflı kod, GitHub Action
 | `pdf/06-ekran-sunumu-16x9.pdf` | 9 slaytlık ekran sunumu |
 | `pdf/07-stant-rehberi-A4.pdf` | Ekip için: takvim, kurulum, baskı listesi, konuşma metinleri, sorular |
 | `pdf/08-video-brifi-A4.pdf`, `film/video-prompt.md` | Filmi yeniden yaptırmak için brif, yapay zekâ promptları ve seslendirme metni |
-| `pdf/en/` | Posterin, proje özetinin ve ekran sunumunun İngilizce sürümleri |
+| `pdf/09-kural-katalogu-A4.pdf` | 113 kuralın kataloğu: her kural için neden, israflı ve verimli örnek, ölçüm sonucu, istisna ve kaynak (masada başvuru için) |
+| `pdf/en/` | Posterin, proje özetinin, ekran sunumunun ve kural kataloğunun İngilizce sürümleri |
 | `qr/` | QR kodları (SVG baskı için, PNG genel kullanım için) |
 
 Ekip adı ya da adres değişirse `stant/ayarlar.json` dosyasını düzenleyip yeniden üretin:
@@ -134,6 +144,7 @@ Ekip adı ya da adres değişirse `stant/ayarlar.json` dosyasını düzenleyip y
 ```bash
 python3 stant/hazirla.py            # site, QR, PDF ve film
 python3 stant/hazirla.py pdf        # yalnızca PDF'ler (Google Chrome gerekir)
+python3 stant/hazirla.py pdf katalog   # yalnızca kural kataloğu
 ```
 
 QR adımı `pip install segno`, film adımı `ffmpeg` ister.
@@ -143,6 +154,7 @@ QR adımı `pip install segno`, film adımı `ffmpeg` ister.
 - Yalnızca işlemci enerjisi ölçülür; bellek, ağ, disk ve soğutma dahil değildir. Gösterilen kazanç alt sınırdır.
 - Sipariş raporu senaryosunda veritabanı aynı bilgisayardadır. Gerçek sistemde her sorgu ağdan geçer; bu yüzden sorgu sayısı ayrıca gösterilir.
 - Tahmini modda mutlak değerlerden çok oranlar güvenilirdir.
+- Kural ölçümleri tek bir makinede (Apple M4, Python 3.13) alındı; oranlar başka işlemcide ve Python sürümünde değişebilir. Veritabanı kuralları bellekteki SQLite ile ölçüldü; ağ üzerindeki bir veritabanında fark genellikle daha büyüktür.
 - Düzeltme motoru şimdilik Python içindir. Aynı satırda birden fazla ifade gibi nadir durumlarda biçim korunamaz; motor o zaman kodu `ast.unparse` ile baştan yazar ve bunu bildirir.
 - Karbon yoğunluğu yıllık ortalamadır; şebeke saatten saate değişir.
 

@@ -2,9 +2,12 @@
 // telefonda çalıştırır; sayfa donmasın diye ayrı iş parçacığındadır.
 //   {tip: "analiz", kod}     statik analiz + biçimi koruyan düzeltme (kod çalıştırılmaz)
 //   {tip: "olc", senaryo}    hazır senaryonun iki sürümünü çalıştırır, karşılaştırır, süreleri ölçer
+//   {tip: "kural", kod, kotu, iyi, tanim}
+//                            bir kuralın kötü ve iyi örneğini aynı girdiyle çalıştırır (kural_kanit.py);
+//                            gereken paketler (numpy, pandas) ilk kullanımda indirilir
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js");
 
-const DOSYALAR = ["__init__.py", "config.py", "kurallar.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"];
+const DOSYALAR = ["__init__.py", "config.py", "kurallar.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py", "kural_kanit.py"];
 let hazir = null, sqlite = null;
 
 function baslat() {
@@ -65,6 +68,12 @@ def olc(sid):
     mb, kb = _ort(run_b, tb, 0.6, 20000)
     return json.dumps({"esdeger": True, "cikti": len(a), "ozgun_s": ma, "duzeltilmis_s": mb,
                        "kat": ma / mb if mb else None, "tekrar": [ka, kb], "sorgu": sorgu})
+
+def kural_olc(girdi):
+    from greencode import kural_kanit
+    g = json.loads(girdi)
+    r = kural_kanit.kanitla(g["kod"], g["kotu"], g["iyi"], g["tanim"], tur=3)
+    return json.dumps(r, ensure_ascii=False)
 `);
     return py;
   })().catch(e => { hazir = null; throw e; });
@@ -82,6 +91,12 @@ onmessage = async e => {
       if (!sqlite) sqlite = py.loadPackage("sqlite3").catch(err => { sqlite = null; throw err; });
       await sqlite;
       sonuc = JSON.parse(py.globals.get("olc")(e.data.senaryo));
+    } else if (tip === "kural") {
+      if (!sqlite) sqlite = py.loadPackage("sqlite3").catch(err => { sqlite = null; throw err; });
+      await sqlite;
+      const {kod, kotu, iyi, tanim} = e.data;
+      await py.loadPackagesFromImports([kotu, iyi, tanim.ortam || "", tanim.hazirla || ""].join("\n"));
+      sonuc = JSON.parse(py.globals.get("kural_olc")(JSON.stringify({kod, kotu, iyi, tanim})));
     }
     postMessage({id, ok: true, sonuc});
   } catch (err) {

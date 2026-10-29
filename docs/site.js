@@ -5,6 +5,7 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const VIEWS = ['proje', 'dene', 'analizler', 'kurallar'];
+const BASE_TITLE = document.title;
 const KEY = 'yk-analizler-v1', MAX_KAYIT = 300, LINE_H = 22, PAD = 12;
 const IS_MAC = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 let LANG = 'tr', SAMPLES = [], RULES = [], HIST = [];
@@ -443,7 +444,55 @@ function exportCsv() {
 }
 
 // ------------------------------------------------------------------ Kurallar
-let ruleCat = '', ruleQ = '';
+let ruleCat = '', ruleQ = '', ruleSort = 'kod', ENV = null;
+const RD = {
+  tr: {
+    back: '← Bütün kurallar', why: 'Neden enerji harcar?', when: 'Ne zaman sorun değil?', cx: 'Yapılan iş', bad: 'İsraflı', good: 'Verimli',
+    engine: 'Motorun yazdığı (israflı örnekten, kendiliğinden)', engineOk: k => `Motorun düzeltmesi de aynı girdiyle sınandı: çıktı aynı, ${k}.`,
+    source: 'Kaynak', related: 'Aynı gruptan', measured: 'Ölçüm', notMeasured: 'Neden ölçülmedi?',
+    same: 'İki sürüm aynı girdiyle birebir aynı sonucu verdi.', random: 'Çıktı rastgele olduğu için karşılaştırılmadı; yalnızca süre ölçüldü.',
+    faster: 'daha kısa sürede', lessCpu: 'daha az işlemci süresi', lessMem: 'daha az bellek', noDiff: 'süre farkı yok', slower: 'iyi sürüm bu kadar yavaş',
+    rows: ['Süre (çağrı başına)', 'İşlemci süresi', 'Bellek tepe değeri', 'Yazılan dosya'], ratio: 'Oran',
+    meta: e => `${e.islemci || e.sistem} · Python ${e.python} · ${dateTxt(e.tarih)} · ${e.tur} turun ortancası`,
+    device: 'Bu cihazda ölç', deviceRun: 'Ölçülüyor…', deviceAgain: 'Tekrar ölç', onDevice: 'Bu cihazda', onMac: m => `Mac’te: ${m}`,
+    noBrowser: 'Bu kural tarayıcıda ölçülemez (iş parçacığı, alt süreç ya da diske eşitleme gerektirir); sonuç Mac’te alındı.',
+    pkg: p => `İlk ölçümde ${p} indirilir.`, skipped: 'Bu cihazda ölçülemedi', tryBad: 'İsraflı örneği Dashboard’da dene', tryGood: 'Verimli örneği Dashboard’da dene',
+    detail: 'Ayrıntı', gain: {win: k => `${k} hızlı`, cpu: k => `${k} az işlemci`, mem: k => `${k} az bellek`, flat: 'fark yok', loss: k => `${k} yavaş`, na: 'ölçülmedi'},
+    sort: [['kod', 'Koda göre'], ['kazanc', 'Ölçülen kazanca göre'], ['onem', 'Öneme göre']],
+    summary: (n, eq, rnd, un) => `${nf(n)} kural ölçüldü. Çıktısı karşılaştırılabilen ${nf(eq)} kuralın hepsinde iki sürüm birebir aynı sonucu verdi${rnd ? `; ${nf(rnd)} kuralın çıktısı rastgele` : ''}. ${nf(un)} kural veritabanı sunucusu, GPU ya da ağ gerektirdiği için ölçülmedi.`,
+  },
+  en: {
+    back: '← All rules', why: 'Why does it waste energy?', when: 'When is it fine?', cx: 'Work done', bad: 'Wasteful', good: 'Efficient',
+    engine: 'What the engine wrote (from the wasteful example, on its own)', engineOk: k => `The engine’s fix was tested on the same input too: same output, ${k}.`,
+    source: 'Source', related: 'Same group', measured: 'Measurement', notMeasured: 'Why was it not measured?',
+    same: 'Both versions gave exactly the same result on the same input.', random: 'The output is random, so it was not compared; only time was measured.',
+    faster: 'less time', lessCpu: 'less CPU time', lessMem: 'less memory', noDiff: 'no time difference', slower: 'the good version is this much slower',
+    rows: ['Time (per call)', 'CPU time', 'Peak memory', 'File written'], ratio: 'Ratio',
+    meta: e => `${e.islemci || e.sistem} · Python ${e.python} · ${dateTxt(e.tarih)} · median of ${e.tur} rounds`,
+    device: 'Measure on this device', deviceRun: 'Measuring…', deviceAgain: 'Measure again', onDevice: 'On this device', onMac: m => `On the Mac: ${m}`,
+    noBrowser: 'This rule cannot be measured in a browser (it needs threads, a subprocess or a disk sync); the result was taken on the Mac.',
+    pkg: p => `${p} is downloaded on the first measurement.`, skipped: 'Could not be measured on this device', tryBad: 'Try the wasteful example in the Dashboard', tryGood: 'Try the efficient example in the Dashboard',
+    detail: 'Details', gain: {win: k => `${k} faster`, cpu: k => `${k} less CPU`, mem: k => `${k} less memory`, flat: 'no difference', loss: k => `${k} slower`, na: 'not measured'},
+    sort: [['kod', 'By code'], ['kazanc', 'By measured gain'], ['onem', 'By severity']],
+    summary: (n, eq, rnd, un) => `${nf(n)} rules were measured. In all ${nf(eq)} whose output could be compared, both versions gave exactly the same result${rnd ? `; ${nf(rnd)} has a random output` : ''}. ${nf(un)} rules need a database server, a GPU or the network, so they were not measured.`,
+  },
+};
+const rd = () => RD[LANG];
+const rtx = (r, a) => LANG === 'en' ? r[a + '_en'] : r[a];
+const dateTxt = d => new Date(d + 'T12:00:00').toLocaleDateString(LANG === 'en' ? 'en-GB' : 'tr-TR', {day: 'numeric', month: 'long', year: 'numeric'});
+const fmtB = b => b >= 1048576 ? nf(b / 1048576, 1) + ' MB' : b >= 1024 ? nf(b / 1024, 1) + ' KB' : nf(b) + ' B';
+function gainOf(o) {
+  if (!o) return {cls: 'na'};
+  if (o.kat >= 1.1) return {cls: o.olcut === 'islemci' ? 'cpu' : 'win', k: o.kat};
+  if (o.bellek_kat >= 2 && o.kotu.bellek_b - o.iyi.bellek_b >= 4096) return {cls: 'mem', k: o.bellek_kat};   // birkaç düzine baytlık fark kazanç sayılmaz
+  if (o.kat > 0.9) return {cls: 'flat', k: o.kat};
+  return {cls: 'loss', k: 1 / o.kat};
+}
+function gainChip(r) {
+  const g = gainOf(r.olcum), f = rd().gain[g.cls];
+  return `<span class="gain ${g.cls}">${typeof f === 'function' ? f(big(g.k)) : f}</span>`;
+}
+const SEV_ORDER = {'yüksek': 0, 'orta': 1, 'bilgi': 2};
 function renderRules() {
   const n = RULES.length, auto = RULES.filter(r => r.otomatik).length;
   const chips = [['', LANG === 'en' ? `All ${n}` : `Tümü (${n})`]].concat(Object.entries(CATS).map(([k, v]) =>
@@ -451,21 +500,117 @@ function renderRules() {
   $('#ruleCats').innerHTML = chips.map(([k, l]) => `<button class="chip" data-c="${k}" aria-pressed="${k === ruleCat}">${esc(l)}</button>`).join('') +
     `<span class="tag auto" style="align-self:center">${LANG === 'en' ? `${auto} fixed automatically` : `${auto} tanesini motor düzeltir`}</span>`;
   $$('#ruleCats .chip').forEach(c => c.onclick = () => { ruleCat = c.dataset.c; renderRules(); });
+  $('#ruleSort').innerHTML = rd().sort.map(([v, l]) => `<option value="${v}"${v === ruleSort ? ' selected' : ''}>${l}</option>`).join('');
+  const olc = RULES.filter(r => r.olcum);
+  $('#ruleMeta').innerHTML = olc.length ? esc(rd().summary(olc.length, olc.filter(r => r.olcum.esdeger === true).length,
+    olc.filter(r => r.olcum.esdeger === null).length, n - olc.length)) + (ENV ? `<br><span>${esc(rd().meta(ENV))}</span>` : '') : '';
   const q = ruleQ.toLocaleLowerCase('tr');
-  const shown = RULES.filter(r => (!ruleCat || r.kategori === ruleCat) && (!q ||
+  let shown = RULES.filter(r => (!ruleCat || r.kategori === ruleCat) && (!q ||
     [r.kural, r.baslik, r.baslik_en, r.oneri, r.oneri_en, r.kaynak].join(' ').toLocaleLowerCase('tr').includes(q)));
+  if (ruleSort === 'kazanc') shown = shown.slice().sort((a, b) => ((b.olcum || {}).kat || 0) - ((a.olcum || {}).kat || 0));
+  if (ruleSort === 'onem') shown = shown.slice().sort((a, b) => SEV_ORDER[a.onem] - SEV_ORDER[b.onem]);
   $('#ruleCount').textContent = LANG === 'en' ? `${shown.length} shown` : `${shown.length} kural gösteriliyor`;
   $('#rules').innerHTML = shown.map(r => `<div class="card rule">
       <div class="cat">${esc((CATS[r.kategori] || {})[LANG] || '')}</div>
-      <div class="rh"><b>${r.kural}</b><span class="sev ${r.onem}">${t().sev[r.onem]}</span>${r.otomatik ? `<span class="tag auto">${t().autoFix}</span>` : `<span class="tag">${t().advice}</span>`}</div>
-      <h3>${esc(ruleTitle(r.kural))}</h3><p>${esc(ruleAdvice(r.kural, r.oneri))}</p>
+      <div class="rh"><b>${r.kural}</b><span class="sev ${r.onem}">${t().sev[r.onem]}</span>${r.otomatik ? `<span class="tag auto">${t().autoFix}</span>` : `<span class="tag">${t().advice}</span>`}${gainChip(r)}</div>
+      <h3><a href="#kural/${r.kural}">${esc(ruleTitle(r.kural))}</a></h3><p>${esc(ruleAdvice(r.kural, r.oneri))}</p>
       <pre>${esc(r.ornek.trim())}</pre>
       <div class="src">${LANG === 'en' ? 'Source' : 'Kaynak'}: ${esc(r.kaynak)}</div>
-      <button class="tbtn" data-k="${r.kural}">${t().tryIt} →</button></div>`).join('');
-  $$('#rules .tbtn').forEach(b => b.onclick = () => {
-    setCode(RULES.find(r => r.kural === b.dataset.k).ornek, null);
-    location.hash = '#dene'; analyse();
-  });
+      <div class="row" style="margin:0"><a class="tbtn" href="#kural/${r.kural}">${rd().detail} →</a><button class="tbtn" data-k="${r.kural}">${t().tryIt}</button></div></div>`).join('');
+  $$('#rules button.tbtn').forEach(b => b.onclick = () => tryCode(ruleOf(b.dataset.k).ornek));
+}
+function tryCode(kod) { setCode(kod, null); location.hash = '#dene'; analyse(); }
+function codeBox(title, cls, src, other) {
+  const diger = new Set(other.split('\n').map(s => s.trim()));
+  const satirlar = src.replace(/\n+$/, '').split('\n');
+  return `<div class="cbox ${cls}"><div class="chd">${title}</div><pre>${satirlar.map(l =>
+    `<span${l.trim() && !diger.has(l.trim()) ? ' class="chg"' : ''}>${esc(l) || ' '}</span>`).join('')}</pre></div>`;
+}
+function ruleBars(A, B, key) {
+  const f = key === 'bellek_b' ? fmtB : fmtS, max = Math.max(A[key], B[key]) || 1;
+  const lab = (w, txt) => w > 72 ? `<em style="right:8px;color:#fff">${txt}</em>` : `<em style="left:calc(${w}% + 8px)">${txt}</em>`;
+  return `<div class="bars">${[[rd().bad, A[key], 'var(--c-waste)'], [rd().good, B[key], 'var(--c-fixed)']].map(([l, v, c]) => {
+    const w = Math.max(v / max * 100, 0.4);
+    return `<div class="lab"><b>${l}</b></div><div class="track"><i style="width:${w}%;background:${c}"></i>${lab(w, f(v))}</div>`;
+  }).join('')}</div>`;
+}
+function ruleMeasureHtml(r) {
+  const L = rd(), o = r.olcum;
+  if (!o) return `<h2>${L.notMeasured}</h2><p>${esc(rtx(r, 'olculmedi'))}</p>`;
+  const g = gainOf(o), A = o.kotu, B = o.iyi;
+  const hero = {win: [big(o.kat), L.faster], cpu: [big(o.kat), L.lessCpu], mem: [big(o.bellek_kat), L.lessMem],
+                flat: ['≈ 1×', L.noDiff], loss: [big(1 / o.kat), L.slower]}[g.cls];
+  const key = g.cls === 'mem' ? 'bellek_b' : g.cls === 'cpu' ? 'islemci_s' : 'sure_s';
+  const rows = [[L.rows[0], 'sure_s', fmtS], [L.rows[1], 'islemci_s', fmtS], [L.rows[2], 'bellek_b', fmtB]];
+  if (A.boyut_b) rows.push([L.rows[3], 'boyut_b', fmtB]);
+  const oran = (a, b) => b ? big(a / b) : '—';
+  const pk = r.tanim && /\b(import|from)\s+pandas\b/.test(r.ornek + r.iyi + (r.tanim.hazirla || '')) ? 'pandas + NumPy (~20 MB)'
+    : r.tanim && /\b(import|from)\s+numpy\b/.test(r.ornek + r.iyi + (r.tanim.hazirla || '')) ? 'NumPy (~8 MB)' : '';
+  return `<h2>${L.measured}</h2>
+    <div class="mhero"><div class="x ${g.cls}">${hero[0]}</div><span>${hero[1]}</span></div>
+    ${ruleBars(A, B, key)}
+    <table class="mt"><thead><tr><th></th><th>${L.bad}</th><th>${L.good}</th><th>${L.ratio}</th></tr></thead><tbody>
+      ${rows.map(([l, k, f]) => `<tr${k === key ? ' class="on"' : ''}><th>${l}</th><td>${f(A[k] || 0)}</td><td>${f(B[k] || 0)}</td><td>${oran(A[k], B[k])}</td></tr>`).join('')}
+    </tbody></table>
+    <div class="checks"><span class="${o.esdeger ? 'ok' : ''}">${o.esdeger ? '✓ ' + L.same : L.random}</span></div>
+    ${rtx(o, 'not') ? `<p class="note">${esc(rtx(o, 'not'))}</p>` : ''}
+    ${ENV ? `<p class="fine">${esc(L.meta(ENV))}</p>` : ''}
+    <div class="dev">${r.tanim ? `<button class="go leaf" id="devGo">${L.device}</button>${pk ? `<span class="pk">${L.pkg(pk)}</span>` : ''}<div id="devRes" aria-live="polite"></div>`
+      : `<p class="fine">${L.noBrowser}</p>`}</div>`;
+}
+function devHtml(m, r) {
+  const L = rd();
+  if (m.atlandi) return `<p class="note">${L.skipped}: ${esc(m.atlandi)}</p>`;
+  if (m.esdeger === false) return `<p class="note">${t().notSame}</p>`;
+  const g = gainOf(m), f = L.gain[g.cls === 'na' ? 'flat' : g.cls];
+  return `<div class="devr"><b>${L.onDevice}: ${typeof f === 'function' ? f(big(g.k)) : f}</b>
+    <span>${L.bad} ${fmtS(m.kotu.sure_s)} · ${L.good} ${fmtS(m.iyi.sure_s)}${m.esdeger ? ' · ✓' : ''}</span>
+    <span>${L.onMac(gainChip(r).replace(/<[^>]+>/g, ''))}</span></div>`;
+}
+function renderRuleDetail(k) {
+  const r = ruleOf(k), d = $('#ruleDetail');
+  $('#ruleList').hidden = !!r; d.hidden = !r;
+  if (!r) { renderRules(); return; }
+  const L = rd(), cat = (CATS[r.kategori] || {})[LANG] || '', i = RULES.indexOf(r), prev = RULES[i - 1], next = RULES[i + 1];
+  const m = r.olcum && r.olcum.motor;
+  document.title = `${r.kural} · ${ruleTitle(r.kural)} · Yeşil Kod`;
+  d.innerHTML = `
+    <nav class="rd-nav"><a href="#kurallar" class="tbtn">${L.back}</a><span class="sp"></span>
+      ${prev ? `<a class="tbtn" href="#kural/${prev.kural}" aria-label="${prev.kural}">← ${prev.kural}</a>` : ''}
+      ${next ? `<a class="tbtn" href="#kural/${next.kural}" aria-label="${next.kural}">${next.kural} →</a>` : ''}</nav>
+    <header class="rd-head">
+      <div class="rh"><span class="cat">${esc(cat)}</span><b>${r.kural}</b><span class="sev ${r.onem}">${t().sev[r.onem]}</span>${r.otomatik ? `<span class="tag auto">${t().autoFix}</span>` : `<span class="tag">${t().advice}</span>`}</div>
+      <h1>${esc(ruleTitle(r.kural))}</h1>
+      <p class="lead">${esc(ruleAdvice(r.kural, r.oneri))}</p>
+    </header>
+    <div class="rd-grid">
+      <section class="card rd-m">${ruleMeasureHtml(r)}</section>
+      <div class="rd-side">
+        <section class="card"><h2>${L.why}</h2><p>${esc(rtx(r, 'neden'))}</p>
+          <div class="cx"><span>${L.cx}</span><b>${esc(rtx(r, 'karmasiklik'))}</b></div></section>
+        <section class="card"><h2>${L.when}</h2><p>${esc(rtx(r, 'istisna'))}</p></section>
+        <section class="card"><h2>${L.source}</h2><p><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.kaynak)} ↗</a></p>
+          <p class="url">${esc(r.url.replace(/^https?:\/\//, ''))}</p></section>
+      </div>
+    </div>
+    <section class="rd-code">
+      <div class="codes">${codeBox(L.bad, 'bad', r.ornek, r.iyi)}${codeBox(L.good, 'good', r.iyi, r.ornek)}</div>
+      ${r.duzeltilmis ? `<div class="codes one">${codeBox(L.engine, 'eng', r.duzeltilmis, r.ornek)}</div>
+        ${m && m.esdeger ? `<p class="kept">✓ ${esc(L.engineOk(big(m.kat)))}</p>` : ''}` : ''}
+      <div class="row" style="margin-top:12px"><button class="tbtn" data-try="ornek">${L.tryBad} →</button><button class="tbtn" data-try="iyi">${L.tryGood} →</button></div>
+    </section>
+    <section class="rd-rel"><h2>${L.related} · ${esc(cat)}</h2><div class="rel">${RULES.filter(x => x.kategori === r.kategori && x !== r).map(x =>
+      `<a href="#kural/${x.kural}"><b>${x.kural}</b><span>${esc(ruleTitle(x.kural))}</span>${gainChip(x)}</a>`).join('')}</div></section>`;
+  $$('#ruleDetail [data-try]').forEach(b => b.onclick = () => tryCode(r[b.dataset.try]));
+  const go = $('#devGo');
+  if (go) go.onclick = async () => {
+    go.disabled = true; go.innerHTML = `<span class="spin"></span>${L.deviceRun}`;
+    let html;
+    try { html = devHtml(await motor({tip: 'kural', kod: r.kural, kotu: r.ornek, iyi: r.iyi, tanim: r.tanim}), r); }
+    catch (e) { html = `<p class="note">${t().fail}</p>`; }
+    if (!document.body.contains(go)) return;               // bu arada başka kurala geçildi
+    $('#devRes').innerHTML = html; go.disabled = false; go.textContent = rd().deviceAgain;
+  };
 }
 
 // ------------------------------------------------------------------ dil ve yönlendirme
@@ -479,12 +624,14 @@ function setLang(l) {
   setEngine(engine); renderChips(); paintEditor(); renderResult();
   if (!$('#v-analizler').hidden) renderHistory();
   $('#ruleQ').placeholder = l === 'en' ? 'Search code, title or source' : 'Kodda, başlıkta ya da kaynakta ara';
-  if (!$('#v-kurallar').hidden) renderRules();
+  if (!$('#v-kurallar').hidden) route();
   try { localStorage.setItem('yk-lang', l); } catch (e) {}
 }
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
-  const v = VIEWS.includes(h) ? h : 'proje';
+  const kural = (/^kural\/(YK\d{3})$/i.exec(h) || [])[1];
+  const v = kural ? 'kurallar' : VIEWS.includes(h) ? h : 'proje';
+  document.title = BASE_TITLE;
   VIEWS.forEach(x => { $('#v-' + x).hidden = x !== v; });
   $$('.nav a').forEach(a => { if (a.dataset.v === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   if (v === 'proje') {
@@ -493,7 +640,10 @@ function route() {
   } else window.scrollTo(0, 0);
   if (v === 'dene') { warmUp(); paintEditor(); }
   if (v === 'analizler') renderHistory();
-  if (v === 'kurallar') renderRules();
+  if (v === 'kurallar') {
+    if (kural) renderRuleDetail(kural.toUpperCase());
+    else { $('#ruleDetail').hidden = true; $('#ruleList').hidden = false; renderRules(); }
+  }
 }
 
 // ------------------------------------------------------------------ başlangıç
@@ -505,7 +655,7 @@ function route() {
   loadHist(); updateNavCount();
   try {
     const [o, k] = await Promise.all(['py/ornekler.json', 'py/kurallar.json'].map(u => fetch(u).then(r => r.json())));
-    SAMPLES = o; RULES = k.kurallar; CATS = k.kategoriler;
+    SAMPLES = o; RULES = k.kurallar; CATS = k.kategoriler; ENV = k.olcum_ortami || null;
   } catch (e) {}
   ta().value = SAMPLES.length ? SAMPLES[0].kod : '';
   cur.sample = SAMPLES.length ? 0 : null;
@@ -523,6 +673,7 @@ function route() {
   $$('.rtabs button').forEach(b => b.onclick = () => switchTab(b.dataset.t));
   $('#q').oninput = renderTable;
   $('#ruleQ').oninput = e => { ruleQ = e.target.value; renderRules(); };
+  $('#ruleSort').onchange = e => { ruleSort = e.target.value; renderRules(); };
   $('#fRule').onchange = renderTable;
   $('#expJson').onclick = () => download('yesil-kod-analizler.json', JSON.stringify(HIST, null, 1), 'application/json');
   $('#expCsv').onclick = exportCsv;

@@ -8,10 +8,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from greencode import analyzer, fixer, proof, report, scenarios  # noqa: E402
+from greencode import analyzer, fixer, kural_ayrinti, kural_kanit, proof, report, scenarios  # noqa: E402
 from greencode.meter import EnergyMeter, _PowerMetrics, to_co2_g, yearly_projection  # noqa: E402
 
 ORNEK = (Path(__file__).resolve().parent.parent / "ornekler" / "israfli_ornek.py").read_text("utf-8")
+KURAL_KLASORU = Path(__file__).resolve().parent.parent / "ornekler" / "kurallar"
 
 
 def rules(code):
@@ -249,6 +250,82 @@ class ReportTests(unittest.TestCase):
         rep = report.scan([p])
         self.assertGreaterEqual(rep["toplam"]["yüksek"], 3)
         self.assertIn("Yeşil Kod raporu", report.to_markdown(rep))
+
+
+class KuralKanitTests(unittest.TestCase):
+    """Her kuralın iyi örneği, ayrıntısı ve ölçüm tanımı; kötü ve iyi sürümün aynı sonucu vermesi."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.olcum, cls.olculmez = kural_kanit.tanimlar(str(KURAL_KLASORU))
+
+    def test_her_kuralin_iyi_ornegi_temiz(self):
+        for kod in analyzer.RULES:
+            with self.subTest(kod):
+                self.assertEqual(rules((KURAL_KLASORU / "iyi" / f"{kod}.py").read_text("utf-8")), [])
+
+    def test_ayrinti_ve_olcum_tanimi_her_kurali_kapsar(self):
+        self.assertEqual(set(kural_ayrinti.AYRINTI), set(analyzer.RULES))
+        self.assertEqual(set(self.olcum) | set(self.olculmez), set(analyzer.RULES))
+        self.assertFalse(set(self.olcum) & set(self.olculmez))
+        for kod, (neden, why, istisna, exception, karmasiklik, url) in kural_ayrinti.AYRINTI.items():
+            with self.subTest(kod):
+                self.assertTrue(all((neden, why, istisna, exception, karmasiklik)))
+                self.assertTrue(url.startswith("https://"))
+                self.assertNotRegex(kural_ayrinti.karmasiklik_en(kod), "[çğışöüÇĞİŞÖÜ]")
+        for kod, tanim in self.olcum.items():
+            with self.subTest(kod):
+                self.assertEqual(bool(tanim.get("not")), bool(tanim.get("not_en")))
+
+    def test_kotu_ve_iyi_ornek_ayni_sonucu_verir(self):
+        import sqlite3
+        for kod, tanim in sorted(self.olcum.items()):
+            with self.subTest(kod):
+                kotu = (KURAL_KLASORU / f"{kod}.py").read_text("utf-8")
+                iyi = (KURAL_KLASORU / "iyi" / f"{kod}.py").read_text("utf-8")
+                try:
+                    r = kural_kanit.kanitla(kod, kotu, iyi, tanim, olc=False)
+                except sqlite3.OperationalError as e:          # eski SQLite: FTS5 trigram yok
+                    self.skipTest(str(e))
+                if "atlandi" in r:
+                    continue                                     # numpy, pandas ... kurulu değil
+                self.assertIsNot(r["esdeger"], False, r.get("hata"))
+
+    def test_motorun_duzeltmesi_de_ayni_sonucu_verir(self):
+        for kod in ("YK002", "YK003", "YK004", "YK011", "YK029", "YK062", "YK064", "YK065", "YK066", "YK113"):
+            with self.subTest(kod):
+                kotu = (KURAL_KLASORU / f"{kod}.py").read_text("utf-8")
+                yeni, _, duzeltmeler = fixer.fix(kotu)
+                self.assertIn(kod, {d.kural for d in duzeltmeler})
+                r = kural_kanit.kanitla(kod, kotu, yeni, self.olcum[kod], olc=False)
+                self.assertTrue(r["esdeger"])
+
+    def test_kayitli_olcumler_tam_ve_esdeger(self):
+        import json
+        kayit = json.loads((KURAL_KLASORU / "olcumler.json").read_text("utf-8"))["sonuclar"]
+        self.assertEqual(set(kayit), set(analyzer.RULES))
+        for kod, r in kayit.items():
+            with self.subTest(kod):
+                if kod in self.olculmez:
+                    self.assertIn("olculmedi", r)
+                else:
+                    self.assertIsNot(r["esdeger"], False)
+                    self.assertGreater(r["kat"], 0)
+
+    def test_normalle_ve_esit(self):
+        from collections import Counter
+        n, e = kural_kanit.normalle, kural_kanit.esit
+        self.assertTrue(e(n(Counter("aab")), n({"a": 2, "b": 1})))
+        self.assertTrue(e(n((1, [2, 3])), n([1, (2, 3)])))
+        self.assertTrue(e(n(3.0000000000000004), n(3.0)))
+        self.assertFalse(e(n(3.1), n(3.0)))
+        self.assertTrue(e(n({1, 2}), n({2, 1})))
+        self.assertFalse(e(n([1, 2]), n([2, 1])))
+
+    def test_ardisik_startswith(self):
+        self.assertIn("YK071", rules("def f(s):\n    return s.startswith('a') or s.startswith('b')\n"))
+        self.assertNotIn("YK071", rules("def f(s, t):\n    return s.startswith('a') or t.startswith('b')\n"))
+        self.assertNotIn("YK071", rules("def f(s):\n    return s.startswith('a') or s.endswith('b')\n"))
 
 
 if __name__ == "__main__":

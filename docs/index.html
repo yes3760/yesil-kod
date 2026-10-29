@@ -245,18 +245,24 @@
 </div>
 <div class="view" id="v-kurallar" hidden>
   <div class="app">
-    <div class="ahead">
-      <div>
-        <h1><span lang="tr">Kurallar</span><span lang="en">Rules</span></h1>
-        <p lang="tr">Yeşil Kod’un aradığı 113 enerji israfı kalıbı, dokuz grupta. On birini motor kendisi düzeltir, diğerleri için ne yapılacağını söyler; her kartta kuralın dayandığı kaynak yazar. Her örneği Dashboard’da deneyebilirsin.</p>
-        <p lang="en">The 113 energy-waste patterns Yeşil Kod looks for, in nine groups. The engine fixes eleven of them itself and advises on the rest; every card names its source. Try every example in the Dashboard.</p>
+    <div id="ruleList">
+      <div class="ahead">
+        <div>
+          <h1><span lang="tr">Kurallar</span><span lang="en">Rules</span></h1>
+          <p lang="tr">Yeşil Kod’un aradığı 113 enerji israfı kalıbı, dokuz grupta. Her kuralın kötü ve iyi örneği aynı girdiyle çalıştırılıp karşılaştırıldı ve ölçüldü; bir kartı açınca nedenini, ne zaman sorun olmadığını ve ölçüm sonucunu görürsün. Çoğunu kendi cihazında da ölçebilirsin.</p>
+          <p lang="en">The 113 energy-waste patterns Yeşil Kod looks for, in nine groups. Every rule’s bad and good example was run on the same input, compared and measured; open a card to see why it wastes energy, when it is fine, and the measured result. You can measure most of them on your own device too.</p>
+          <p class="rmeta" id="ruleMeta"></p>
+        </div>
       </div>
+      <div class="filters card" style="border-radius:var(--r);margin-bottom:12px;border-bottom:1px solid var(--rule)">
+        <input type="search" id="ruleQ" aria-label="Kural ara">
+        <select id="ruleSort" aria-label="Sırala"></select>
+        <span id="ruleCount" style="font-size:13px;color:var(--ink3)"></span>
+      </div>
+      <div class="chips" id="ruleCats" style="margin-bottom:14px"></div>
+      <div class="rules" id="rules"></div>
     </div>
-    <div class="filters card" style="border-radius:var(--r);margin-bottom:12px;border-bottom:1px solid var(--rule)">
-      <input type="search" id="ruleQ" aria-label="Kural ara"><span id="ruleCount" style="font-size:13px;color:var(--ink3)"></span>
-    </div>
-    <div class="chips" id="ruleCats" style="margin-bottom:14px"></div>
-    <div class="rules" id="rules"></div>
+    <article class="rd" id="ruleDetail" hidden></article>
   </div>
 </div>
 <footer>

@@ -4,6 +4,7 @@
     python3 stant/hazirla.py site       docs/ klasörünü (GitHub Pages) günceller
     python3 stant/hazirla.py qr         QR kodlarını üretir          (gerekir: pip install segno)
     python3 stant/hazirla.py pdf        PDF'leri üretir               (gerekir: Google Chrome; önizleme için pymupdf)
+    python3 stant/hazirla.py pdf katalog   yalnızca kural kataloğunu üretir
     python3 stant/hazirla.py film       filmi QR kapanışıyla yeniden üretir (gerekir: ffmpeg)
 
 Ekip adı, adresler ve etkinlik bilgisi stant/ayarlar.json dosyasındadır.
@@ -121,13 +122,66 @@ def render_html(ad):
 
 
 # ------------------------------------------------------------------ site
+def _yuvarla(x, n=4):
+    if isinstance(x, float):
+        return float(f"{x:.{n}g}")
+    if isinstance(x, dict):
+        return {k: _yuvarla(v, n) for k, v in x.items()}
+    return x
+
+
+def _olcum_ozeti(r, tanim):
+    """olcumler.json'daki bir sonucun sitede gereken kısmı (sayılar 4 anlamlı basamak)."""
+    alanlar = ("esdeger", "olcut", "kat", "sure_kat", "islemci_kat", "bellek_kat", "kotu", "iyi", "motor")
+    ozet = _yuvarla({a: r[a] for a in alanlar if a in r})
+    ozet["not"], ozet["not_en"] = tanim.get("not"), tanim.get("not_en")
+    return ozet
+
+
+def kural_verisi():
+    """Kurallar sayfası ve katalog için: her kuralın açıklaması, kötü ve iyi örneği,
+    motorun düzeltmesi ve ölçüm sonucu."""
+    sys.path.insert(0, str(ROOT))
+    from greencode import fixer, kural_ayrinti as ka, kural_kanit, kurallar as kk
+    klasor = ROOT / "ornekler" / "kurallar"
+    olcum, olculmez = kural_kanit.tanimlar(str(klasor))
+    olcumler = json.loads((klasor / "olcumler.json").read_text("utf-8"))
+    kurallar = []
+    for kod, kategori, onem, baslik, oneri, title, advice, kaynak in kk.KURALLAR:
+        ornek = (klasor / f"{kod}.py").read_text("utf-8")
+        duzeltilmis, _, duzeltmeler = fixer.fix(ornek)
+        otomatik = any(f.kural == kod for f in duzeltmeler)
+        neden, why, istisna, exception, karmasiklik, url = ka.AYRINTI[kod]
+        k = {"kural": kod, "kategori": kategori, "onem": onem, "baslik": baslik, "oneri": oneri,
+             "baslik_en": title, "oneri_en": advice, "kaynak": kaynak, "url": url, "ornek": ornek,
+             "iyi": (klasor / "iyi" / f"{kod}.py").read_text("utf-8"), "otomatik": otomatik,
+             "duzeltilmis": duzeltilmis if otomatik else None,
+             "neden": neden, "neden_en": why, "istisna": istisna, "istisna_en": exception,
+             "karmasiklik": karmasiklik, "karmasiklik_en": ka.karmasiklik_en(kod)}
+        if kod in olculmez:
+            k["olculmedi"], k["olculmedi_en"] = olculmez[kod]
+        else:
+            tanim = olcum[kod]
+            k["olcum"] = _olcum_ozeti(olcumler["sonuclar"][kod], tanim)
+            if tanim.get("tarayici", True):
+                k["tanim"] = {a: v for a, v in tanim.items() if a not in ("not", "not_en", "tarayici")}
+        kurallar.append(k)
+    o = olcumler["ortam"]
+    veri = {"kategoriler": {k: {"tr": tr, "en": en} for k, (tr, en) in kk.KATEGORILER.items()},
+            "olcum_ortami": {"islemci": o.get("islemci"), "python": o["python"], "sistem": o["sistem"],
+                             "tarih": olcumler["tarih"], "tur": kural_kanit.TUR},
+            "kurallar": kurallar}
+    return veri
+
+
 def site():
     (DOCS / "fonts").mkdir(parents=True, exist_ok=True)
     for f in (ROOT / "web" / "fonts").iterdir():
         shutil.copy2(f, DOCS / "fonts" / f.name)
     pkg = DOCS / "py" / "greencode"
     pkg.mkdir(parents=True, exist_ok=True)
-    for f in ("__init__.py", "config.py", "kurallar.py", "analyzer.py", "fixer.py", "meter.py", "proof.py", "scenarios.py"):
+    for f in ("__init__.py", "config.py", "kurallar.py", "analyzer.py", "fixer.py", "meter.py", "proof.py",
+              "scenarios.py", "kural_kanit.py"):
         shutil.copy2(ROOT / "greencode" / f, pkg / f)
     sys.path.insert(0, str(ROOT))
     from greencode import scenarios
@@ -138,16 +192,7 @@ def site():
     ornekler.append({"tr": "Karışık örnek dosya", "en": "Mixed example file",
                      "kod": (ROOT / "ornekler" / "israfli_ornek.py").read_text("utf-8")})
     (DOCS / "py" / "ornekler.json").write_text(json.dumps(ornekler, ensure_ascii=False, indent=1), "utf-8")
-    # Kurallar sayfası: her kuralın açıklaması, örneği ve motorun onu kendisi düzeltip düzeltmediği
-    from greencode import fixer, kurallar as kk
-    kurallar = []
-    for kod, kategori, onem, baslik, oneri, title, advice, kaynak in kk.KURALLAR:
-        ornek = (ROOT / "ornekler" / "kurallar" / f"{kod}.py").read_text("utf-8")
-        duzeltmeler = fixer.fix(ornek)[2]
-        kurallar.append({"kural": kod, "kategori": kategori, "onem": onem, "baslik": baslik, "oneri": oneri,
-                         "baslik_en": title, "oneri_en": advice, "kaynak": kaynak, "ornek": ornek,
-                         "otomatik": any(f.kural == kod for f in duzeltmeler)})
-    veri = {"kategoriler": {k: {"tr": tr, "en": en} for k, (tr, en) in kk.KATEGORILER.items()}, "kurallar": kurallar}
+    veri = kural_verisi()
     (DOCS / "py" / "kurallar.json").write_text(json.dumps(veri, ensure_ascii=False, indent=1), "utf-8")
     (DOCS / ".nojekyll").write_text("")            # GitHub Pages __init__.py dosyasını gizlemesin
     print("site    docs/ güncellendi")
@@ -165,6 +210,8 @@ def qr():
         "qr-kodunu-dene": AYAR["site_url"] + "#dene",
         "qr-kaynak-kod": AYAR["repo_url"],
         "qr-try-en": AYAR["site_url"] + "?lang=en#dene",
+        "qr-kurallar": AYAR["site_url"] + "#kurallar",
+        "qr-rules-en": AYAR["site_url"] + "?lang=en#kurallar",
     }
     for ad, url in hedefler.items():
         q = segno.make(url, error="q", micro=False)
@@ -191,6 +238,8 @@ def pdf(sadece=None):
                 continue
             chrome(["--no-pdf-header-footer", f"--print-to-pdf={PDF_DIR / cikti}", base + yol], profil)
             print(f"pdf     {cikti}")
+        if not sadece or "katalog" in sadece:
+            katalog_pdf(base, profil)
         if not sadece or "brosur" in sadece:
             for ad in ("02-brosur-A5-TR.pdf", "03-brochure-A5-EN.pdf"):
                 if (PDF_DIR / ad).exists():
@@ -200,6 +249,22 @@ def pdf(sadece=None):
         httpd.shutdown()
         shutil.rmtree(profil, ignore_errors=True)
         shutil.rmtree(KAYNAK / "_render", ignore_errors=True)
+
+
+def katalog_pdf(base, profil):
+    """113 kuralın kataloğu: sitedeki Kurallar sayfasıyla aynı veriden, Türkçe ve İngilizce."""
+    import katalog
+    veri = kural_verisi()
+    (KAYNAK / "_render").mkdir(exist_ok=True)
+    for dil, cikti in (("tr", "09-kural-katalogu-A4.pdf"), ("en", "en/09-rule-catalogue-A4-EN.pdf")):
+        hedef = KAYNAK / "_render" / f"katalog-{dil}.html"
+        hedef.write_text(katalog.html_uret(veri, dil, AYAR), "utf-8")
+        chrome(["--no-pdf-header-footer", f"--print-to-pdf={PDF_DIR / cikti}", base + "/" + hedef.relative_to(ROOT).as_posix()], profil)
+        try:
+            katalog.sayfa_numarasi(PDF_DIR / cikti, dil)
+        except ImportError:
+            print("        (sayfa numaraları için: pip install pymupdf)")
+        print(f"pdf     {cikti}")
 
 
 def a4_ikili(a5_pdf: Path):

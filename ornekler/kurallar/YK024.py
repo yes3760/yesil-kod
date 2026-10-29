@@ -1,5 +1,7 @@
 import json
 
 
-def ayar_kopyasi(ayar):
-    return json.loads(json.dumps(ayar))
+def kullanici_ayari(varsayilan, tema):
+    ayar = json.loads(json.dumps(varsayilan))
+    ayar["tema"] = tema
+    return ayar

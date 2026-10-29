@@ -9,6 +9,8 @@
                                                çalıştırıp sonucu karşılaştırır ve ölçer
   python -m greencode olc dosya.py             betiği çalıştırıp enerjisini ölçer
   python -m greencode olcer                    ölçüm modunu ve boşta gücü gösterir
+  python -m greencode kanit [YK002 ...]        kuralların kötü ve iyi örneğini çalıştırıp
+                                               karşılaştırır ve ölçer (--yaz: olcumler.json)
   python -m greencode rapor DİZİN [--bicim md|html|json] [--esik N]
 """
 import argparse
@@ -123,6 +125,48 @@ def cmd_olcer(_):
           f"ortalama {r.energy_j / r.wall_s:.2f} W ek güç\n")
 
 
+def _kat(x):
+    if x is None:
+        return "-"
+    return f"{x:,.0f}×".replace(",", ".") if x >= 100 else f"{x:.2f}×".replace(".", ",")
+
+
+def cmd_kanit(a):
+    import json
+    import time
+    from . import kural_kanit
+    klasor = Path(__file__).resolve().parent.parent / "ornekler" / "kurallar"
+    hedef = klasor / "olcumler.json"
+    secim = [k.upper() for k in a.kurallar] or None
+    print(f"\n{'Kural':6} {'Eşdeğer':8} {'Kat':>9} {'Süre':>9} {'İşlemci':>9} {'Bellek':>9}  Motor")
+
+    def satir(kod, r):
+        if "olculmedi" in r:
+            print(f"{kod:6} {DIM}ölçülmedi: {r['olculmedi'][:70]}…{END}")
+        elif "atlandi" in r or r.get("esdeger") is False:
+            print(f"{kod:6} {AMBER}{r.get('atlandi') or r.get('hata')}{END}")
+        else:
+            es = "evet" if r["esdeger"] else "rastgele"
+            m = r.get("motor")
+            motor = (f"eşdeğer, {_kat(m['kat'])}" if m["esdeger"] else f"{AMBER}FARKLI{END}") if m else ""
+            renk = GREEN if (r["kat"] or 0) >= 1.1 else (AMBER if (r["kat"] or 0) <= 0.9 else "")
+            print(f"{kod:6} {es:8} {renk}{_kat(r['kat']):>9}{END} {_kat(r['sure_kat']):>9} "
+                  f"{_kat(r['islemci_kat']):>9} {_kat(r.get('bellek_kat')):>9}  {motor}")
+
+    t0 = time.time()
+    sonuclar = kural_kanit.hepsini_olc(str(klasor), secim, satir)
+    print(f"\n{len(sonuclar)} kural, {time.time() - t0:.0f} s. Kat: kötü sürümün iyi sürüme oranı "
+          f"(süre; bekleme kurallarında işlemci süresi).")
+    if a.yaz:
+        eski = json.loads(hedef.read_text("utf-8")) if hedef.exists() and secim else {"sonuclar": {}}
+        eski["sonuclar"].update(sonuclar)
+        eski["ortam"] = kural_kanit.ortam()
+        eski["tarih"] = time.strftime("%Y-%m-%d")
+        eski["sonuclar"] = dict(sorted(eski["sonuclar"].items()))
+        hedef.write_text(json.dumps(eski, ensure_ascii=False, indent=1), "utf-8")
+        print(f"Yazıldı: {hedef.relative_to(Path.cwd()) if hedef.is_relative_to(Path.cwd()) else hedef}")
+
+
 def cmd_rapor(a):
     rep = report.scan(a.yollar)
     out = {"md": report.to_markdown, "html": report.to_html, "json": report.to_json}[a.bicim](rep)
@@ -142,6 +186,8 @@ def main():
     po = sub.add_parser("olc"); po.add_argument("dosya"); po.add_argument("args", nargs="*")
     po.add_argument("--tekrar", type=int, default=3)
     sub.add_parser("olcer")
+    pk = sub.add_parser("kanit"); pk.add_argument("kurallar", nargs="*")
+    pk.add_argument("--yaz", action="store_true")
     pr = sub.add_parser("rapor"); pr.add_argument("yollar", nargs="+")
     pr.add_argument("--bicim", choices=["md", "html", "json"], default="md")
     pr.add_argument("--esik", type=int, default=None)
@@ -151,7 +197,7 @@ def main():
         serve()
     else:
         {"senaryolar": cmd_senaryolar, "analiz": cmd_analiz, "duzelt": cmd_duzelt,
-         "olc": cmd_olc, "olcer": cmd_olcer, "rapor": cmd_rapor}[a.komut](a)
+         "olc": cmd_olc, "olcer": cmd_olcer, "kanit": cmd_kanit, "rapor": cmd_rapor}[a.komut](a)
 
 
 if __name__ == "__main__":
