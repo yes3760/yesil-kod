@@ -75,7 +75,8 @@ const FIX_EN = {YK001: 'Single-row query in the loop replaced by one batched IN 
                 YK113: 'Generator rewritten as a direct list, set or dict comprehension.'};
 const t = () => T[LANG];
 const nf = (v, d = 0) => Number(v).toLocaleString(LANG === 'en' ? 'en-GB' : 'tr-TR', {maximumFractionDigits: d, minimumFractionDigits: d});
-const fmtS = s => s >= 1 ? nf(s, 2) + ' s' : s >= 1e-3 ? nf(s * 1e3, 1) + ' ms' : nf(s * 1e6, 0) + ' µs';
+const fmtS = s => s >= 1 ? nf(s, 2) + ' s' : s >= 1e-3 ? nf(s * 1e3, 1) + ' ms' : s >= 1e-5 ? nf(s * 1e6, 0) + ' µs'
+  : s >= 1e-7 ? nf(s * 1e6, 2) + ' µs' : nf(s * 1e9, 0) + ' ns';
 const big = v => (v >= 100 ? nf(v, 0) : v >= 10 ? nf(v, 1) : nf(v, 2)) + '×';
 const ruleOf = k => RULES.find(r => r.kural === k);
 const ruleTitle = (k, fallback) => { const r = ruleOf(k); return r ? (LANG === 'en' ? r.baslik_en : r.baslik) : fallback || k; };
